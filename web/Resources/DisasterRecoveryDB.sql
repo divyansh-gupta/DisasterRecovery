@@ -1,0 +1,51 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS Responder;
+DROP TABLE IF EXISTS Request;
+DROP TABLE IF EXISTS Location;
+DROP TABLE IF EXISTS Item;
+DROP TABLE IF EXISTS Need;
+
+CREATE TABLE Responder (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    responder_name VARCHAR(100) NOT NULL,
+    image VARCHAR(100) NOT NULL,
+    location_id INT,
+    FOREIGN KEY (location_id) REFERENCES Location(ID)
+);
+
+CREATE TABLE Request (
+	ID INT PRIMARY KEY AUTO_INCREMENT,
+    status ENUM('REQUESTED', 'IN_PROGRESS', 'COMPLETED') NOT NULL,
+    from_location_id INT NOT NULL,
+    to_location_id INT NOT NULL,
+    FOREIGN KEY (from_location_id) REFERENCES Location(ID),
+    FOREIGN KEY (to_location_id) REFERENCES Location(ID)
+);
+
+CREATE TABLE Need (
+	ID INT PRIMARY KEY AUTO_INCREMENT,
+    item_id INT NOT NULL,
+    request_id INT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (item_id) REFERENCES Item(ID),
+    FOREIGN KEY (request_id) REFERENCES Request(ID)
+);
+
+CREATE TABLE Location (
+	ID INT PRIMARY KEY AUTO_INCREMENT,
+    location_name VARCHAR(100) NOT NULL,
+    latitude DECIMAL(13,10) NOT NULL,
+    longitude DECIMAL(13,10) NOT NULL
+);
+
+CREATE TABLE Item (
+	ID INT PRIMARY KEY AUTO_INCREMENT,
+    location_id INT NOT NULL,
+    item_type ENUM('WATER', 'CANNED_GOODS', 'BLANKETS', 'SHELTER', 'EMERGENCY_KITS', 'USD') NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES Location(ID)
+);
+
+SET FOREIGN_KEY_CHECKS = 1;
