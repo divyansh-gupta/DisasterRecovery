@@ -27,4 +27,16 @@ public class ResponderFacade extends AbstractFacade<Responder> {
         super(Responder.class);
     }
     
+    
+    public Responder findByUsername(String username) {
+        if (em.createQuery("SELECT c FROM Responder c WHERE c.username = :username")
+                .setParameter("username", username)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Responder) (em.createQuery("SELECT c FROM User c WHERE c.username = :username")
+                    .setParameter("username", username)
+                    .getSingleResult());
+        }
+    }
 }
