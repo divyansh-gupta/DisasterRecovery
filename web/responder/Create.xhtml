@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResponderCreateDlg" widgetVar="ResponderCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateResponderTitle}">
+            <h:form id="ResponderCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{responderController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{responderController.selected.id}" title="#{bundle.CreateResponderTitle_id}" required="true" requiredMessage="#{bundle.CreateResponderRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{responderController.selected.username}" title="#{bundle.CreateResponderTitle_username}" required="true" requiredMessage="#{bundle.CreateResponderRequiredMessage_username}"/>
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_responderName}" for="responderName" />
+                        <p:inputText id="responderName" value="#{responderController.selected.responderName}" title="#{bundle.CreateResponderTitle_responderName}" required="true" requiredMessage="#{bundle.CreateResponderRequiredMessage_responderName}"/>
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_image}" for="image" />
+                        <p:inputText id="image" value="#{responderController.selected.image}" title="#{bundle.CreateResponderTitle_image}" required="true" requiredMessage="#{bundle.CreateResponderRequiredMessage_image}"/>
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_locationId}" for="locationId" />
+                        <p:selectOneMenu id="locationId" value="#{responderController.selected.locationId}" >
+                            <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
+                                           var="locationIdItem"
+                                           itemValue="#{locationIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{responderController.selected.email}" title="#{bundle.CreateResponderTitle_email}" required="true" requiredMessage="#{bundle.CreateResponderRequiredMessage_email}"/>
+                        <p:outputLabel value="#{bundle.CreateResponderLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{responderController.selected.password}" title="#{bundle.CreateResponderTitle_password}" required="true" requiredMessage="#{bundle.CreateResponderRequiredMessage_password}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{responderController.create}" value="#{bundle.Save}" update="display,:ResponderListForm:datalist,:growl" oncomplete="handleSubmit(args,'ResponderCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ResponderCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

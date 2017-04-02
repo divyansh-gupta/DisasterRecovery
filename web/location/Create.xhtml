@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LocationCreateDlg" widgetVar="LocationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateLocationTitle}">
+            <h:form id="LocationCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{locationController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateLocationLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{locationController.selected.id}" title="#{bundle.CreateLocationTitle_id}" required="true" requiredMessage="#{bundle.CreateLocationRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateLocationLabel_locationName}" for="locationName" />
+                        <p:inputText id="locationName" value="#{locationController.selected.locationName}" title="#{bundle.CreateLocationTitle_locationName}" required="true" requiredMessage="#{bundle.CreateLocationRequiredMessage_locationName}"/>
+                        <p:outputLabel value="#{bundle.CreateLocationLabel_latitude}" for="latitude" />
+                        <p:inputText id="latitude" value="#{locationController.selected.latitude}" title="#{bundle.CreateLocationTitle_latitude}" required="true" requiredMessage="#{bundle.CreateLocationRequiredMessage_latitude}"/>
+                        <p:outputLabel value="#{bundle.CreateLocationLabel_longitude}" for="longitude" />
+                        <p:inputText id="longitude" value="#{locationController.selected.longitude}" title="#{bundle.CreateLocationTitle_longitude}" required="true" requiredMessage="#{bundle.CreateLocationRequiredMessage_longitude}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{locationController.create}" value="#{bundle.Save}" update="display,:LocationListForm:datalist,:growl" oncomplete="handleSubmit(args,'LocationCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="LocationCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
