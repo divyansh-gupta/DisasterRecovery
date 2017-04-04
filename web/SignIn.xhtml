@@ -14,7 +14,6 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
     <!-- This page is constructed based on the siteTemplate -->
     <ui:composition template="template/siteTemplate.xhtml">
         <ui:define name="title">
-            <!-- Set the page title -->
             <h:outputText value="Sign In"></h:outputText>
         </ui:define>
 
@@ -56,7 +55,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     <p:commandButton id="retrieve" value="Forgot Password" action="#{loginManager.resetPassword()}" 
                                      styleClass="commandButton" ajax="false" icon="ui-icon-refresh" />
                     &nbsp;
-                    <p:button outcome="index" value="Cancel" icon="ui-icon-cancel" styleClass="commandButton" />
+                    <!--<p:button outcome="" value="Cancel" icon="ui-icon-cancel" styleClass="commandButton" />-->
                 </h:form>
                 
             </div>

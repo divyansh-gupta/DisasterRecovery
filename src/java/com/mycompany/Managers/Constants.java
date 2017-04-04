@@ -9,6 +9,9 @@ package com.mycompany.Managers;
  * @author andre
  */
 public class Constants {
+    
+        public Constants() {}
+    
         public static final String GMAPS_GEOCODE_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
         public static final String GMAPS_GEOCODE_API = "key=***REMOVED***";
 }

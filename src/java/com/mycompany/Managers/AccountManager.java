@@ -6,7 +6,7 @@
 package com.mycompany.managers;
 
 import com.mycompany.DisasterRecovery.Responder;
-import com.mycompany.DisasterRecovery.ResponderFacade;
+import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
