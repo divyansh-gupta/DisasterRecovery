@@ -346,6 +346,13 @@ Other Style Definitions
     width: 200px;
 }
 
+/* Style the Google map display */
+.map {
+    margin-left: 10px;
+    margin-right: 40px;
+    height:600px;
+}
+
 /*
 ==================================
 Social Media Buttons Spin Animated
