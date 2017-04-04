@@ -5,6 +5,7 @@
 package com.mycompany.sessionbeans;
 
 import com.mycompany.DisasterRecovery.Responder;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +27,19 @@ public class ResponderFacade extends AbstractFacade<Responder> {
 
     public ResponderFacade() {
         super(Responder.class);
+    }
+    
+        
+    public Responder findByUsername(String username) {
+        if (em.createQuery("SELECT c FROM Responder c WHERE c.username = :username")
+                .setParameter("username", username)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Responder) (em.createQuery("SELECT c FROM User c WHERE c.username = :username")
+                    .setParameter("username", username)
+                    .getSingleResult());
+        }
     }
     
 }

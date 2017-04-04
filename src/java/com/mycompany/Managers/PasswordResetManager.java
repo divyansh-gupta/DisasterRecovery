@@ -4,8 +4,8 @@
  */
 package com.mycompany.Managers;
 
-import com.mycompany.entityclasses.User;
-import com.mycompany.sessionbeans.UserFacade;
+import com.mycompany.DisasterRecovery.Responder;
+import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -40,7 +40,7 @@ public class PasswordResetManager implements Serializable {
     of the UserFacade object, after it is instantiated at runtime, into the instance variable 'userFacade'.
      */
     @EJB
-    private UserFacade userFacade;
+    private ResponderFacade userFacade;
 
     /*
     =========================

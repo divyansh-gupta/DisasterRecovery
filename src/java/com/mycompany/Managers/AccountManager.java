@@ -5,12 +5,16 @@
  */
 package com.mycompany.managers;
 
+import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Responder;
+import com.mycompany.sessionbeans.LocationFacade;
+
 import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -85,6 +89,14 @@ public class AccountManager implements Serializable {
     private String name;
 
     private String address1;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     private String address2;
     private String city;
     private String state;
@@ -108,6 +120,8 @@ public class AccountManager implements Serializable {
      */
     @EJB
     private ResponderFacade userFacade;
+    @EJB
+    private LocationFacade locationFacade;
 
     // Constructor method instantiating an instance of AccountManager
     public AccountManager() {
@@ -222,6 +236,10 @@ public class AccountManager implements Serializable {
         return userFacade;
     }
 
+    public LocationFacade getLocationFacade() {
+        return locationFacade;
+    }
+
     /*
     private Map<String, Object> security_questions;
         String      int
@@ -293,11 +311,44 @@ public class AccountManager implements Serializable {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username") != null;
     }
 
+    public Location getLatLongFromAddress(String city, String State, String zipcode) throws Exception {
+        String api_call_init = Constants.GMAPS_GEOCODE_BASE_URL + city + ", "
+                + State + ", " + zipcode + "&"
+                + Constants.GMAPS_GEOCODE_API_KEY;
+        String api_call_final = api_call_init.replaceAll(" ", "+");
+        String results = readUrlContent(api_call_final);
+        results = "[" + results + "]";
+        JSONArray jsonResults = new JSONArray(results);
+        JSONArray jsonArrayResults = jsonResults.getJSONObject(0).getJSONArray("results");
+        JSONObject resultsObject = jsonArrayResults.getJSONObject(0);
+
+        JSONObject geometry = resultsObject.getJSONObject("geometry");
+        JSONObject location = geometry.getJSONObject("location");
+        System.out.println(jsonArrayResults.toString());
+        BigDecimal latitude = location.optBigDecimal("lat", BigDecimal.ZERO);
+        BigDecimal longitude = location.optBigDecimal("lng", BigDecimal.ZERO);
+
+        Location checkLocation = getLocationFacade().findByLatLong(latitude, longitude);
+        if (checkLocation != null) {
+            System.out.println("checkLocation from DB: " + checkLocation);
+            return checkLocation;
+        } else {
+            String locationName = city + ", " + state + " " + zipcode;
+            Location newEntry = new Location();
+            newEntry.setLocationName(locationName);
+            newEntry.setLatitude(latitude);
+            newEntry.setLongitude(longitude);
+            getLocationFacade().create(newEntry);
+            System.out.println("newEntry from DB: " + newEntry);
+            return newEntry;
+        }
+    }
+
     /*
     Create a new new user account. Return "" if an error occurs; otherwise,
     upon successful account creation, redirect to show the SignIn page.
      */
-    public String createAccount() {
+    public String createAccount() throws Exception {
 
         // First, check if the entered username is already being used
         // Obtain the object reference of a Responder object with username
@@ -321,19 +372,13 @@ public class AccountManager implements Serializable {
                 entered by the user in the AccountCreationForm in CreateAccount.xhtml
                  */
                 newResponder.setResponderName(name);
-//                newResponder.setAddress1(address1);
-//                newResponder.setAddress2(address2);
-//                newResponder.setCity(city);
-//                newResponder.setState(state);
-//                newResponder.setZipcode(zipcode);
-//                newResponder.setSecurityQuestion(securityQuestion);
-//                newResponder.setSecurityAnswer(securityAnswer);
                 newResponder.setEmail(email);
-//                newResponder.setRespondername(username);
                 newResponder.setPassword(password);
-
+                Location userLocation = getLatLongFromAddress(city, state, zipcode);
+//                newResponder.setLocationId(userLocation.);
+                newResponder.setUsername(username);
+                
                 getResponderFacade().create(newResponder);
-
             } catch (EJBException e) {
                 username = "";
                 statusMessage = "Something went wrong while creating user's account! See: " + e.getMessage();
@@ -349,20 +394,6 @@ public class AccountManager implements Serializable {
             return "SignIn.xhtml?faces-redirect=true";
         }
         return "";
-    }
-
-    public void getLatLongFromAddress(String city, String State, String zipcode) throws Exception {
-        String api_call_init = Constants.GMAPS_GEOCODE_BASE_URL + city + ", "
-                + State + ", " + zipcode + "&"
-                + Constants.GMAPS_GEOCODE_API_KEY;
-        String api_call_final = api_call_init.replaceAll(" ", "+");
-        String results = readUrlContent(api_call_final);
-        results = "[" + results + "]";
-        JSONArray jsonResults = new JSONArray(results);
-        JSONArray jsonArrayResults = jsonResults.getJSONObject(0).getJSONArray("results");
-        System.out.println(jsonArrayResults.toString());
-       
-
     }
 
     /*
@@ -455,7 +486,6 @@ public class AccountManager implements Serializable {
 //        }
 //        return "";
 //    }
-
     // Validate if the entered password matches the entered confirm password
     public void validateInformation(ComponentSystemEvent event) {
 
@@ -618,7 +648,7 @@ public class AccountManager implements Serializable {
                     getExternalContext().getSessionMap().get("username");
 
             // Obtain the object reference of the signed-in Responder object
-            Responder user = getResponderFacade().findByRespondername(user_name);
+            Responder user = getResponderFacade().findByUsername(user_name);
 
             if (entered_password.equals(user.getPassword())) {
                 // entered password = signed-in user's password
@@ -633,7 +663,7 @@ public class AccountManager implements Serializable {
     public void initializeSessionMap() {
 
         // Obtain the object reference of the Responder object
-        Responder user = getResponderFacade().;
+        Responder user = getResponderFacade().findByUsername(getRespondername());
 
         // Put the Responder's object reference into session map variable user
         FacesContext.getCurrentInstance().getExternalContext().
@@ -692,7 +722,7 @@ public class AccountManager implements Serializable {
 
         // Reset the logged-in Responder's properties
         username = password = "";
-        firstName = middleName = lastName = "";
+        name = "";
         address1 = address2 = city = state = zipcode = "";
         securityQuestion = 0;
         securityAnswer = "";
@@ -705,99 +735,56 @@ public class AccountManager implements Serializable {
         return "index.xhtml?faces-redirect=true";
     }
 
-    public String userPhoto() {
-
-        // Obtain the signed-in user's username
-        String usernameOfSignedInResponder = (String) FacesContext.getCurrentInstance()
-                .getExternalContext().getSessionMap().get("username");
-
-        // Obtain the object reference of the signed-in user
-        Responder signedInResponder = getResponderFacade().findByUsername(usernameOfSignedInResponder);
-
-        // Obtain the id (primary key in the database) of the signedInResponder object
-        Integer userId = signedInResponder.getId();
-
-        List<ResponderPhoto> photoList = getResponderPhotoFacade().findPhotosByResponderID(userId);
-
-        if (photoList.isEmpty()) {
-            /*
-            No user photo exists. Return defaultResponderPhoto.png 
-            in CloudStorage/PhotoStorage.
-             */
-            return Constants.DEFAULT_PHOTO_RELATIVE_PATH;
-        }
-
-        /*
-        photoList.get(0) returns the object reference of the first Photo object in the list.
-        getThumbnailFileName() message is sent to that Photo object to retrieve its
-        thumbnail image file name, e.g., 5_thumbnail.jpeg
-         */
-        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
-
-        /*
-        In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
-        Alternate Document Root with the following statement:
-        
-        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Responders/Balci" />
-        
-        in Constants.java file, we defined the relative photo file path as
-        
-        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
-        
-        Thus, JSF knows that 'CloudStorage/' is the document root directory.
-         */
-        String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
-
-        return relativePhotoFilePath;
-    }
-
-    /*
-    Delete both uploaded and thumbnail photo files that belong to the Responder
-    object whose database primary key is userId
-     */
-    public void deleteAllResponderPhotos(int userId) {
-
-        /*
-        Obtain the list of Photo objects that belong to the Responder whose
-        database primary key is userId.
-         */
-        List<ResponderPhoto> photoList = getResponderPhotoFacade().findPhotosByResponderID(userId);
-
-        if (!photoList.isEmpty()) {
-
-            // Obtain the object reference of the first Photo object in the list.
-            ResponderPhoto photo = photoList.get(0);
-            try {
-                /*
-                 Delete the user's photo if it exists.
-                 getFilePath() is given in ResponderPhoto.java file.
-                 */
-                Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));
-
-                /*
-                 Delete the user's thumbnail image if it exists.
-                 getThumbnailFilePath() is given in ResponderPhoto.java file.
-                 */
-                Files.deleteIfExists(Paths.get(photo.getThumbnailFilePath()));
-
-                // Delete the temporary file if it exists
-                Files.deleteIfExists(Paths.get(Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file"));
-
-                // Remove the user's photo's record from the CloudDriveDB database
-                getResponderPhotoFacade().remove(photo);
-
-            } catch (IOException e) {
-                statusMessage = "Something went wrong while deleting user's photo! See: " + e.getMessage();
-            }
-        }
-    }
+//    public String userPhoto() {
+//
+//        // Obtain the signed-in user's username
+//        String usernameOfSignedInResponder = (String) FacesContext.getCurrentInstance()
+//                .getExternalContext().getSessionMap().get("username");
+//
+//        // Obtain the object reference of the signed-in user
+//        Responder signedInResponder = getResponderFacade().findByUsername(usernameOfSignedInResponder);
+//
+//        // Obtain the id (primary key in the database) of the signedInResponder object
+//        Integer userId = signedInResponder.getId();
+//
+//        List<ResponderPhoto> photoList = getResponderPhotoFacade().findPhotosByResponderID(userId);
+//
+//        if (photoList.isEmpty()) {
+//            /*
+//            No user photo exists. Return defaultResponderPhoto.png 
+//            in CloudStorage/PhotoStorage.
+//             */
+//            return Constants.DEFAULT_PHOTO_RELATIVE_PATH;
+//        }
+//
+//        /*
+//        photoList.get(0) returns the object reference of the first Photo object in the list.
+//        getThumbnailFileName() message is sent to that Photo object to retrieve its
+//        thumbnail image file name, e.g., 5_thumbnail.jpeg
+//         */
+//        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
+//
+//        /*
+//        In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
+//        Alternate Document Root with the following statement:
+//        
+//        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Responders/Balci" />
+//        
+//        in Constants.java file, we defined the relative photo file path as
+//        
+//        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+//        
+//        Thus, JSF knows that 'CloudStorage/' is the document root directory.
+//         */
+//        String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
+//
+//        return relativePhotoFilePath;
+//    }
 
     /*
     Delete all of the files that belong to the Responder
     whose object reference is userId
      */
-
-
     public String readUrlContent(String webServiceURL) throws Exception {
         /*
         reader is an object reference pointing to an object instantiated from the BufferedReader class.

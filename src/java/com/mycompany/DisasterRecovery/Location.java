@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findById", query = "SELECT l FROM Location l WHERE l.id = :id")
     , @NamedQuery(name = "Location.findByLocationName", query = "SELECT l FROM Location l WHERE l.locationName = :locationName")
     , @NamedQuery(name = "Location.findByLatitude", query = "SELECT l FROM Location l WHERE l.latitude = :latitude")
+    ,  @NamedQuery(name = "Location.findByLatLong", query = "SELECT l FROM Location l WHERE l.latitude = :latitude AND l.longitude = :longitude")
     , @NamedQuery(name = "Location.findByLongitude", query = "SELECT l FROM Location l WHERE l.longitude = :longitude")})
 public class Location implements Serializable {
 
@@ -173,5 +174,5 @@ public class Location implements Serializable {
     public String toString() {
         return "com.mycompany.DiasasterRecovery.Location[ id=" + id + " ]";
     }
-    
+
 }

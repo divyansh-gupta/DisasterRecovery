@@ -138,9 +138,7 @@ public class LoginManager implements Serializable {
      */
     public void initializeSessionMap(Responder user) {
         FacesContext.getCurrentInstance().getExternalContext().
-                getSessionMap().put("first_name", user.getFirstName());
-        FacesContext.getCurrentInstance().getExternalContext().
-                getSessionMap().put("last_name", user.getLastName());
+                getSessionMap().put("name", user.getResponderName());
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("username", username);
         FacesContext.getCurrentInstance().getExternalContext().

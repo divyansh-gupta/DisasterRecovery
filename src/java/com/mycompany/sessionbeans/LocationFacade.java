@@ -5,6 +5,7 @@
 package com.mycompany.sessionbeans;
 
 import com.mycompany.DisasterRecovery.Location;
+import java.math.BigDecimal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +28,18 @@ public class LocationFacade extends AbstractFacade<Location> {
     public LocationFacade() {
         super(Location.class);
     }
-    
+
+    public Location findByLatLong(BigDecimal lat, BigDecimal lng) {
+        if (em.createQuery("SELECT l FROM Location l WHERE l.latitude = :latitude AND l.longitude = :longitude")
+                .setParameter("latitude", lat)
+                .setParameter("longitude", lng)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Location) (em.createQuery("SELECT l FROM Location l WHERE l.latitude = :latitude AND l.longitude = :longitude")
+                    .setParameter("latitude", lat)
+                    .setParameter("longitude", lng)
+                    .getSingleResult());
+        }
+    }
 }
