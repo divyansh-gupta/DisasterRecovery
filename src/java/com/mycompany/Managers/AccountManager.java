@@ -3,11 +3,12 @@
  * Created by Osman Balci on 2017.01.28  * 
  * Copyright © 2017 Osman Balci. All rights reserved. * 
  */
-package com.mycompany.managers;
+package com.mycompany.Managers;
 
 import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Responder;
 import com.mycompany.sessionbeans.LocationFacade;
+//import com.mycompany.Managers.Constants;
 
 import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.BufferedReader;
@@ -314,7 +315,7 @@ public class AccountManager implements Serializable {
     public Location getLatLongFromAddress(String city, String State, String zipcode) throws Exception {
         String api_call_init = Constants.GMAPS_GEOCODE_BASE_URL + city + ", "
                 + State + ", " + zipcode + "&"
-                + Constants.GMAPS_GEOCODE_API_KEY;
+                + Constants.GMAPS_GEOCODE_API;
         String api_call_final = api_call_init.replaceAll(" ", "+");
         String results = readUrlContent(api_call_final);
         results = "[" + results + "]";

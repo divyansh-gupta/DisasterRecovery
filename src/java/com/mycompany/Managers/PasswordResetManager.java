@@ -79,7 +79,7 @@ public class PasswordResetManager implements Serializable {
         this.password = password;
     }
 
-    public UserFacade getUserFacade() {
+    public ResponderFacade getUserFacade() {
         return userFacade;
     }
 
@@ -92,7 +92,7 @@ public class PasswordResetManager implements Serializable {
     public String usernameSubmit() {
 
         // Obtain the object reference of the User object with username
-        User user = getUserFacade().findByUsername(username);
+        Responder user = getUserFacade().findByUsername(username);
 
         if (user == null) {
             message = "Entered username does not exist!";
@@ -112,37 +112,39 @@ public class PasswordResetManager implements Serializable {
     public String securityAnswerSubmit() {
 
         // Obtain the object reference of the User object with username
-        User user = getUserFacade().findByUsername(username);
-
-        String actualSecurityAnswer = user.getSecurityAnswer();
-        String enteredSecurityAnswer = getAnswer();
-
-        if (actualSecurityAnswer.equals(enteredSecurityAnswer)) {
-            // Answer to the security question is correct
-            message = "";
-
-            // Redirect to show the ResetPassword page
-            return "ResetPassword?faces-redirect=true";
-        } else {
-            // Answer to the security question is wrong
-            message = "Security question answer is incorrect!";
-
-            // Redirect to show the SecurityQuestion page
-            return "SecurityQuestion?faces-redirect=true";
-        }
+//        Responder user = getUserFacade().findByUsername(username);
+//
+//        String actualSecurityAnswer = user.getSecurityAnswer();
+//        String enteredSecurityAnswer = getAnswer();
+//
+//        if (actualSecurityAnswer.equals(enteredSecurityAnswer)) {
+//            // Answer to the security question is correct
+//            message = "";
+//
+//            // Redirect to show the ResetPassword page
+//            return "ResetPassword?faces-redirect=true";
+//        } else {
+//            // Answer to the security question is wrong
+//            message = "Security question answer is incorrect!";
+//
+//            // Redirect to show the SecurityQuestion page
+//            return "SecurityQuestion?faces-redirect=true";
+//        }
+        return "SecurityQuestion?faces-redirect=true";
     }
 
     // Return the security question selected by the User object with username
     public String getSecurityQuestion() {
 
-        // Obtain the object reference of the User object with username
-        User user = getUserFacade().findByUsername(username);
-
-        // Obtain the number of the security question selected by the user
-        int questionNumber = user.getSecurityQuestion();
-
-        // Return the security question corresponding to the question number
-        return Constants.QUESTIONS[questionNumber];
+//        // Obtain the object reference of the User object with username
+//        Responder user = getUserFacade().findByUsername(username);
+//
+//        // Obtain the number of the security question selected by the user
+//        int questionNumber = user.getSecurityQuestion();
+//
+//        // Return the security question corresponding to the question number
+//        return Constants.QUESTIONS[questionNumber];
+        return null;
     }
 
     // Validate if the entered password matches the entered confirm password
@@ -198,7 +200,7 @@ public class PasswordResetManager implements Serializable {
         if (message == null || message.isEmpty()) {
 
             // Obtain the object reference of the User object with username
-            User user = getUserFacade().findByUsername(username);
+            Responder user = getUserFacade().findByUsername(username);
 
             try {
                 // Reset User object's password
