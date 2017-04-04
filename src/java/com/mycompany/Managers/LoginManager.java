@@ -98,7 +98,7 @@ public class LoginManager implements Serializable {
     public String loginUser() {
 
         // Obtain the object reference of the User object from the entered username
-        ResponderFacade user = getResponderFacade().findByUsername(getUsername());
+        Responder user = getResponderFacade().findByUsername(getUsername());
 
         if (user == null) {
             errorMessage = "Entered username " + getUsername() + " does not exist!";
@@ -136,7 +136,7 @@ public class LoginManager implements Serializable {
     namely, first_name, last_name, username, and user_id.
     user_id = primary key of the user entity in the database
      */
-    public void initializeSessionMap(ResponderFacade user) {
+    public void initializeSessionMap(Responder user) {
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("first_name", user.getFirstName());
         FacesContext.getCurrentInstance().getExternalContext().
