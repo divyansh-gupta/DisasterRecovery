@@ -129,21 +129,21 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                             <h2> #{accountManager.selected.responderName}'s Account Profile </h2>
 
                             <!-- USER'S PROFILE PHOTO -->
-                            <h:graphicImage class="profilePhoto" value="#{accountManager.userPhoto()}" />
+                            <h:graphicImage class="profilePhoto" value="#{accountManager.responderPhoto()}" />
                             <br />
                             <br />
                             <p:panelGrid columns="2" columnClasses="profileColumn1, profileColumn2" >
 
-                                <h:outputText value="#{bundle.ViewUserLabel_responderName}"/>
+                                <h:outputText value="#{bundle.ResponderViewResponderName}"/>
                                 <h:outputText value="#{accountManager.selected.responderName}" />
 
                                 <h:outputText value="#{bundle.ResponderViewLocationName}"/>
                                 <h:outputText value="#{accountManager.selected.locationId.locationName}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_email}"/>
+                                <h:outputText value="#{bundle.ResponderViewEmail}"/>
                                 <h:outputText value="#{accountManager.selected.email}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_username}"/>
+                                <h:outputText value="#{bundle.ResponderViewUserName}"/>
                                 <h:outputText value="#{accountManager.selected.username}" />
 
                             </p:panelGrid>

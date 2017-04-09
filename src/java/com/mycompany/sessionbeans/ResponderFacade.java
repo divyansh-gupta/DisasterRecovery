@@ -42,4 +42,17 @@ public class ResponderFacade extends AbstractFacade<Responder> {
         }
     }
     
+    public String findPhotosByResponderID(Integer id) {
+        if (em.createQuery("SELECT p.image FROM Responder p WHERE p.id = :id")
+                .setParameter("id", id)
+                .getResultList().isEmpty()) {
+            return null;
+        }
+        else {
+            return (String) (em.createQuery("SELECT p.image FROM Responder p WHERE p.id = :id")
+                    .setParameter("id", id)
+                    .getSingleResult());
+        }
+    }
+    
 }

@@ -9,31 +9,12 @@ package com.mycompany.Managers;
  * @author andre
  */
 public final class Constants {
-    
-        public static final String GMAPS_GEOCODE_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-        public static final String GMAPS_GEOCODE_API = "key=***REMOVED***";
-        //    public static final String FILES_ABSOLUTE_PATH = "/Users/Balci/CloudStorage/FileStorage/";
-        public static final String FILES_ABSOLUTE_PATH = "/home/cloudsd/Kaul/CloudStorage/FileStorage";
 
-//        public static final String FILES_ABSOLUTE_PATH = "C:\\Users\\Bhaanu Kaul\\Desktop\\School\\CS 3984\\CloudStorage\\FileStorage\\";
-
-
-//        public static final String PHOTOS_ABSOLUTE_PATH = "/Users/Balci/CloudStorage/PhotoStorage/";
-        public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/Kaul/CloudStorage/PhotoStorage";
-
-//    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\Bhaanu Kaul\\Desktop\\School\\CS 3984\\CloudStorage\\PhotoStorage\\";
-
-    /*
-    In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
-    Alternate Document Root directory with the following statement:
-        
-        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Users/Balci" />
-    
-    Relative path is defined with respect to the Alternate Document Root starting with 'CloudStorage'.
-     */
-    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
-    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
+    public static final String GMAPS_GEOCODE_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    public static final String GMAPS_GEOCODE_API = "key=***REMOVED***";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/Cheng/NetbeansProjects/DisasterRecoveryStorage";
+    public static final String PHOTOS_RELATIVE_PATH = "DisasterRecoveryStorage/";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage/defaultUserPhoto.png";
 
     /* Temporary filename */
     public static final String TEMP_FILE = "tmp_file";
@@ -64,5 +45,5 @@ public final class Constants {
         "What is the name of your most favorite pet?",
         "What street did you grow up on?"
     };
-    
+
 }

@@ -378,7 +378,7 @@ public class AccountManager implements Serializable {
                 Location userLocation = getLatLongFromAddress(city, state, zipcode);
                 newResponder.setLocationId(userLocation);
                 newResponder.setUsername(username);
-                newResponder.setImage(Constants.DEFAULT_PHOTO_RELATIVE_PATH);
+                newResponder.setImage("1");
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {
                 username = "";
@@ -735,58 +735,38 @@ public class AccountManager implements Serializable {
         // Redirect to show the index (Home) page
         return "index.xhtml?faces-redirect=true";
     }
-    
-    public String userPhoto() {
-        // TODO
-        
-        return null;
-    }
 
-//    public String userPhoto() {
-//
-//        // Obtain the signed-in user's username
-//        String usernameOfSignedInResponder = (String) FacesContext.getCurrentInstance()
-//                .getExternalContext().getSessionMap().get("username");
-//
-//        // Obtain the object reference of the signed-in user
-//        Responder signedInResponder = getResponderFacade().findByUsername(usernameOfSignedInResponder);
-//
-//        // Obtain the id (primary key in the database) of the signedInResponder object
-//        Integer userId = signedInResponder.getId();
-//
-//        List<ResponderPhoto> photoList = getResponderPhotoFacade().findPhotosByResponderID(userId);
-//
-//        if (photoList.isEmpty()) {
-//            /*
-//            No user photo exists. Return defaultResponderPhoto.png 
-//            in CloudStorage/PhotoStorage.
-//             */
-//            return Constants.DEFAULT_PHOTO_RELATIVE_PATH;
-//        }
-//
-//        /*
-//        photoList.get(0) returns the object reference of the first Photo object in the list.
-//        getThumbnailFileName() message is sent to that Photo object to retrieve its
-//        thumbnail image file name, e.g., 5_thumbnail.jpeg
-//         */
-//        String thumbnailFileName = photoList.get(0).getThumbnailFileName();
-//
-//        /*
-//        In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
-//        Alternate Document Root with the following statement:
-//        
-//        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Responders/Balci" />
-//        
-//        in Constants.java file, we defined the relative photo file path as
-//        
-//        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
-//        
-//        Thus, JSF knows that 'CloudStorage/' is the document root directory.
-//         */
-//        String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
-//
-//        return relativePhotoFilePath;
-//    }
+    public String responderPhoto() {
+
+        // Obtain the signed-in user's username
+        String usernameOfSignedInResponder = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        // Obtain the object reference of the signed-in user
+        Responder signedInResponder = getResponderFacade().findByUsername(usernameOfSignedInResponder);
+
+        // Obtain the id (primary key in the database) of the signedInResponder object
+        Integer userId = signedInResponder.getId();
+
+        String photo = getResponderFacade().findPhotosByResponderID(userId);
+
+        /*
+        In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
+        Alternate Document Root with the following statement:
+        
+        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Responders/Balci" />
+        
+        in Constants.java file, we defined the relative photo file path as
+        
+        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+        
+        Thus, JSF knows that 'CloudStorage/' is the document root directory.
+         */
+        String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + photo;
+        System.out.println(relativePhotoFilePath);
+        System.out.println(Constants.PHOTOS_RELATIVE_PATH);
+        return relativePhotoFilePath;
+    }
 
     /*
     Delete all of the files that belong to the Responder
