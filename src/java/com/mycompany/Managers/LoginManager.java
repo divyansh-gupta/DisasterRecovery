@@ -103,7 +103,6 @@ public class LoginManager implements Serializable {
         if (user == null) {
             errorMessage = "Entered username " + getUsername() + " does not exist!";
             return "";
-
         } else {
             String actualUsername = user.getUsername();
             String enteredUsername = getUsername();

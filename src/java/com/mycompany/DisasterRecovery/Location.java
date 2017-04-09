@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findById", query = "SELECT l FROM Location l WHERE l.id = :id")
     , @NamedQuery(name = "Location.findByLocationName", query = "SELECT l FROM Location l WHERE l.locationName = :locationName")
     , @NamedQuery(name = "Location.findByLatitude", query = "SELECT l FROM Location l WHERE l.latitude = :latitude")
-    ,  @NamedQuery(name = "Location.findByLatLong", query = "SELECT l FROM Location l WHERE l.latitude = :latitude AND l.longitude = :longitude")
+    , @NamedQuery(name = "Location.findByLatLong", query = "SELECT l FROM Location l WHERE l.latitude = :latitude AND l.longitude = :longitude")
     , @NamedQuery(name = "Location.findByLongitude", query = "SELECT l FROM Location l WHERE l.longitude = :longitude")})
 public class Location implements Serializable {
 
@@ -45,26 +45,38 @@ public class Location implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "location_name")
     private String locationName;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "latitude")
     private BigDecimal latitude;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "longitude")
     private BigDecimal longitude;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "triggered")
+    private Boolean triggered;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private Collection<Item> itemCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fromLocationId")
     private Collection<Request> requestCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "toLocationId")
     private Collection<Request> requestCollection1;
+    
     @OneToMany(mappedBy = "locationId")
     private Collection<Responder> responderCollection;
 
@@ -75,11 +87,12 @@ public class Location implements Serializable {
         this.id = id;
     }
 
-    public Location(Integer id, String locationName, BigDecimal latitude, BigDecimal longitude) {
+    public Location(Integer id, String locationName, BigDecimal latitude, BigDecimal longitude, Boolean triggered) {
         this.id = id;
         this.locationName = locationName;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.triggered = triggered;
     }
 
     public Integer getId() {
@@ -108,6 +121,14 @@ public class Location implements Serializable {
 
     public BigDecimal getLongitude() {
         return longitude;
+    }
+    
+    public Boolean isTriggered() {
+        return triggered;
+    }
+    
+    public void setTriggered(Boolean triggered) {
+        this.triggered = triggered;
     }
 
     public void setLongitude(BigDecimal longitude) {
