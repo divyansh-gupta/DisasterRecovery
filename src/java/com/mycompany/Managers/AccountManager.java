@@ -735,6 +735,12 @@ public class AccountManager implements Serializable {
         // Redirect to show the index (Home) page
         return "index.xhtml?faces-redirect=true";
     }
+    
+    public String userPhoto() {
+        // TODO
+        
+        return null;
+    }
 
 //    public String userPhoto() {
 //

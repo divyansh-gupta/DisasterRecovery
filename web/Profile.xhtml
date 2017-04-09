@@ -30,7 +30,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
             -->
             <p:growl id="growl" life="5000" />
 
-            <h:form id="UserProfileForm">
+            <h:form id="ResponderProfileForm">
                 <!--
                 <tr> defines a row in the table
                 <td> defines a column within a row.
@@ -48,8 +48,8 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                                 <li class="verticalMenuItem">
                                     <!-- HOME -->
-                                    <h:link outcome="index">
-                                        <i class="fa fa-home">&nbsp;</i>Home
+                                    <h:link outcome="Map">
+                                        <i class="fa fa-home">&nbsp;</i>Map
                                     </h:link>
                                 </li>
 
@@ -114,13 +114,6 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                                 </li>
 
                                 <li class="verticalMenuItem">
-                                    <!-- MY FILES -->
-                                    <h:link outcome="UserFiles">
-                                        <i class="fa fa-files-o">&nbsp;</i>My Files
-                                    </h:link>
-                                </li>
-
-                                <li class="verticalMenuItem">
                                     <!-- SIGN OUT -->
                                     <h:commandLink action="#{accountManager.logout()}">
                                         <i class="fa fa-sign-out">&nbsp;</i>Sign Out
@@ -133,7 +126,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <!-- The second <td> contains the USER PROFILE DATA -->
                         <td align="center" valign="top">
 
-                            <h2> #{accountManager.selected.responderName} #{accountManager.selected.lastName}'s Account Profile </h2>
+                            <h2> #{accountManager.selected.responderName}'s Account Profile </h2>
 
                             <!-- USER'S PROFILE PHOTO -->
                             <h:graphicImage class="profilePhoto" value="#{accountManager.userPhoto()}" />
@@ -144,20 +137,8 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                                 <h:outputText value="#{bundle.ViewUserLabel_responderName}"/>
                                 <h:outputText value="#{accountManager.selected.responderName}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_address1}"/>
-                                <h:outputText value="#{accountManager.selected.address1}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_address2}"/>
-                                <h:outputText value="#{accountManager.selected.address2}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_city}"/>
-                                <h:outputText value="#{accountManager.selected.city}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_state}"/>
-                                <h:outputText value="#{accountManager.selected.state}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_zipcode}"/>
-                                <h:outputText value="#{accountManager.selected.zipcode}" />
+                                <h:outputText value="#{bundle.ResponderViewLocationName}"/>
+                                <h:outputText value="#{accountManager.selected.locationId.locationName}" />
 
                                 <h:outputText value="#{bundle.ViewUserLabel_email}"/>
                                 <h:outputText value="#{accountManager.selected.email}" />
