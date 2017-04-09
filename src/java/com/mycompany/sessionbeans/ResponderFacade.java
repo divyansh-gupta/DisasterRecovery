@@ -36,7 +36,7 @@ public class ResponderFacade extends AbstractFacade<Responder> {
                 .getResultList().isEmpty()) {
             return null;
         } else {
-            return (Responder) (em.createQuery("SELECT c FROM User c WHERE c.username = :username")
+            return (Responder) (em.createQuery("SELECT c FROM Responder c WHERE c.username = :username")
                     .setParameter("username", username)
                     .getSingleResult());
         }

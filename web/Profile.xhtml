@@ -133,7 +133,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <!-- The second <td> contains the USER PROFILE DATA -->
                         <td align="center" valign="top">
 
-                            <h2> #{accountManager.selected.firstName} #{accountManager.selected.lastName}'s Account Profile </h2>
+                            <h2> #{accountManager.selected.responderName} #{accountManager.selected.lastName}'s Account Profile </h2>
 
                             <!-- USER'S PROFILE PHOTO -->
                             <h:graphicImage class="profilePhoto" value="#{accountManager.userPhoto()}" />
@@ -141,14 +141,8 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                             <br />
                             <p:panelGrid columns="2" columnClasses="profileColumn1, profileColumn2" >
 
-                                <h:outputText value="#{bundle.ViewUserLabel_firstName}"/>
-                                <h:outputText value="#{accountManager.selected.firstName}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_middleName}"/>
-                                <h:outputText value="#{accountManager.selected.middleName}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_lastName}"/>
-                                <h:outputText value="#{accountManager.selected.lastName}" />
+                                <h:outputText value="#{bundle.ViewUserLabel_responderName}"/>
+                                <h:outputText value="#{accountManager.selected.responderName}" />
 
                                 <h:outputText value="#{bundle.ViewUserLabel_address1}"/>
                                 <h:outputText value="#{accountManager.selected.address1}" />

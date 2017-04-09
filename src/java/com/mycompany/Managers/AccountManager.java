@@ -115,12 +115,12 @@ public class AccountManager implements Serializable {
     private Responder selected;
 
     /*
-    The instance variable 'userFacade' is annotated with the @EJB annotation.
+    The instance variable 'responderFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
-    of the ResponderFacade object, after it is instantiated at runtime, into the instance variable 'userFacade'.
+    of the ResponderFacade object, after it is instantiated at runtime, into the instance variable 'responderFacade'.
      */
     @EJB
-    private ResponderFacade userFacade;
+    private ResponderFacade responderFacade;
     @EJB
     private LocationFacade locationFacade;
 
@@ -234,7 +234,7 @@ public class AccountManager implements Serializable {
     }
 
     public ResponderFacade getResponderFacade() {
-        return userFacade;
+        return responderFacade;
     }
 
     public LocationFacade getLocationFacade() {
@@ -353,7 +353,7 @@ public class AccountManager implements Serializable {
 
         // First, check if the entered username is already being used
         // Obtain the object reference of a Responder object with username
-        Responder aResponder = getResponderFacade().find(username);
+        Responder aResponder = getResponderFacade().findByUsername(username);
 
         if (aResponder != null) {
             // A user already exists with the username entered
@@ -372,13 +372,13 @@ public class AccountManager implements Serializable {
                 Set the properties of the newly created newResponder object with the values
                 entered by the user in the AccountCreationForm in CreateAccount.xhtml
                  */
-                newResponder.setResponderName(name);
+                newResponder.setResponderName("bob");
                 newResponder.setEmail(email);
                 newResponder.setPassword(password);
                 Location userLocation = getLatLongFromAddress(city, state, zipcode);
-//                newResponder.setLocationId(userLocation.);
+                newResponder.setLocationId(userLocation);
                 newResponder.setUsername(username);
-                
+                newResponder.setImage(Constants.DEFAULT_PHOTO_RELATIVE_PATH);
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {
                 username = "";

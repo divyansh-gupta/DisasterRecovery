@@ -85,7 +85,7 @@ public class Responder implements Serializable {
         this.responderName = responderName;
         this.image = image;
     }
-
+    
     public Integer getId() {
         return id;
     }

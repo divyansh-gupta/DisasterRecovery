@@ -38,7 +38,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <h1>Hello, #{accountManager.selected.firstName}</h1>
+                            <h1>Hello, #{accountManager.selected.responderName}</h1>
                         </c:if>
                         <c:if test="#{accountManager.isLoggedIn() == false}">
                             <h1>Hello, Guest</h1>
