@@ -8,7 +8,8 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">   
 
     <!--
     *********************************************
@@ -40,6 +41,10 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == true}">
                                 <h1>Hello, #{accountManager.selected.responderName}, your location has an emergency triggered!</h1>
+                                <h:form>
+                                    <p:commandButton id="trigger" value="Untrigger Emergency" action="#{triggerManager.unTriggerEmergency(accountManager.selected)}"
+                                     styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
+                                </h:form>
                             </c:if>
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == false}">
                                 <h1>Hello, #{accountManager.selected.responderName}, there is currently no emergency triggered in your area.</h1>

@@ -33,7 +33,9 @@ public class TriggerManager implements Serializable {
     }
     
     public String unTriggerEmergency(Responder user) {
-        
+        Location userLocation = user.getLocationId();
+        userLocation.setTriggered(Boolean.FALSE);
+        locationFacade.edit(userLocation);
         return "Profile.xhtml?faces-redirect=true";
     }
     
