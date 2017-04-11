@@ -38,7 +38,12 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <h1>Hello, #{accountManager.selected.responderName}</h1>
+                            <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == true}">
+                                <h1>Hello, #{accountManager.selected.responderName}, your location has an emergency triggered!</h1>
+                            </c:if>
+                            <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == false}">
+                                <h1>Hello, #{accountManager.selected.responderName}, there is currently no emergency triggered in your area.</h1>
+                            </c:if>
                         </c:if>
                         <c:if test="#{accountManager.isLoggedIn() == false}">
                             <h1>Hello, Guest</h1>

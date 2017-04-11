@@ -41,6 +41,7 @@ public class Responder implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -48,26 +49,31 @@ public class Responder implements Serializable {
     private String password;
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "username")
     private String username;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "responder_name")
     private String responderName;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "image")
     private String image;
+    
     @JoinColumn(name = "location_id", referencedColumnName = "ID")
     @ManyToOne
     private Location locationId;

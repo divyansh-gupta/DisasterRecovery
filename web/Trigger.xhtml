@@ -3,13 +3,23 @@
 Created by Divyansh Gupta on 2017.04.11 
 Copyright © 2017 Divyansh Gupta. All rights reserved.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Trigger Emergency"></h:outputText>
+        </ui:define>
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+                <h2>Sign In</h2>
+                <h:form>
+                    <p:commandButton id="trigger" value="Trigger Emergency" action="#{triggerManager.triggerEmergency(accountManager.selected)}"
+                                     styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
 </html>

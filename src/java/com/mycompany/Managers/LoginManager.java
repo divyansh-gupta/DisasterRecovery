@@ -124,6 +124,7 @@ public class LoginManager implements Serializable {
 
             // Initialize the session map with user properties of interest
             initializeSessionMap(user);
+            
             if (triggered) {
                 return "Trigger.xhtml?faces-redirect=true";
             }
