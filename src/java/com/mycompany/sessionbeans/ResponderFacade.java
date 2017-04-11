@@ -55,4 +55,21 @@ public class ResponderFacade extends AbstractFacade<Responder> {
         }
     }
     
+    public Responder findById(Integer id) {
+        if (em.createQuery("SELECT c FROM Responder c WHERE c.id = :id")
+                .setParameter("id", id)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Responder) (em.createQuery("SELECT c FROM Responder c WHERE c.id = :id")
+                    .setParameter("id", id)
+                    .getSingleResult());
+        }
+    }
+    
+    public void deleteResponder(Integer id) {
+        Responder responder = em.find(Responder.class, id);
+        em.remove(responder);
+    }
+    
 }

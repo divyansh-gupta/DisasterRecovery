@@ -7,20 +7,17 @@ package com.mycompany.Managers;
 
 import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Responder;
+import static com.mycompany.Managers.Constants.DEFAULT_PHOTO_RELATIVE_PATH;
 import com.mycompany.sessionbeans.LocationFacade;
 //import com.mycompany.Managers.Constants;
 
 import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -88,16 +85,7 @@ public class AccountManager implements Serializable {
     private String newPassword;
 
     private String name;
-
     private String address1;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
     private String address2;
     private String city;
     private String state;
@@ -137,14 +125,6 @@ public class AccountManager implements Serializable {
         return listOfStates;
     }
 
-    public String getRespondername() {
-        return username;
-    }
-
-    public void setRespondername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -165,7 +145,7 @@ public class AccountManager implements Serializable {
         return name;
     }
 
-    public void setName(String firstname) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -239,6 +219,14 @@ public class AccountManager implements Serializable {
 
     public LocationFacade getLocationFacade() {
         return locationFacade;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /*
@@ -372,13 +360,13 @@ public class AccountManager implements Serializable {
                 Set the properties of the newly created newResponder object with the values
                 entered by the user in the AccountCreationForm in CreateAccount.xhtml
                  */
-                newResponder.setResponderName("bob");
+                newResponder.setResponderName(name);
                 newResponder.setEmail(email);
                 newResponder.setPassword(password);
                 Location userLocation = getLatLongFromAddress(city, state, zipcode);
                 newResponder.setLocationId(userLocation);
                 newResponder.setUsername(username);
-                newResponder.setImage("1");
+                newResponder.setImage(DEFAULT_PHOTO_RELATIVE_PATH); 
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {
                 username = "";
@@ -452,41 +440,37 @@ public class AccountManager implements Serializable {
 //        }
 //        return "";
 //    }
-//
-//    /*
-//    Delete the signed-in user's account. Return "" if an error occurs; otherwise,
-//    upon successful account deletion, redirect to show the index (home) page.
-//     */
-//    public String deleteAccount() {
-//
-//        if (statusMessage == null || statusMessage.isEmpty()) {
-//
-//            // Obtain the database primary key of the signed-in Responder object
-//            int user_id = (int) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user_id");
-//
-//            try {
-//                // Delete all of the photo files associated with the signed-in user whose primary key is user_id
-//                deleteAllResponderPhotos(user_id);
-//
-//                // Delete all of the user files associated with the signed-in user whose primary key is user_id
-//                deleteAllResponderFiles(user_id);
-//
-//                // Delete the Responder entity, whose primary key is user_id, from the CloudDriveDB database
-//                getResponderFacade().deleteResponder(user_id);
-//
-//                statusMessage = "Your account is successfully deleted!";
-//
-//            } catch (EJBException e) {
-//                username = "";
-//                statusMessage = "Something went wrong while deleting user's account! See: " + e.getMessage();
-//                return "";
-//            }
-//
-//            logout();
-//            return "index.xhtml?faces-redirect=true";
-//        }
-//        return "";
-//    }
+    
+    /*
+    
+    the signed-in user's account. Return "" if an error occurs; otherwise,
+    upon successful account deletion, redirect to show the index (home) page.
+     */
+    public String deleteAccount() {
+
+        if (statusMessage == null || statusMessage.isEmpty()) {
+
+            // Obtain the database primary key of the signed-in Responder object
+            int user_id = (int) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user_id");
+
+            try {
+                // Delete the Responder entity, whose primary key is user_id, from the CloudDriveDB database
+                getResponderFacade().deleteResponder(user_id);
+
+                statusMessage = "Your account is successfully deleted!";
+
+            } catch (EJBException e) {
+                username = "";
+                statusMessage = "Something went wrong while deleting user's account! See: " + e.getMessage();
+                return "";
+            }
+
+            logout();
+            return "SignIn.xhtml?faces-redirect=true";
+        }
+        return "";
+    }
+
     // Validate if the entered password matches the entered confirm password
     public void validateInformation(ComponentSystemEvent event) {
 
@@ -664,7 +648,7 @@ public class AccountManager implements Serializable {
     public void initializeSessionMap() {
 
         // Obtain the object reference of the Responder object
-        Responder user = getResponderFacade().findByUsername(getRespondername());
+        Responder user = getResponderFacade().findByUsername(getUsername());
 
         // Put the Responder's object reference into session map variable user
         FacesContext.getCurrentInstance().getExternalContext().
@@ -762,6 +746,11 @@ public class AccountManager implements Serializable {
         
         Thus, JSF knows that 'CloudStorage/' is the document root directory.
          */
+        
+        if (photo.equals(Constants.DEFAULT_PHOTO_RELATIVE_PATH)) {
+            return photo;
+        }
+        
         String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + photo;
         System.out.println(relativePhotoFilePath);
         System.out.println(Constants.PHOTOS_RELATIVE_PATH);
