@@ -95,7 +95,7 @@ public class LoginManager implements Serializable {
     Sign in the user if the entered username and password are valid
     @return "" if an error occurs; otherwise, redirect to show the Profile page
      */
-    public String loginUser() {
+    public String loginUser(boolean triggered) {
 
         // Obtain the object reference of the User object from the entered username
         Responder user = getResponderFacade().findByUsername(getUsername());
@@ -124,8 +124,10 @@ public class LoginManager implements Serializable {
 
             // Initialize the session map with user properties of interest
             initializeSessionMap(user);
-
-            // Redirect to show the Profile page
+            if (triggered) {
+                return "Trigger.xhtml?faces-redirect=true";
+            }
+            // Redirect to show the Profile
             return "Profile.xhtml?faces-redirect=true";
         }
     }

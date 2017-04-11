@@ -9,9 +9,6 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     
-    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
-
-    <!-- This page is constructed based on the siteTemplate -->
     <ui:composition template="template/siteTemplate.xhtml">
         <ui:define name="title">
             <h:outputText value="Sign In"></h:outputText>
@@ -46,7 +43,11 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     </p:panelGrid>
                     <br/>
                     <br/>
-                    <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser()}" 
+                    
+                    <p:commandButton id="trigger" value="Trigger Emergency" action="#{loginManager.loginUser(true)}"
+                                     styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
+                    &nbsp;
+                    <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser(false)}"
                                      styleClass="commandButton" ajax="false" icon="ui-icon-arrowthick-1-e" />
                     &nbsp;
                     <p:commandButton id="create" value="Create an Account" action="#{loginManager.createUser()}" 
