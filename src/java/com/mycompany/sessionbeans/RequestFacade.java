@@ -4,6 +4,7 @@
  */
 package com.mycompany.sessionbeans;
 
+import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Request;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,5 +28,7 @@ public class RequestFacade extends AbstractFacade<Request> {
     public RequestFacade() {
         super(Request.class);
     }
+    
+
     
 }

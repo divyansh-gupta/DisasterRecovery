@@ -6,14 +6,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-
-
+    <ui:composition template="../template/siteTemplate.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.ListRequestTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="editableContent">
+                        <p:growl id="growl" life="5000" />
+
             <h:form id="RequestListForm">
                 <p:panel header="#{bundle.ListRequestTitle}">
                     <p:dataTable id="datalist" value="#{requestController.items}" var="item"
@@ -43,13 +43,13 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRequestTitle_fromLocationId}"/>
                             </f:facet>
-                            <h:outputText value="#{item.fromLocationId}"/>
+                            <h:outputText value="#{item.fromLocationId.locationName}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListRequestTitle_toLocationId}"/>
                             </f:facet>
-                            <h:outputText value="#{item.toLocationId}"/>
+                            <h:outputText value="#{item.toLocationId.locationName}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{requestController.prepareCreate}" update=":RequestCreateForm" oncomplete="PF('RequestCreateDialog').show()"/>
