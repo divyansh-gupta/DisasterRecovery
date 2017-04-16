@@ -380,7 +380,7 @@ public class AccountManager implements Serializable {
             The Profile page cannot be shown since the new Responder has not signed in yet.
             Therefore, we show the Sign In page for the new Responder to sign in first.
              */
-            return "SignIn.xhtml?faces-redirect=true";
+            return "/SignIn.xhtml?faces-redirect=true";
         }
         return "";
     }
@@ -466,7 +466,7 @@ public class AccountManager implements Serializable {
             }
 
             logout();
-            return "SignIn.xhtml?faces-redirect=true";
+            return "/SignIn.xhtml?faces-redirect=true";
         }
         return "";
     }
@@ -692,12 +692,12 @@ public class AccountManager implements Serializable {
 
     // Show the Home page
     public String showHomePage() {
-        return "index?faces-redirect=true";
+        return "/SignIn?faces-redirect=true";
     }
 
     // Show the Profile page
     public String showProfile() {
-        return "Profile?faces-redirect=true";
+        return "/Profile?faces-redirect=true";
     }
 
     public String logout() {
@@ -717,7 +717,7 @@ public class AccountManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         // Redirect to show the index (Home) page
-        return "index.xhtml?faces-redirect=true";
+        return "/SignIn.xhtml?faces-redirect=true";
     }
 
     public String responderPhoto() {

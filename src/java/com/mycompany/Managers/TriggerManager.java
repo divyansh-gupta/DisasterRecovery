@@ -29,14 +29,14 @@ public class TriggerManager implements Serializable {
         // TODO: Send Message to Nearby Responders
         userLocation.setTriggered(Boolean.TRUE);
         locationFacade.edit(userLocation);
-        return "Map.xhtml?faces-redirect=true";
+        return "/Map.xhtml?faces-redirect=true";
     }
     
     public String unTriggerEmergency(Responder user) {
         Location userLocation = user.getLocationId();
         userLocation.setTriggered(Boolean.FALSE);
         locationFacade.edit(userLocation);
-        return "Profile.xhtml?faces-redirect=true";
+        return "/Profile.xhtml?faces-redirect=true";
     }
     
     public boolean userLocationIsTriggered(Responder user) {
