@@ -5,6 +5,7 @@
 package com.mycompany.DisasterRecovery;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,6 +49,8 @@ public class Need implements Serializable {
     @JoinColumn(name = "request_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Request requestId;
+    
+
 
     public Need() {
     }

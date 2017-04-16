@@ -12,23 +12,34 @@
             <h:form id="RequestCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateRequestLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{requestController.selected.id}" title="#{bundle.CreateRequestTitle_id}" required="true" requiredMessage="#{bundle.CreateRequestRequiredMessage_id}"/>
                         <p:outputLabel value="#{bundle.CreateRequestLabel_status}" for="status" />
                         <p:inputText id="status" value="#{requestController.selected.status}" title="#{bundle.CreateRequestTitle_status}" required="true" requiredMessage="#{bundle.CreateRequestRequiredMessage_status}"/>
+
+
                         <p:outputLabel value="#{bundle.CreateRequestLabel_fromLocationId}" for="fromLocationId" />
                         <p:selectOneMenu id="fromLocationId" value="#{requestController.selected.fromLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_fromLocationId}">
                             <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
+
                                            var="fromLocationIdItem"
+                                           itemLabel="#{fromLocationIdItem.locationName}"
+
                                            itemValue="#{fromLocationIdItem}"/>
+
                         </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.CreateRequestLabel_toLocationId}" for="toLocationId" />
                         <p:selectOneMenu id="toLocationId" value="#{requestController.selected.toLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_toLocationId}">
                             <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
                                            var="toLocationIdItem"
+                                           itemLabel = "#{toLocationIdItem.locationName}"
                                            itemValue="#{toLocationIdItem}"/>
                         </p:selectOneMenu>
+
                     </p:panelGrid>
+                    <p:outputLabel value="Needs"/>
+                        
+
+                    <h:commandButton action="#{CreateNeedList.add}" value="Add Textbox"/>
                     <p:commandButton actionListener="#{requestController.create}" value="#{bundle.Save}" update="display,:RequestListForm:datalist,:growl" oncomplete="handleSubmit(args,'RequestCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RequestCreateDialog.hide()"/>
                 </h:panelGroup>

@@ -4,10 +4,12 @@ Created by Divyansh Gupta on 2017.02.21
 Copyright © 2017 Divyansh Gupta. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"   
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <ui:composition template="template/siteTemplate.xhtml">
         <ui:define name="title">
@@ -16,8 +18,17 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
+            <c:if test="#{accountManager.isLoggedIn() == true}">
+                <script>
+                    $(document).ready(
+                        function() {
+                            element = document.getElementsByClassName("redirectButton")[0];
+                            element.click();
+                        }
+                    );
+                </script>
+            </c:if>
             <div align="center" style="width:70%; margin:0 auto;">
-                
                 <h2>Sign In</h2>
                 
                 <!-- Error messages will be shown here if any -->
@@ -56,13 +67,17 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     <p:commandButton id="retrieve" value="Forgot Password" action="#{loginManager.resetPassword()}" 
                                      styleClass="commandButton" ajax="false" icon="ui-icon-refresh" />
                     &nbsp;
-                    <!--<p:button outcome="" value="Cancel" icon="ui-icon-cancel" styleClass="commandButton" />-->
                 </h:form>
+                <c:if test="#{accountManager.isLoggedIn() == true}">
+                    <h:form>
+                        <p:commandButton id="redirectButton" value="" action="#{loginManager.redirectIfSignedIn(accountManager.selected)}"
+                                     style="display: none;" styleClass="commandButton redirectButton" ajax="false" />
+                    </h:form>
+                </c:if>
                 
             </div>
             <br/><br/><br/>
         </ui:define>
     </ui:composition>
-    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
 
 </html>

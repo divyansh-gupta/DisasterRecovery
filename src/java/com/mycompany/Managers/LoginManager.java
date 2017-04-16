@@ -36,6 +36,9 @@ public class LoginManager implements Serializable {
      */
     @EJB
     private ResponderFacade responderFacade;
+    
+//    @EJB
+//    private TriggerManager triggerManager;
 
     // Constructor method instantiating an instance of LoginManager
     public LoginManager() {
@@ -82,13 +85,13 @@ public class LoginManager implements Serializable {
     public String createUser() {
 
         // Redirect to show the CreateAccount page
-        return "CreateAccount.xhtml?faces-redirect=true";
+        return "/CreateAccount.xhtml?faces-redirect=true";
     }
 
     public String resetPassword() {
 
         // Redirect to show the EnterUsername page
-        return "EnterUsername.xhtml?faces-redirect=true";
+        return "/EnterUsername.xhtml?faces-redirect=true";
     }
 
     /*
@@ -126,11 +129,18 @@ public class LoginManager implements Serializable {
             initializeSessionMap(user);
             
             if (triggered) {
-                return "Trigger.xhtml?faces-redirect=true";
+                return "/Trigger.xhtml?faces-redirect=true";
             }
             // Redirect to show the Profile
-            return "Profile.xhtml?faces-redirect=true";
+            return redirectIfSignedIn(user);
         }
+    }
+    
+    public String redirectIfSignedIn(Responder user) {
+        if (user.getLocationId().isTriggered()) {
+            return "/Map.xhtml?faces-redirect=true";
+        }
+        return "/Profile.xhtml?faces-redirect=true";
     }
 
     /*
@@ -146,5 +156,4 @@ public class LoginManager implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("user_id", user.getId());
     }
-
 }

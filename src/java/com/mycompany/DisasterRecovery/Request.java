@@ -5,7 +5,9 @@
 package com.mycompany.DisasterRecovery;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,6 +58,8 @@ public class Request implements Serializable {
     @JoinColumn(name = "to_location_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Location toLocationId;
+    
+   
 
     public Request() {
     }
@@ -109,7 +113,8 @@ public class Request implements Serializable {
     public void setToLocationId(Location toLocationId) {
         this.toLocationId = toLocationId;
     }
-
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
