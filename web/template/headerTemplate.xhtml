@@ -29,7 +29,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     <td align="left" valign="middle">
 
                         <!-- Use absolute path for the image file since it will be accessed from all pages -->
-                        <h:link outcome="/SignIn"><img src="./resources/images/DisasterRecoveryLogo.png"
+                        <h:link outcome="/SignIn"><img src="#{resource['images:DisasterRecoveryLogo.png']}"
                                                      style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
                                                      alt="Disaster Recovery Logo" />
                         </h:link>
@@ -63,9 +63,13 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
                         -->
 
-                        <!-- Clicking "Home" displays the index.xhtml file -->
-                        <h:link outcome="/location/List" styleClass="arialTen">
-                            <i class="fa fa-youtube-play">&nbsp;</i>Locations
+
+                        <h:link outcome="Map" styleClass="arialTen">
+                            <i class="fa fa-map">&nbsp;</i>Map
+                        </h:link>&nbsp;&nbsp;
+                        
+                        <h:link outcome="/request/List" styleClass="arialTen">
+                            <i class="fa fa-youtube-play">&nbsp;</i>Requests
                         </h:link>&nbsp;&nbsp;
 
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
