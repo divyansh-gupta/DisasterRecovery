@@ -36,6 +36,9 @@ public class LoginManager implements Serializable {
      */
     @EJB
     private ResponderFacade responderFacade;
+    
+//    @EJB
+//    private TriggerManager triggerManager;
 
     // Constructor method instantiating an instance of LoginManager
     public LoginManager() {
@@ -131,6 +134,13 @@ public class LoginManager implements Serializable {
             // Redirect to show the Profile
             return "Profile.xhtml?faces-redirect=true";
         }
+    }
+    
+    public String redirectIfSignedIn(Responder user) {
+        if (user.getLocationId().isTriggered()) {
+            return "Map.xhtml?faces-redirect=true";
+        }
+        return "Profile.xhtml?faces-redirect=true";
     }
 
     /*

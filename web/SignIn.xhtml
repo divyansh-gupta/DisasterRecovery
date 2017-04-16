@@ -18,6 +18,16 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
+            <c:if test="#{accountManager.isLoggedIn() == true}">
+                <script>
+                    $(document).ready(
+                        function() {
+                            element = document.getElementsByClassName("redirectButton")[0];
+                            element.click();
+                        }
+                    );
+                </script>
+            </c:if>
             <div align="center" style="width:70%; margin:0 auto;">
                 <h2>Sign In</h2>
                 
@@ -58,6 +68,12 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                                      styleClass="commandButton" ajax="false" icon="ui-icon-refresh" />
                     &nbsp;
                 </h:form>
+                <c:if test="#{accountManager.isLoggedIn() == true}">
+                    <h:form>
+                        <p:commandButton id="redirectButton" value="" action="#{loginManager.redirectIfSignedIn(accountManager.selected)}"
+                                     style="display: none;" styleClass="commandButton redirectButton" ajax="false" />
+                    </h:form>
+                </c:if>
                 
             </div>
             <br/><br/><br/>
