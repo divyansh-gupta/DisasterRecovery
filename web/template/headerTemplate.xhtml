@@ -63,37 +63,25 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
                         -->
 
-                        <!-- Clicking "Home" displays the index.xhtml file -->
                         <h:link outcome="/location/List" styleClass="arialTen">
                             <i class="fa fa-youtube-play">&nbsp;</i>Locations
                         </h:link>&nbsp;&nbsp;
 
-                        <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
                                 <i class="fa fa-sign-out">&nbsp;</i>Sign Out
                             </h:commandLink>&nbsp;&nbsp;
 
-                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
                             <h:link outcome="/Profile" styleClass="arialTen">
                                 <i class="fa fa-user">&nbsp;</i>My Account
                             </h:link>&nbsp;&nbsp;
-
-<!--                             Clicking "My Files" displays the UserFiles.xhtml file 
-                            <h:link outcome="/UserFiles" styleClass="arialTen">
-                                <i class="fa fa-files-o">&nbsp;</i>My Files
-                            </h:link>&nbsp;&nbsp;-->
                         </c:if>
 
-                        <!-- "Sign In" and "Create an Account" if no user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == false}">
-                            <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
                             <h:link outcome="/SignIn" styleClass="arialTen">
                                 <i class="fa fa-sign-in">&nbsp;</i>Sign In
                             </h:link>&nbsp;&nbsp;
 
-                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
                             <h:link outcome="/CreateAccount" styleClass="arialTen">
                                 <i class="fa fa-user-plus">&nbsp;</i>Create an Account
                             </h:link>&nbsp;&nbsp;
