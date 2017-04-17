@@ -34,8 +34,10 @@ public class RequestFacade extends AbstractFacade<Request> {
     Search Category: Title
     ---------------------------
     */
-    public List<Request> findByLocation(String locationName) {
+    public List<Request> findByLocation(Location location) {
         // Conduct the search in a case-insensitive manner and return the results in a list.
-        return getEntityManager().createQuery("SELECT c FROM Requests c WHERE c.title LIKE :locationName").setParameter("locationName", locationName).getResultList();
+        return getEntityManager().createQuery("SELECT c FROM Request c "
+                + "WHERE c.fromLocationId = :location"
+                + " OR c.toLocationId = :location").setParameter("location", location).getResultList();
     }
 }

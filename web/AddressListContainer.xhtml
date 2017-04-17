@@ -22,85 +22,97 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
-
-            <div align="center" style="width:97%" bgcolor="#FDF5E6" >
+            
+            <div align="center" style="width:97%">
                 <p:growl id="growl" life="4000" />
-                
-                <!-- Error messages will be shown here if any  -->
-                <p:messages id="msgs" styleClass="errorMessages" showIcon="false"/>
-                <h:outputLabel id="form-error-message" class="errorMessages" value="#{searchedMovieController.statusMessage}"/>
+            
+                <h:form id="AddressRequestListForm">
+                    <p:panel header="Request List for #{LocationManager.getLocation()}">
+                        <p:dataTable id="datalist" value="#{LocationManager.items}" var="item"
+                                     selectionMode="single" selection="#{LocationManager.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50">
 
-                <h:form id="SearchedMoviesForm">
-                    <p:dataGrid id="searchedMovies" value="#{searchedMovieController.searchedMovies}" var="aSearchedMovie"
-                                columns="2" layout="grid"
-                                rows="6" paginator="true"  
-                                rowsPerPageTemplate="6,12,18,24,30,36,42,48,54" 
-                                >
+                            <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <f:facet name="header">
-                            Request List for Blacksburg
-                        </f:facet>
-
-                        <!-- The p:panel defines a data grid cell displaying aSearchedMovie data -->
-                        <p:panel  style="text-align:left" > 
+                            <p:column style="width: 20px; text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListRequestTitle_id}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.getId()}"/>
+                            </p:column>
                             
-                            <h:panelGrid columns="3" style="width:100%" 
-                                         columnClasses="columnMoviePoster, columnMiddlePart, columnInfoButton">                                    
-                                <p:graphicImage url="http://image.tmdb.org/t/p/w92#{aSearchedMovie.posterFileName}" width="92px" style="float:left" /> 
-                      
-                                <h:panelGrid style="width:100%; margin-left:10px">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{aSearchedMovie.title}"/>
-                                    </f:facet>             
-                                    <br/>
-                                    
-                                    <!-- Ratings display -->
-                                    <h:panelGrid columns="2" style="float:left">
-                                        <h:panelGrid columns="2" >
-                                            <h:graphicImage name="/images/ratingIcons/imdb.png" width="25px" style="float:left"/>
-                                            <h:outputText class="ratingNumber" value="&nbsp;&nbsp;#{aSearchedMovie.imdbRating}&nbsp;&nbsp;" />
-                                        </h:panelGrid>
-                                        
-                                        <h:panelGrid columns="2">
-                                            <h:graphicImage name="#{aSearchedMovie.criticsRatingImage}" width="25px" style="float:left"/>
-                                            <h:outputText class="ratingNumber" value="&nbsp;&nbsp;#{aSearchedMovie.criticsRating}&nbsp;&nbsp;" />
-                                        </h:panelGrid>
-                                    </h:panelGrid>
-                                    
-                                    <!-- Short list of cast members -->
-                                    <h:outputText value="#{aSearchedMovie.getCastShort()}" style="float:left"/>
-                                    
-                                    <!-- MPAA Rating, duration, release date -->
-                                    <h:outputText value="#{aSearchedMovie.mpaaRating}, #{aSearchedMovie.runtime}, #{aSearchedMovie.releaseDate}" style="float:left"/>
-                                    
-                                </h:panelGrid>
-                                
-                                <!-- 
-                                *** INFO button ***
-                                The "title" attribute value is shown as a tooltip text when the mouse is moved over the info icon.
-                                -->
-                                <p:commandLink update=":searchedMovieDetailsForm" style="width:20px;float:right;" 
-                                               oncomplete="PF('searchedMovieDetailsDialog').show()" 
-                                               title="View Searched Movie Details">
-                                    
-                                    <!-- Display the Info Icon -->
-                                    <i class="fa fa-info-circle fa-2x"></i>
-                                    <!-- 
-                                    When the Info Icon is clicked on (selected), the searchedMovieController.selected method
-                                    is invoked to set the selected current movie object to the aSearchedMovie object. 
-                                    -->
-                                    <f:setPropertyActionListener target="#{searchedMovieController.selected}" value="#{aSearchedMovie}" />
-                                </p:commandLink>     
-                                
-                            </h:panelGrid>
+                            <p:column sortBy="#{item.getStatus()}" style="width: 100px; text-align: left;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListRequestTitle_status}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.getStatus()}"/>
+                            </p:column>
                             
-                        </p:panel>
-                    </p:dataGrid>     
+                            <p:column style="width: 80px; text-align: center;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListRequestTitle_fromLocationId}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.getFromLocationId()}"/>
+                            </p:column>
+                            
+                            <p:column style="width: 250px; text-align: left;">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListRequestTitle_toLocationId}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.getToLocationId()}"/>
+                            </p:column>
+                            
+                            <f:facet name="footer">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   
+                                                 value="#{bundle.Create}" actionListener="#{LocationManager.prepareCreate}" 
+                                                 update=":AddressRequestCreateForm" oncomplete="PF('RequestCreateDialog').show()"/>
+                                
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" 
+                                                 value="#{bundle.View}" update=":AddressRequestViewForm" 
+                                                 oncomplete="PF('RequestViewDialog').show()" 
+                                                 disabled="#{empty LocationManager.selected}"/>
+                                
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" 
+                                                 value="#{bundle.Edit}" update=":AddressRequestEditForm" 
+                                                 oncomplete="PF('RequestEditDialog').show()" 
+                                                 disabled="#{empty LocationManager.selected}"/>
+                                
+                                <!-- **********************************************
+                                Display a Confirmation dialog for the DELETE button
+                                *********************************************** -->
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  
+                                                 value="#{bundle.Delete}" actionListener="#{LocationManager.destroy}" 
+                                                 update=":growl,datalist" disabled="#{empty LocationManager.selected}">
+
+                                    <p:confirm header="Confirmation" 
+                                               message="Are you sure you want to permanently delete the selected video from the database?" 
+                                               icon="ui-icon-alert" />
+                                </p:commandButton>
+                                
+                                <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
+                                    <div align="center">
+                                        <!-- The value of the first button listed below will be shown as 
+                                        highlighted (default action) when displayed -->
+                                        <p:commandButton value="No" type="button" 
+                                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        &nbsp;
+                                        <p:commandButton value="Yes" type="button" 
+                                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    </div>
+                                </p:confirmDialog>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
                 </h:form>
             </div>
-           
+            <ui:include src="AddressListCreate.xhtml"/>
+            <ui:include src="AddressListEdit.xhtml"/>
+            <ui:include src="AddressListView.xhtml"/>
         </ui:define>
-        
     </ui:composition>
     <!-- Do not enter tags after the composition line since they are ignored by JSF -->
 

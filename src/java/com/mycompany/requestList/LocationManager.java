@@ -9,6 +9,7 @@ import com.mycompany.DisasterRecovery.Request;
 import com.mycompany.DisasterRecovery.Responder;
 import com.mycompany.sessionbeans.RequestFacade;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -49,10 +50,22 @@ public class LocationManager implements Serializable {
     }
     
     public List<Request> getItems() {
+        System.out.println("HERE");
+        Location newLoc = new Location(1, "newLoc", new BigDecimal(1), new BigDecimal(1), true);
         if (items == null) {
-            items = getRequestFacade().findByLocation("Blacksburg");
+            items = getRequestFacade().findByLocation(this.selected);
+            //items = getRequestFacade().findByLocation(newLoc);
         }
+        System.out.println("List items: " + items);
         return items;
+    }
+
+    public Location getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Location selected) {
+        this.selected = selected;
     }
 }
 
