@@ -21,19 +21,29 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
                 <!--<p:gmap id="gmap" center="36.890257,30.707417" zoom="13" type="HYBRID" model="#{mapView.advancedModel}" style="width:100%;height:520px">-->
                 <p:gmap id="gmap" center="#{mapView.getMapCenter()}" zoom="13" type="HYBRID" model="#{mapView.advancedModel}" style="width:100%;height:520px">
 
-                <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />
+                    <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />
 
-                <p:gmapInfoWindow id="infoWindow">
-                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+                    <p:gmapInfoWindow id="infoWindow">
 
-                        <h:outputText value="#{mapView.marker.data}" />
-                        <br />
-                        <h:outputText value="#{mapView.marker.title}" />
+                        <h:panelGroup id="display">
+                            <p:panelGrid columns="2" columnClasses="InfoWindowColumn1, InfoWindowColumn2" 
+                                         rendered="#{mapView.marker.data != null}"
+                                         style="margin-left: 10px; margin-right: 10px"
+                                         class="noBorders">
+                                <h:outputLabel value="Location Name:" for="locationName" />
+                                <h:outputLabel id="locationName" value="#{requestController.getRequest(mapView.marker.data).toLocationId.locationName}" />
 
-                    </p:outputPanel>
-                </p:gmapInfoWindow>
+                                <h:outputLabel value="Status:" for="status" />
+                                <h:outputLabel id="status" value="#{requestController.getRequest(mapView.marker.data).status}" />
+
+                                <h:outputLabel value="From:" for="from" />
+                                <h:outputLabel id="from" value="#{requestController.getRequest(mapView.marker.data).fromLocationId.locationName}" />                            </p:panelGrid>
+                        </h:panelGroup>
+
+
+                    </p:gmapInfoWindow>
                 </p:gmap>
- 
+
                 <!-- Preload for demo -->
                 <p:outputPanel style="display:none">
                     <p:graphicImage name="/demo/images/antalya/konyaalti.png" />
