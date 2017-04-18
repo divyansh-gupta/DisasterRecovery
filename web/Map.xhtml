@@ -17,23 +17,24 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
 
         <ui:define name="editableContent">
             <script src="http://maps.google.com/maps/api/js?key=AIzaSyAqLkL7YFuRRHD8523bGyZ4vgW0kqkqpvo" type="text/javascript" ></script>
-
             <h:form>
-                <p:gmap id="gmap" center="36.879466, 30.667648" zoom="13" type="HYBRID" model="#{mapView.advancedModel}" style="width:100%;height:500px">
- 
-                    <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />
- 
-                    <p:gmapInfoWindow id="infoWindow">
-                        <p:outputPanel style="text-align: center; display: block; margin: auto">
- 
-                        <p:graphicImage name="/demo/images/antalya/#{mapView.marker.data}" height="150" />
+                <!--<p:gmap id="gmap" center="36.890257,30.707417" zoom="13" type="HYBRID" model="#{mapView.advancedModel}" style="width:100%;height:520px">-->
+                <p:gmap id="gmap" center="#{mapView.getMapCenter()}" zoom="13" type="HYBRID" model="#{mapView.advancedModel}" style="width:100%;height:520px">
+
+                <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />
+
+                <p:gmapInfoWindow id="infoWindow">
+                    <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+                        <h:outputText value="#{mapView.marker.data}" />
                         <br />
                         <h:outputText value="#{mapView.marker.title}" />
- 
-                        </p:outputPanel>
-                    </p:gmapInfoWindow>
+
+                    </p:outputPanel>
+                </p:gmapInfoWindow>
                 </p:gmap>
  
+                <!-- Preload for demo -->
                 <p:outputPanel style="display:none">
                     <p:graphicImage name="/demo/images/antalya/konyaalti.png" />
                     <p:graphicImage name="/demo/images/antalya/ataturkparki.png" />

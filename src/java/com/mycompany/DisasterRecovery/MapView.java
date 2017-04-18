@@ -4,41 +4,62 @@
  */
 package com.mycompany.DisasterRecovery;
 
+import com.mycompany.sessionbeans.LocationFacade;
+import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Named;
-  
+
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
   
-@Named(value = "mapView")
+@ManagedBean
 @ViewScoped
 public class MapView implements Serializable {
       
+    @EJB
+    private LocationFacade locationFacade;
+    
+    @EJB
+    private ResponderFacade responderFacade;
+    
     private MapModel advancedModel;
-  
     private Marker marker;
+    
+    private static final String TRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+    private static final String UNTRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
   
     @PostConstruct
     public void init() {
         advancedModel = new DefaultMapModel();
-          
-        //Shared coordinates
-        LatLng coord1 = new LatLng(36.879466, 30.667648);
-        LatLng coord2 = new LatLng(36.883707, 30.689216);
-        LatLng coord3 = new LatLng(36.879703, 30.706707);
-        LatLng coord4 = new LatLng(36.885233, 30.702323);
-          
-        //Icons and Data
-        advancedModel.addOverlay(new Marker(coord1, "Konyaalti", "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
-        advancedModel.addOverlay(new Marker(coord2, "Ataturk Parki"));
-        advancedModel.addOverlay(new Marker(coord4, "Kaleici", "http://maps.google.com/mapfiles/ms/micons/pink-dot.png"));
-        advancedModel.addOverlay(new Marker(coord3, "Karaalioglu Parki", "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png"));
+        locationFacade.findAll().forEach((location) -> {
+            LatLng coord = new LatLng(location.getLatitude().doubleValue(), location.getLongitude().doubleValue());
+            Marker newMarker = new Marker(coord, location.getLocationName(), location);
+            newMarker.setIcon(UNTRIGGERED_ICON);
+            if (location.isTriggered()) {
+                newMarker.setIcon(TRIGGERED_ICON);
+            }
+            advancedModel.addOverlay(newMarker);
+        });
+    }
+    
+    public String getMapCenter() {
+        Location center = locationFacade.find(1);
+        if (responderFacade.isLoggedIn()) {
+            Responder user = responderFacade.getLoggedIn();
+            if (user != null) {
+                center = user.getLocationId();
+            }
+        }
+        if (center == null) {
+            return "37.2296, 80.4139";
+        }
+        return center.getLatitude().doubleValue() + ", " + center.getLongitude().doubleValue();
     }
   
     public MapModel getAdvancedModel() {
