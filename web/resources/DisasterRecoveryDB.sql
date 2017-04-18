@@ -53,8 +53,8 @@ CREATE TABLE Item (
 );
 
 -- Locations
-INSERT INTO Location (location_name, latitude, longitude) VALUES
-('Burruss_Hall', 37.229, -80.42371), ('McBride_Hall', 37.23062, -80.42178), ('New_Classroom_Building', 37.229270, -80.427207);
+INSERT INTO Location (location_name, latitude, longitude, triggered) VALUES
+('Burruss_Hall', 37.229, -80.42371, false), ('McBride_Hall', 37.23062, -80.42178, false), ('New_Classroom_Building', 37.229270, -80.427207, false);
 
 -- Responders
 INSERT INTO Responder (username, email, responder_name, image, password, location_id) VALUES
