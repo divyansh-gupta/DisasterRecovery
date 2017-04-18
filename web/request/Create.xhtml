@@ -8,7 +8,7 @@
 
     <ui:composition>
         <p:dialog id="RequestCreateDlg" widgetVar="RequestCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRequestTitle}">
-            <h:form id="AddressRequestCreateForm">
+            <h:form id="RequestCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateRequestLabel_status}" for="status" />

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RequestEditDlg" widgetVar="RequestEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditRequestTitle}">
+            <h:form id="RequestEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditRequestLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{requestController.selected.id}" title="#{bundle.EditRequestTitle_id}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditRequestLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{requestController.selected.status}" title="#{bundle.EditRequestTitle_status}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_status}"/>
+                        <p:outputLabel value="#{bundle.EditRequestLabel_fromLocationId}" for="fromLocationId" />
+                        <p:selectOneMenu id="fromLocationId" value="#{requestController.selected.fromLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_fromLocationId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
+                                           var="fromLocationIdItem"
+                                           itemValue="#{fromLocationIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditRequestLabel_toLocationId}" for="toLocationId" />
+                        <p:selectOneMenu id="toLocationId" value="#{requestController.selected.toLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_toLocationId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
+                                           var="toLocationIdItem"
+                                           itemValue="#{toLocationIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{requestController.update}" value="#{bundle.Save}" update="display,:RequestListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RequestEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RequestEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
