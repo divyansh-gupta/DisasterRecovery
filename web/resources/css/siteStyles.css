@@ -354,7 +354,7 @@ Other Style Definitions
 }
 
 .InfoWindowColumn1 {
-    text-align: right;
+    text-align: left;
     background-color: #FFFFFF;   /* Bisque */
     white-space: nowrap;  /* Disallow line break */
     width: 125px;
@@ -362,7 +362,7 @@ Other Style Definitions
 
 /* Used in Public Videos */
 .InfoWindowColumn2 {
-    text-align: left;
+    text-align: right;
     background-color: #FFFFFF;   /* Blanched Almond  */
 }
 
