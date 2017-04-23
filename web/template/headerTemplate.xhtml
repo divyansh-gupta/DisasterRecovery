@@ -53,18 +53,15 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == true}">
-                                <h1>Hello, #{accountManager.selected.responderName}, your location has an emergency triggered!</h1>
+                                <h1>Your location has an emergency triggered!</h1>
                                 <h:form>
                                     <p:commandButton id="trigger" value="Untrigger Emergency" action="#{triggerManager.unTriggerEmergency(accountManager.selected)}"
                                      styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
                                 </h:form>
                             </c:if>
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == false}">
-                                <h1>Hello, #{accountManager.selected.responderName}, there is currently no emergency triggered in your area.</h1>
+                                <h1>There is currently no emergency triggered in your area.</h1>
                             </c:if>
-                        </c:if>
-                        <c:if test="#{accountManager.isLoggedIn() == false}">
-                            <h1>Hello, Guest</h1>
                         </c:if>
 
                     </td>
@@ -78,6 +75,10 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <h:link outcome="/Map" styleClass="arialTen">
                             <i class="fa fa-map">&nbsp;</i>Map
+                        </h:link>&nbsp;&nbsp;
+                        
+                        <h:link outcome="/Inventory" styleClass="arialTen">
+                            <i class="fa fa-map">&nbsp;</i>Your Inventory
                         </h:link>&nbsp;&nbsp;
                         
                         <h:link outcome="/request/List" styleClass="arialTen">

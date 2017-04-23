@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Divyansh Gupta on 2017.04.11 
+Copyright © 2017 Divyansh Gupta. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Inventory"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+                <h2>Manage Inventory For Your Area</h2>
+                <h:form>
+                    <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+                        <h:outputLabel value="Water (Gallons)" for="waterCount" />
+                        <p:inputNumber id="waterCount" value="#{inventoryManager.waterCount}" required="true" styleClass="signInInputTextField"
+                                      converterMessage="Please enter digits only." label="waterCount" />
+                        
+                        <h:outputLabel value="Canned Goods (Cans)" for="cannedGoodsCount" />
+                        <p:inputNumber id="cannedGoodsCount" value="#{inventoryManager.cannedGoodsCount}" required="true" styleClass="signInInputTextField"
+                                      converterMessage="Please enter digits only." label="cannedGoodsCount" />
+                        
+                        <h:outputLabel value="Blankets" for="blanketsCount" />
+                        <p:inputNumber id="blanketsCount" value="#{inventoryManager.blanketsCount}" required="true" styleClass="signInInputTextField"
+                                      converterMessage="Please enter digits only." label="blanketsCount" />
+                        
+                        <h:outputLabel value="Shelter (Capacity in People)" for="shelterCount" />
+                        <p:inputNumber id="shelterCount" value="#{inventoryManager.shelterCount}" required="true" styleClass="signInInputTextField"
+                                      converterMessage="Please enter digits only." label="shelterCount" />
+                        
+                        <h:outputLabel value="Emergency Kits" for="emergencyKitCount" />
+                        <p:inputNumber id="emergencyKitCount" value="#{inventoryManager.emergencyKitCount}" required="true" styleClass="signInInputTextField"
+                                      converterMessage="Please enter digits only." label="emergencyKitCount" />
+                        
+                        <h:outputLabel value="USD ($)" for="dollarCount" />
+                        <p:inputNumber id="dollarCount" value="#{inventoryManager.dollarCount}" required="true" styleClass="signInInputTextField"
+                                      converterMessage="Please enter valid dollar amounts only." label="dollarCount" 
+                                      symbol=" CHF" symbolPosition="s" 
+                                      decimalSeparator="," thousandSeparator="."/>
+                    </p:panelGrid>
+                    <p:commandButton id="trigger" value="Update Inventory" action="#{inventoryManager.updateInventory(accountManager.selected)}"
+                                 styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
+                    
+                    <h:message for="message"></h:message>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -41,7 +41,8 @@ CREATE TABLE Location (
     location_name VARCHAR(100) NOT NULL,
     latitude DECIMAL(13,10) NOT NULL,
     longitude DECIMAL(13,10) NOT NULL,
-    triggered BOOLEAN NOT NULL DEFAULT FALSE
+    triggered BOOLEAN NOT NULL DEFAULT FALSE,
+    emergency_description VARCHAR(500)
 );
 
 CREATE TABLE Item (
@@ -53,7 +54,6 @@ CREATE TABLE Item (
 );
 
 -- Locations
-
 INSERT INTO Location (location_name, latitude, longitude, triggered) VALUES
 ('Burruss_Hall', 37.229, -80.42371, false), ('McBride_Hall', 37.23062, -80.42178, false), ('New_Classroom_Building', 37.229270, -80.427207, false);
 
