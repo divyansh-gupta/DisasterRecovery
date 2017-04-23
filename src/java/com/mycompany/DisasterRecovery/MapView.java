@@ -54,7 +54,7 @@ public class MapView implements Serializable {
         locationFacade.findAll().forEach((location) -> {
             LatLng coord = new LatLng(location.getLatitude().doubleValue(), location.getLongitude().doubleValue());
             Marker newMarker = new Marker(coord, location.getLocationName(), location);
-            newMarker.setIcon(TRIGGERED_ICON);
+            newMarker.setIcon(UNTRIGGERED_ICON);
             
             if (location.isTriggered()) {
                 newMarker.setIcon(TRIGGERED_ICON);
