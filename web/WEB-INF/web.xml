@@ -29,7 +29,7 @@
     </session-config>
     
     <welcome-file-list>
-        <welcome-file>AddressListContainer.xhtml</welcome-file>
+        <welcome-file>Map.xhtml</welcome-file>
     </welcome-file-list>
     
 </web-app>

@@ -28,6 +28,9 @@ public class LocationManager implements Serializable {
     @EJB
     private com.mycompany.sessionbeans.RequestFacade requestFacade;
     
+    @EJB
+    private com.mycompany.sessionbeans.LocationFacade locationFacade;
+    
     private List<Request> items = null;
     
     private Location selected;
@@ -45,13 +48,13 @@ public class LocationManager implements Serializable {
 //    }
     
     public String getLocation() {
-        //return selected.getLocationName();
-        return "Blacksburg";
+        return selected.getLocationName().replace('_', ' ');
+        //return "Blacksburg";
     }
     
     public List<Request> getItems() {
         System.out.println("HERE");
-        Location newLoc = new Location(1, "newLoc", new BigDecimal(1), new BigDecimal(1), true);
+        //Location newLoc = new Location(1, "newLoc", new BigDecimal(1), new BigDecimal(1), true);
         if (items == null) {
             items = getRequestFacade().findByLocation(this.selected);
             //items = getRequestFacade().findByLocation(newLoc);
@@ -66,6 +69,11 @@ public class LocationManager implements Serializable {
 
     public void setSelected(Location selected) {
         this.selected = selected;
+    }
+    
+    public String getLocationNameWithId(int x) {
+        Location loc = locationFacade.findById(x);
+        return loc.getLocationName();
     }
 }
 

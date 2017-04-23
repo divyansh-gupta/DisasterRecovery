@@ -36,15 +36,7 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                      rowsPerPageTemplate="10,20,30,40,50">
 
                             <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
-                            <p:column style="width: 20px; text-align: center;">
-                                <f:facet name="header">
-                                    <h:outputText value="#{bundle.ListRequestTitle_id}"/>
-                                </f:facet>
-                                <h:outputText value="#{item.getId()}"/>
-                            </p:column>
-                            
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>                            
                             <p:column sortBy="#{item.getStatus()}" style="width: 100px; text-align: left;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_status}"/>
@@ -52,18 +44,18 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                 <h:outputText value="#{item.getStatus()}"/>
                             </p:column>
                             
-                            <p:column style="width: 80px; text-align: center;">
+                            <p:column style="width: 80px; text-align: left;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_fromLocationId}"/>
                                 </f:facet>
-                                <h:outputText value="#{item.getFromLocationId()}"/>
+                                <h:outputText value="#{item.getFromLocationId().getLocationName().replace('_', ' ')}"/>
                             </p:column>
                             
                             <p:column style="width: 250px; text-align: left;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_toLocationId}"/>
                                 </f:facet>
-                                <h:outputText value="#{item.getToLocationId()}"/>
+                                <h:outputText value="#{item.getToLocationId().getLocationName().replace('_', ' ')}"/>
                             </p:column>
                             
                             <f:facet name="footer">
