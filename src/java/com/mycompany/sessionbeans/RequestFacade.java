@@ -38,6 +38,6 @@ public class RequestFacade extends AbstractFacade<Request> {
         // Conduct the search in a case-insensitive manner and return the results in a list.
         return getEntityManager().createQuery("SELECT c FROM Request c "
                 + "WHERE c.fromLocationId=:location"
-                + " OR c.toLocationId=:location").setParameter("location", location).getResultList();
+                + " OR c.toLocationId=:location ORDER BY c.status ASC").setParameter("location", location).getResultList();
     }
 }
