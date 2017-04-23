@@ -76,17 +76,15 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <h:link outcome="/Map" styleClass="arialTen">
                             <i class="fa fa-map">&nbsp;</i>Map
                         </h:link>&nbsp;&nbsp;
-                        
-                        <h:link outcome="/Inventory" styleClass="arialTen">
-                            <i class="fa fa-map">&nbsp;</i>Your Inventory
-                        </h:link>&nbsp;&nbsp;
-                        
-                        <h:link outcome="/request/List" styleClass="arialTen">
-                            <i class="fa fa-youtube-play">&nbsp;</i>Requests
-
-                        </h:link>&nbsp;&nbsp;
 
                         <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <h:link outcome="/Inventory" styleClass="arialTen">
+                                <i class="fa fa-map">&nbsp;</i>Your Inventory
+                            </h:link>&nbsp;&nbsp;
+
+                            <h:link outcome="/request/List" styleClass="arialTen">
+                                <i class="fa fa-youtube-play">&nbsp;</i>Requests
+                            </h:link>&nbsp;&nbsp;
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
                                 <i class="fa fa-sign-out">&nbsp;</i>Sign Out
                             </h:commandLink>&nbsp;&nbsp;
