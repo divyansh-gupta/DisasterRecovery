@@ -14,9 +14,14 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
         </ui:define>
         <ui:define name="editableContent">
             <div align="center" style="width:70%; margin:0 auto;">
-                <h2>Sign In</h2>
+                <h2>Trigger Emergency In Your Area</h2>
                 <h:form>
-                    <p:commandButton id="trigger" value="Trigger Emergency" action="#{triggerManager.triggerEmergency(accountManager.selected)}"
+                    <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+                        <h:outputLabel value="What is your emergency?" for="emergencyDescrption" />
+                        <p:inputText id="emergencyDescrption" value="#{triggerManager.emergencyDescription}" required="true" styleClass="signInInputTextField"
+                                     requiredMessage="Description of emergency needed!" label="emergencyDescription" />
+                    </p:panelGrid>
+                        <p:commandButton id="trigger" value="Trigger Emergency" action="#{triggerManager.triggerEmergency(accountManager.selected)}"
                                      styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
                 </h:form>
             </div>

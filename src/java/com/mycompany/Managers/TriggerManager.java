@@ -21,8 +21,18 @@ import com.mycompany.sessionbeans.LocationFacade;
 @SessionScoped
 public class TriggerManager implements Serializable {
     
-    @EJB 
+    @EJB
     LocationFacade locationFacade;
+    
+    private String emergencyDescription;
+
+    public String getEmergencyDescription() {
+        return emergencyDescription;
+    }
+
+    public void setEmergencyDescription(String emergencyDescription) {
+        this.emergencyDescription = emergencyDescription;
+    }
     
     public String triggerEmergency(Responder user) {
         Location userLocation = user.getLocationId();
