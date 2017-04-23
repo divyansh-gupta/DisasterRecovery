@@ -8,11 +8,13 @@ import com.mycompany.sessionbeans.LocationFacade;
 import com.mycompany.sessionbeans.NeedFacade;
 import com.mycompany.sessionbeans.RequestFacade;
 import com.mycompany.sessionbeans.ResponderFacade;
+import com.mycompany.requestList.LocationManager;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -35,6 +37,9 @@ public class MapView implements Serializable {
 
     @EJB
     private RequestFacade requestFacade;
+    
+    @Inject
+    private LocationManager locationManager;
 
     private MapModel advancedModel;
     private Marker marker;
@@ -80,6 +85,7 @@ public class MapView implements Serializable {
 
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
+        locationManager.setSelected(locationFacade.findLocationByName(marker.getTitle()));
     }
 
     public Marker getMarker() {

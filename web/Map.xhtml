@@ -24,23 +24,12 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
                     <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />
 
                     <p:gmapInfoWindow id="infoWindow">
-
                         <h:panelGroup id="display">
-                            <p:panelGrid columns="2" columnClasses="InfoWindowColumn1, InfoWindowColumn2" 
-                                         rendered="#{mapView.marker.data != null}"
-                                         style="margin-left: 10px; margin-right: 10px"
-                                         class="noBorders">
-                                <h:outputLabel value="Location Name:" for="locationName" />
-                                <h:outputLabel id="locationName" value="#{requestController.getRequest(mapView.marker.data).toLocationId.locationName}" />
-
-                                <h:outputLabel value="Status:" for="status" />
-                                <h:outputLabel id="status" value="#{requestController.getRequest(mapView.marker.data).status}" />
-
-                                <h:outputLabel value="From:" for="from" />
-                                <h:outputLabel id="from" value="#{requestController.getRequest(mapView.marker.data).fromLocationId.locationName}" />                            </p:panelGrid>
+                            <h:outputLabel value="Location Name:" for="locationName" />
+                            <a href="AddressListContainer.xhtml" target="_blank">
+                                <h:outputLabel id="locationName" value="#{mapView.marker.title}" />
+                            </a>
                         </h:panelGroup>
-
-
                     </p:gmapInfoWindow>
                 </p:gmap>
 
