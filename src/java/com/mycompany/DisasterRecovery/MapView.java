@@ -37,30 +37,28 @@ public class MapView implements Serializable {
 
     @EJB
     private RequestFacade requestFacade;
-    
+
     @Inject
     private LocationManager locationManager;
 
     private MapModel advancedModel;
     private Marker marker;
 
-    private static final String TRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+    private static final String TRIGGERED_ICON = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
     private static final String UNTRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
 
     @PostConstruct
     public void init() {
         advancedModel = new DefaultMapModel();
 
-        requestFacade.findAll().forEach((request) -> {
-            LatLng coord = new LatLng(request.getToLocationId().getLatitude().doubleValue(), request.getToLocationId().getLongitude().doubleValue());
-            Marker newMarker = new Marker(coord, request.getToLocationId().getLocationName(), request.getId());
-
-            if (request.getToLocationId().isTriggered()) {
+        locationFacade.findAll().forEach((location) -> {
+            LatLng coord = new LatLng(location.getLatitude().doubleValue(), location.getLongitude().doubleValue());
+            Marker newMarker = new Marker(coord, location.getLocationName(), location);
+            newMarker.setIcon("UNTRIGGERED_ICON");
+            
+            if (location.isTriggered()) {
                 newMarker.setIcon(TRIGGERED_ICON);
-            } else {
-                newMarker.setIcon(UNTRIGGERED_ICON);
             }
-
             advancedModel.addOverlay(newMarker);
         });
     }
