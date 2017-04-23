@@ -327,6 +327,7 @@ public class AccountManager implements Serializable {
             newEntry.setLocationName(locationName);
             newEntry.setLatitude(latitude);
             newEntry.setLongitude(longitude);
+            newEntry.setTriggered(Boolean.FALSE);
             getLocationFacade().create(newEntry);
             System.out.println("newEntry from DB: " + newEntry);
             return newEntry;
