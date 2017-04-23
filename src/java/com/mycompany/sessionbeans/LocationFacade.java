@@ -42,4 +42,28 @@ public class LocationFacade extends AbstractFacade<Location> {
                     .getSingleResult());
         }
     }
+
+    public Location findById(Integer id) {
+        if (em.createQuery("SELECT l FROM Location l WHERE l.id = :id")
+                .setParameter("id", id)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Location) (em.createQuery("SELECT l FROM Location l WHERE l.id = :id")
+                    .setParameter("id", id)
+                    .getSingleResult());
+        }
+    }
+
+    public Location findLocationByName(String loc) {
+        if (em.createQuery("SELECT l FROM Location l WHERE l.locationName = :locationName")
+                .setParameter("locationName", loc)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Location) (em.createQuery("SELECT l FROM Location l WHERE l.locationName = :locationName")
+                    .setParameter("locationName", loc)
+                    .getSingleResult());
+        }
+    }
 }

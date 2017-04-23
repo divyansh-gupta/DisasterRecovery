@@ -353,6 +353,23 @@ Other Style Definitions
     height:600px;
 }
 
+.InfoWindowColumn1 {
+    text-align: left;
+    background-color: #FFFFFF;   /* Bisque */
+    white-space: nowrap;  /* Disallow line break */
+    width: 125px;
+}
+
+/* Used in Public Videos */
+.InfoWindowColumn2 {
+    text-align: right;
+    background-color: #FFFFFF;   /* Blanched Almond  */
+}
+
+.noBorders tr, .noBorders td {
+    border: none !important;
+}
+
 /*
 ==================================
 Social Media Buttons Spin Animated

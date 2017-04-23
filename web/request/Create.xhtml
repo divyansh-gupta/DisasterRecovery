@@ -8,7 +8,7 @@
 
     <ui:composition>
         <p:dialog id="RequestCreateDlg" widgetVar="RequestCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRequestTitle}">
-            <h:form id="AddressRequestCreateForm">
+            <h:form id="RequestCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateRequestLabel_status}" for="status" />
@@ -35,11 +35,14 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    
                     <h:form>
                         List of Needs
+
                         <div>
+
                             <span style="float: left">
+
+
                                 <ui:repeat value="#{CreateNeedList.items}" var="item">
                                     <!--<h:inputText value="#{item}" />-->
                                     <p:selectOneMenu value="#{item}" required="true">
@@ -48,6 +51,10 @@
                                     </p:selectOneMenu>
                                     <br />
                                 </ui:repeat>
+
+
+
+
                             </span>
                             <span style="float: right">
                                 <ui:repeat value="#{CreateNeedList.quantities}" var="qty">
@@ -56,21 +63,30 @@
                                 </ui:repeat>
                             </span>
                         </div>
+
+
+
                         <br />
                         <br/>
                         <br/>
                         <br/>
+
+
                     </h:form>
                     <div style="text-align: center">
+
+
                         <p:commandButton value="Add new Need">
                             <f:ajax listener="#{CreateNeedList.extend}"
                                     render="@form" />
                         </p:commandButton>
-                        <p:commandButton actionListener="#{requestController.create}" value="#{bundle.Save}" update="display,:AddressRequestListForm:datalist,:growl" oncomplete="handleSubmit(args,'RequestCreateDialog');"/>
+                        <p:commandButton actionListener="#{requestController.create}" value="#{bundle.Save}" update="display,:RequestListForm:datalist,:growl" oncomplete="handleSubmit(args,'RequestCreateDialog');"/>
                         <p:commandButton value="#{bundle.Cancel}" onclick="RequestCreateDialog.hide()"/>
                     </div>
+
                 </h:panelGroup>
             </h:form>
         </p:dialog>
+
     </ui:composition>
 </html>

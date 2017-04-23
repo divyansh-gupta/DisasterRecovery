@@ -2,4 +2,5 @@
 /dist/
 /nbproject/private/*
 nbproject/private/private.properties
-src/java/com/mycompany/Managers/Constants.java
+/src/java/com/mycompany/Managers/Constants.java
+/web/WEB-INF/*
