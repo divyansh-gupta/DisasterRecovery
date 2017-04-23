@@ -5,6 +5,8 @@
 package com.mycompany.sessionbeans;
 
 import com.mycompany.DisasterRecovery.Need;
+import com.mycompany.DisasterRecovery.Request;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,4 +30,9 @@ public class NeedFacade extends AbstractFacade<Need> {
         super(Need.class);
     }
     
-}
+    public List<Need> findByLocation(Request request) {
+        // Conduct the search in a case-insensitive manner and return the results in a list.
+        return getEntityManager().createQuery("SELECT c FROM Need c "
+                + "WHERE c.requestId=:request").setParameter("request", request).getResultList();
+    }
+}   

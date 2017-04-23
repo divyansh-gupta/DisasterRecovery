@@ -1,8 +1,10 @@
 package com.mycompany.jsfclasses;
 
+import com.mycompany.DisasterRecovery.Need;
 import com.mycompany.DisasterRecovery.Request;
 import com.mycompany.jsfclasses.util.JsfUtil;
 import com.mycompany.jsfclasses.util.JsfUtil.PersistAction;
+import com.mycompany.sessionbeans.NeedFacade;
 import com.mycompany.sessionbeans.RequestFacade;
 
 import java.io.Serializable;
@@ -25,7 +27,20 @@ public class RequestController implements Serializable {
 
     @EJB
     private com.mycompany.sessionbeans.RequestFacade ejbFacade;
+    
+    @EJB
+    NeedFacade needFacade;
+    
     private List<Request> items = null;
+    private List<Need> needs = null;
+
+    public NeedFacade getNeedFacade() {
+        return needFacade;
+    }
+
+    public void setNeedFacade(NeedFacade needFacade) {
+        this.needFacade = needFacade;
+    }
     private Request selected;
 
     public RequestController() {
@@ -79,6 +94,18 @@ public class RequestController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public List<Need> getNeeds() {
+        return needs;
+    }
+
+    public void setNeeds(List<Need> needs) {
+        this.needs = needs;
+    }
+    
+    public void getNeedList(Request req) {
+        needs = needFacade.findByLocation(req);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

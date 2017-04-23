@@ -28,4 +28,15 @@ public class ItemFacade extends AbstractFacade<Item> {
         super(Item.class);
     }
     
+//    public Item findById(Integer id) {
+//        if (em.createQuery("SELECT l FROM Item l WHERE l.id = :id")
+//                .setParameter("id", id)
+//                .getResultList().isEmpty()) {
+//            return null;
+//        } else {
+//            return (Item) (em.createQuery("SELECT l FROM Item l WHERE l.id = :id")
+//                    .setParameter("id", id)
+//                    .getSingleResult());
+//        }
+//    }
 }

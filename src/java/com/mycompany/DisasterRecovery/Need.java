@@ -6,6 +6,7 @@ package com.mycompany.DisasterRecovery;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,7 +52,6 @@ public class Need implements Serializable {
     private Request requestId;
     
 
-
     public Need() {
     }
 
@@ -83,6 +83,7 @@ public class Need implements Serializable {
     public Item getItemId() {
         return itemId;
     }
+    
 
     public void setItemId(Item itemId) {
         this.itemId = itemId;

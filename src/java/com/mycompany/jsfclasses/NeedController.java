@@ -1,5 +1,6 @@
 package com.mycompany.jsfclasses;
 
+import com.mycompany.DisasterRecovery.Item;
 import com.mycompany.DisasterRecovery.Need;
 import com.mycompany.jsfclasses.util.JsfUtil;
 import com.mycompany.jsfclasses.util.JsfUtil.PersistAction;
@@ -22,11 +23,13 @@ import javax.faces.convert.FacesConverter;
 @Named("needController")
 @SessionScoped
 public class NeedController implements Serializable {
-
+    
     @EJB
     private com.mycompany.sessionbeans.NeedFacade ejbFacade;
+    
     private List<Need> items = null;
     private Need selected;
+    
 
     public NeedController() {
     }
@@ -161,5 +164,9 @@ public class NeedController implements Serializable {
         }
 
     }
-
+    
+    
+    public String needToString(Need n) {
+        return n.getQuantity()+ " of " + n.getItemId().getItemType().replace('_', ' ');
+    }
 }

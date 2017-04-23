@@ -7,10 +7,14 @@ package com.mycompany.requestList;
 import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Request;
 import com.mycompany.DisasterRecovery.Responder;
+import com.mycompany.sessionbeans.LocationFacade;
 import com.mycompany.sessionbeans.RequestFacade;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -34,6 +38,10 @@ public class LocationManager implements Serializable {
     private List<Request> items = null;
     
     private Location selected;
+    
+    private Request request_selected;
+    @Resource
+    private javax.transaction.UserTransaction utx;
     
     @PersistenceContext(unitName = "DisasterRecoveryPU")
     private EntityManager em;
@@ -72,6 +80,33 @@ public class LocationManager implements Serializable {
     public String getLocationNameWithId(int x) {
         Location loc = locationFacade.findById(x);
         return loc.getLocationName();
+    }
+
+    public void persist(Object object) {
+        try {
+            utx.begin();
+            em.persist(object);
+            utx.commit();
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public LocationFacade getLocationFacade() {
+        return locationFacade;
+    }
+
+    public void setLocationFacade(LocationFacade locationFacade) {
+        this.locationFacade = locationFacade;
+    }
+
+    public Request getRequest_selected() {
+        return request_selected;
+    }
+
+    public void setRequest_selected(Request request_selected) {
+        this.request_selected = request_selected;
     }
 }
 
