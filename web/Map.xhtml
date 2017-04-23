@@ -27,7 +27,7 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
                         <h:panelGroup id="display">
                             <h:outputLabel value="Location Name:" for="locationName" />
                             <a href="AddressListContainer.xhtml" target="_blank">
-                                <h:outputLabel id="locationName" value="#{mapView.marker.title}" />
+                                <h:outputLabel id="locationName" value="#{mapView.marker.title.replace('_', ' ')}" />
                             </a>
                         </h:panelGroup>
                     </p:gmapInfoWindow>

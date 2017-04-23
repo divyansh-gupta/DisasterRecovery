@@ -53,12 +53,10 @@ public class LocationManager implements Serializable {
     }
     
     public List<Request> getItems() {
-        System.out.println("HERE");
+        System.out.println("SELECTED: " + this.selected.getId());
         //Location newLoc = new Location(1, "newLoc", new BigDecimal(1), new BigDecimal(1), true);
-        if (items == null) {
-            items = getRequestFacade().findByLocation(this.selected);
-            //items = getRequestFacade().findByLocation(newLoc);
-        }
+        items = getRequestFacade().findByLocation(this.selected);
+        //items = getRequestFacade().findByLocation(newLoc);
         System.out.println("List items: " + items);
         return items;
     }

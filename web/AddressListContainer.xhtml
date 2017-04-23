@@ -41,7 +41,7 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_status}"/>
                                 </f:facet>
-                                <h:outputText value="#{item.getStatus()}"/>
+                                <h:outputText value="#{item.getStatus().replace('_', ' ')}"/>
                             </p:column>
                             
                             <p:column style="width: 80px; text-align: left;">
