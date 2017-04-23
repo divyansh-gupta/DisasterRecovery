@@ -66,4 +66,4 @@ public class LocationFacade extends AbstractFacade<Location> {
                     .getSingleResult());
         }
     }
-}
+}   
