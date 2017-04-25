@@ -11,12 +11,10 @@
             <h:form id="RequestCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateRequestLabel_status}" for="status" />
-                        <p:inputText id="status" value="#{requestController.selected.status}" title="#{bundle.CreateRequestTitle_status}" required="true" requiredMessage="#{bundle.CreateRequestRequiredMessage_status}"/>
-
-
+                        <p:messages id="msgtext"></p:messages>
                         <p:outputLabel value="#{bundle.CreateRequestLabel_fromLocationId}" for="fromLocationId" />
                         <p:selectOneMenu id="fromLocationId" value="#{requestController.selected.fromLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_fromLocationId}">
+                            <!--<p:ajax event="change" update="msgtext" listener="#{requestController.selected.fromLocationId.itemCollectionString}" />-->
                             <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
 
                                            var="fromLocationIdItem"
@@ -35,36 +33,52 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
+                    <br/>
                     <h:form>
-                        List of Needs
+                        <div style="text-align: center; font-size: large; font-weight: bold;">
+                            List of Needs
+                        </div>
+                        <br/>
+                        <br/>
+
 
                         <div>
+                            <div>
+                                <p:outputLabel style="font-weight: bold" value="Water"/>
+                                <p:inputNumber style="float: right" value="#{requestController.waterNeed.quantity}"/>   
+                            </div>
+                            <br/> 
+                            <div>
+                                <p:outputLabel style="font-weight: bold" value="Canned Goods"/>
+                                <p:inputNumber style="float: right" value="#{requestController.cannedNeed.quantity}"/>
+                            </div>
 
-                            <span style="float: left">
+                            <br/>
+                            <div>
+                                <p:outputLabel style="font-weight: bold" value="Blankets"/>
+                                <p:inputNumber style="float: right" value="#{requestController.blanketNeed.quantity}"/>
+                            </div>
 
+                            <br/>
+                            <div>
+                                <p:outputLabel style="font-weight: bold" value="Shelter"/>
+                                <p:inputNumber style="float: right" value="#{requestController.shelterNeed.quantity}"/>
+                            </div>
 
-                                <ui:repeat value="#{CreateNeedList.items}" var="item">
-                                    <!--<h:inputText value="#{item}" />-->
-                                    <p:selectOneMenu value="#{item}" required="true">
-                                        <f:selectItems value="#{itemController.itemsAvailableSelectOne}" var="oneItem" itemLabel="#{oneItem.itemType}" 
-                                                       itemValue="#{oneItem.id}"/>
-                                    </p:selectOneMenu>
-                                    <br />
-                                </ui:repeat>
+                            <br/>
+                            <div>
+                                <p:outputLabel style="font-weight: bold" value="Emergency Kits"/>
+                                <p:inputNumber style="float: right" value="#{requestController.emergencyNeed.quantity}"/>
 
+                            </div>
 
+                            <br/>
+                            <div>
+                                <p:outputLabel style="font-weight: bold" value="USD"/>
+                                <p:inputNumber style="float: right" value="#{requestController.usdNeed.quantity}"/> 
+                            </div>
 
-
-                            </span>
-                            <span style="float: right">
-                                <ui:repeat value="#{CreateNeedList.quantities}" var="qty">
-                                    <p:inputText value="#{qty}"  valueChangeListener="#{CreateNeedList.changed}" />
-                                    <br />
-                                </ui:repeat>
-                            </span>
                         </div>
-
-
 
                         <br />
                         <br/>
@@ -74,12 +88,6 @@
 
                     </h:form>
                     <div style="text-align: center">
-
-
-                        <p:commandButton value="Add new Need">
-                            <f:ajax listener="#{CreateNeedList.extend}"
-                                    render="@form" />
-                        </p:commandButton>
                         <p:commandButton actionListener="#{requestController.create}" value="#{bundle.Save}" update="display,:RequestListForm:datalist,:growl" oncomplete="handleSubmit(args,'RequestCreateDialog');"/>
                         <p:commandButton value="#{bundle.Cancel}" onclick="RequestCreateDialog.hide()"/>
                     </div>

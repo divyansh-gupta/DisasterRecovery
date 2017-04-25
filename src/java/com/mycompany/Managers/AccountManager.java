@@ -5,9 +5,11 @@
  */
 package com.mycompany.Managers;
 
+import com.mycompany.DisasterRecovery.Item;
 import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Responder;
 import static com.mycompany.Managers.Constants.DEFAULT_PHOTO_RELATIVE_PATH;
+import com.mycompany.sessionbeans.ItemFacade;
 import com.mycompany.sessionbeans.LocationFacade;
 //import com.mycompany.Managers.Constants;
 
@@ -17,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -111,6 +115,17 @@ public class AccountManager implements Serializable {
     private ResponderFacade responderFacade;
     @EJB
     private LocationFacade locationFacade;
+
+    @EJB
+    private ItemFacade itemFacade;
+
+    public ItemFacade getItemFacade() {
+        return itemFacade;
+    }
+
+    public void setItemFacade(ItemFacade itemFacade) {
+        this.itemFacade = itemFacade;
+    }
 
     // Constructor method instantiating an instance of AccountManager
     public AccountManager() {
@@ -220,7 +235,7 @@ public class AccountManager implements Serializable {
     public LocationFacade getLocationFacade() {
         return locationFacade;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -330,8 +345,58 @@ public class AccountManager implements Serializable {
             newEntry.setTriggered(Boolean.FALSE);
             getLocationFacade().create(newEntry);
             System.out.println("newEntry from DB: " + newEntry);
+            newEntry.setItemCollection(createInitItemList(newEntry));
             return newEntry;
         }
+    }
+
+    public Collection<Item> createInitItemList(Location location) {
+        Item water = new Item();
+        water.setItemType("WATER");
+        water.setQuantity(0);
+        water.setLocationId(location);
+
+        Item blanket = new Item();
+        blanket.setItemType("BLANKETS");
+        blanket.setQuantity(0);
+        blanket.setLocationId(location);
+
+        Item usd = new Item();
+        usd.setItemType("USD");
+        usd.setQuantity(0);
+        usd.setLocationId(location);
+
+        Item emergencyKits = new Item();
+        emergencyKits.setItemType("EMERGENCY_KITS");
+        emergencyKits.setQuantity(0);
+        emergencyKits.setLocationId(location);
+
+        Item cannedGoods = new Item();
+        cannedGoods.setItemType("CANNED_GOODS");
+        cannedGoods.setQuantity(0);
+        cannedGoods.setLocationId(location);
+
+        Item shelter = new Item();
+        shelter.setItemType("SHELTER");
+        shelter.setQuantity(0);
+        shelter.setLocationId(location);
+
+        getItemFacade().create(shelter);
+        getItemFacade().create(usd);
+        getItemFacade().create(blanket);
+        getItemFacade().create(emergencyKits);
+        getItemFacade().create(cannedGoods);
+        getItemFacade().create(water);
+
+        Collection<Item> returnList = new ArrayList();
+        returnList.add(shelter);
+        returnList.add(usd);
+        returnList.add(blanket);
+        returnList.add(cannedGoods);
+        returnList.add(water);
+        returnList.add(emergencyKits);
+
+        return returnList;
     }
 
     /*
@@ -367,7 +432,9 @@ public class AccountManager implements Serializable {
                 Location userLocation = getLatLongFromAddress(city, state, zipcode);
                 newResponder.setLocationId(userLocation);
                 newResponder.setUsername(username);
-                newResponder.setImage(DEFAULT_PHOTO_RELATIVE_PATH); 
+
+                newResponder.setImage(DEFAULT_PHOTO_RELATIVE_PATH);
+
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {
                 username = "";
@@ -390,6 +457,7 @@ public class AccountManager implements Serializable {
      Update the signed-in user's account profile. Return "" if an error occurs;w
      otherwise, upon successful account update, redirect to show the Profile page.
      */
+
     public String updateAccount() throws Exception {
 
         if (statusMessage == null || statusMessage.isEmpty()) {
@@ -436,7 +504,7 @@ public class AccountManager implements Serializable {
         return "";
     }
     
-    /*
+/*
     
     the signed-in user's account. Return "" if an error occurs; otherwise,
     upon successful account deletion, redirect to show the index (home) page.
@@ -741,12 +809,12 @@ public class AccountManager implements Serializable {
         
         Thus, JSF knows that 'CloudStorage/' is the document root directory.
          */
-        
         if (photo.equals(Constants.DEFAULT_PHOTO_RELATIVE_PATH)) {
             return photo;
         }
-        
+
         String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + photo;
+
         System.out.println(relativePhotoFilePath);
         System.out.println(Constants.PHOTOS_RELATIVE_PATH);
         return relativePhotoFilePath;

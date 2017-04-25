@@ -1,5 +1,8 @@
 package com.mycompany.jsfclasses;
 
+
+import com.mycompany.DisasterRecovery.Item;
+
 import com.mycompany.DisasterRecovery.Need;
 import com.mycompany.DisasterRecovery.Request;
 import com.mycompany.jsfclasses.util.JsfUtil;
@@ -8,10 +11,14 @@ import com.mycompany.sessionbeans.NeedFacade;
 import com.mycompany.sessionbeans.RequestFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -42,8 +49,80 @@ public class RequestController implements Serializable {
         this.needFacade = needFacade;
     }
     private Request selected;
+    private NeedController needCtrl = new NeedController();
 
+    Need waterNeed = new Need();
+    Need cannedNeed = new Need();
+    Need blanketNeed = new Need();
+    Need shelterNeed = new Need();
+    Need usdNeed = new Need();
+    Need emergencyNeed = new Need();
+
+    public RequestFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(RequestFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public Need getWaterNeed() {
+        return waterNeed;
+    }
+
+    public void setWaterNeed(Need waterNeed) {
+        this.waterNeed = waterNeed;
+    }
+
+    public Need getCannedNeed() {
+        return cannedNeed;
+    }
+
+    public void setCannedNeed(Need cannedNeed) {
+        this.cannedNeed = cannedNeed;
+    }
+
+    public Need getBlanketNeed() {
+        return blanketNeed;
+    }
+
+    public void setBlanketNeed(Need blanketNeed) {
+        this.blanketNeed = blanketNeed;
+    }
+
+    public Need getShelterNeed() {
+        return shelterNeed;
+    }
+
+    public void setShelterNeed(Need shelterNeed) {
+        this.shelterNeed = shelterNeed;
+    }
+
+    public Need getUsdNeed() {
+        return usdNeed;
+    }
+
+    public void setUsdNeed(Need usdNeed) {
+        this.usdNeed = usdNeed;
+    }
+
+    public Need getEmergencyNeed() {
+        return emergencyNeed;
+    }
+
+    public void setEmergencyNeed(Need emergencyNeed) {
+        this.emergencyNeed = emergencyNeed;
+    }
+
+//    public List<Need> getNeedsToAdd() {
+//        return needsToAdd;
+//    }
+//
+//    public void setNeedsToAdd(List<Need> needsToAdd) {
+//        this.needsToAdd = needsToAdd;
+//    }
     public RequestController() {
+
     }
 
     public Request getSelected() {
@@ -70,7 +149,54 @@ public class RequestController implements Serializable {
         return selected;
     }
 
+    public void createRequest() {
+        Collection<Need> needList = new ArrayList();
+        Map<String, Item> fromLocationMap = selected.getFromLocationId().getItemCollection()
+                .stream().collect(Collectors.toMap(i -> i.getItemType(), i -> i));
+
+        waterNeed.setItemId(fromLocationMap.get("WATER"));
+        cannedNeed.setItemId(fromLocationMap.get("CANNED_GOODS"));
+        blanketNeed.setItemId(fromLocationMap.get("SHELTER"));
+        shelterNeed.setItemId(fromLocationMap.get("BLANKETS"));
+        usdNeed.setItemId(fromLocationMap.get("EMERGENCY_KITS"));
+        emergencyNeed.setItemId(fromLocationMap.get("USD"));
+
+        waterNeed.setQuantity(0);
+        blanketNeed.setQuantity(0);
+        shelterNeed.setQuantity(0);
+        usdNeed.setQuantity(0);
+        cannedNeed.setQuantity(0);
+        emergencyNeed.setQuantity(0);
+        
+
+        if (waterNeed.getQuantity() > 0) {
+            needList.add(waterNeed);
+        }
+        if (blanketNeed.getQuantity() > 0) {
+            needList.add(blanketNeed);
+        }
+        if (shelterNeed.getQuantity() > 0) {
+            needList.add(shelterNeed);
+        }
+        if (cannedNeed.getQuantity() > 0) {
+            needList.add(cannedNeed);
+        }
+        if (emergencyNeed.getQuantity() > 0) {
+            needList.add(emergencyNeed);
+        }
+        if (usdNeed.getQuantity() > 0) {
+
+            needList.add(usdNeed);
+        }
+
+        selected.setNeedCollection(needList);
+
+    }
+
     public void create() {
+        createRequest();
+
+        this.selected.setStatus("REQUESTED");
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RequestCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.

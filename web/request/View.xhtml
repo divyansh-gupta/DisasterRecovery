@@ -9,7 +9,7 @@
     <ui:composition>
 
         <p:dialog id="RequestViewDlg" widgetVar="RequestViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRequestTitle}">
-            <h:form id="AddressRequestViewForm">
+            <h:form id="RequestViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
                         <h:outputText value="#{bundle.ViewRequestLabel_id}"/>

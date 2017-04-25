@@ -24,6 +24,17 @@ public class CreateNeedList {
         private List<Need> needs;
         private List<Item> items;
         private List<Integer> quantities;
+        
+        
+            @PostConstruct
+    public void init() {
+        items = new ArrayList();
+        quantities = new ArrayList();
+//        Need need = new Need();
+        items.add(new Item());
+        quantities.add(0);
+    }
+
 
     public List<Need> getNeeds() {
         return needs;
@@ -49,16 +60,11 @@ public class CreateNeedList {
         this.quantities = quantities;
     }
 
-    @PostConstruct
-    public void init() {
-        items = new ArrayList();
-        quantities = new ArrayList();
-//        Need need = new Need();
-        items.add(new Item());
-        quantities.add(0);
-    }
 
     public void submit() {
+        
+        System.out.println(needs.toString());
+        System.out.println(quantities.toString());
             
     }
     public void changed(ValueChangeEvent event) {
