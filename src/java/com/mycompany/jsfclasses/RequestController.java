@@ -104,8 +104,9 @@ public class RequestController implements Serializable {
         this.needs = needs;
     }
     
-    public void getNeedList(Request req) {
+    public List<Need> getNeedList(Request req) {
         needs = needFacade.findByLocation(req);
+        return needs;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {

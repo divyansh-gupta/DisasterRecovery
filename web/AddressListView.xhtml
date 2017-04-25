@@ -9,21 +9,20 @@
     <ui:composition>
 
         <p:dialog id="RequestViewDlg" widgetVar="RequestViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRequestTitle}">
-            <h:form id="AddressRequestViewForm" style="text-align: center;">
+            <h:form id="AddressRequestViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-                        <h:outputText value="#{bundle.ViewRequestLabel_id}"/>
+                        <h:outputText value="#{bundle.ViewRequestLabel_id}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.id}" title="#{bundle.ViewRequestLabel_id}"/>
-                        <h:outputText value="#{bundle.ViewRequestLabel_status}"/>
+                        <h:outputText value="#{bundle.ViewRequestLabel_status}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.status}" title="#{bundle.ViewRequestTitle_status}"/>
-                        <h:outputText value="#{bundle.ViewRequestLabel_fromLocationId}"/>
+                        <h:outputText value="#{bundle.ViewRequestLabel_fromLocationId}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.fromLocationId}" title="#{bundle.ViewRequestTitle_fromLocationId}"/>
-                        <h:outputText value="#{bundle.ViewRequestLabel_toLocationId}"/>
+                        <h:outputText value="#{bundle.ViewRequestLabel_toLocationId}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.toLocationId}" title="#{bundle.ViewRequestTitle_toLocationId}"/>
                     </p:panelGrid>
-                    <p:poll interval="3" listener="#{requestController.getNeedList(requestController.selected)}" update="updatecomponet" />
-                    <p:dataList value="#{requestController.needs}" var="s" id="updatecomponet">
-                            <p:outputLabel value="#{needController.needToString(s)}"></p:outputLabel>
+                    <p:dataList value="#{requestController.getNeedList(requestController.selected)}" var="s" id="updatecomponet" style="text-align: left;">
+                            <p:outputLabel value="#{needController.needToString(s)}" style="text-align: left;"></p:outputLabel>
                     </p:dataList>
                     <p:commandButton value="#{bundle.Close}" onclick="RequestViewDialog.hide()" />
                 </h:panelGroup>
