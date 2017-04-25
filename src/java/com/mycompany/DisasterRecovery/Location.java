@@ -68,6 +68,11 @@ public class Location implements Serializable {
     @Column(name = "triggered")
     private Boolean triggered;
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "description")
+    private String description;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private Collection<Item> itemCollection;
     
@@ -87,12 +92,21 @@ public class Location implements Serializable {
         this.id = id;
     }
 
-    public Location(Integer id, String locationName, BigDecimal latitude, BigDecimal longitude, Boolean triggered) {
+    public Location(Integer id, String locationName, BigDecimal latitude, BigDecimal longitude, Boolean triggered, String description) {
         this.id = id;
         this.locationName = locationName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.triggered = triggered;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getId() {
