@@ -387,60 +387,54 @@ public class AccountManager implements Serializable {
     }
 
     /*
-    Update the signed-in user's account profile. Return "" if an error occurs;w
-    otherwise, upon successful account update, redirect to show the Profile page.
+     Update the signed-in user's account profile. Return "" if an error occurs;w
+     otherwise, upon successful account update, redirect to show the Profile page.
      */
-//    public String updateAccount() {
-//
-//        if (statusMessage == null || statusMessage.isEmpty()) {
-//
-//            // Obtain the signed-in user's username
-//            String user_name = (String) FacesContext.getCurrentInstance().
-//                    getExternalContext().getSessionMap().get("username");
-//
-//            // Obtain the object reference of the signed-in user
-//            Responder editResponder = getResponderFacade().findByRespondername(user_name);
-//
-//            try {
-//                /*
-//                Set the signed-in user's properties to the values entered by
-//                the user in the EditAccountProfileForm in EditAccount.xhtml.
-//                 */
-//                editResponder.setFirstName(this.selected.getFirstName());
-//                editResponder.setMiddleName(this.selected.getMiddleName());
-//                editResponder.setLastName(this.selected.getLastName());
-//
-//                editResponder.setAddress1(this.selected.getAddress1());
-//                editResponder.setAddress2(this.selected.getAddress2());
-//                editResponder.setCity(this.selected.getCity());
-//                editResponder.setState(this.selected.getState());
-//                editResponder.setZipcode(this.selected.getZipcode());
-//                editResponder.setEmail(this.selected.getEmail());
-//
-//                // It is optional for the user to change his/her password
-//                String new_Password = getNewPassword();
-//
-//                if (new_Password == null || new_Password.isEmpty()) {
-//                    // Do nothing. The user does not want to change the password.
-//                } else {
-//                    editResponder.setPassword(new_Password);
-//                    // Password changed successfully!
-//                    // Password was first validated by invoking the validatePasswordChange method below.
-//                }
-//
-//                // Store the changes in the CloudDriveDB database
-//                getResponderFacade().edit(editResponder);
-//
-//            } catch (EJBException e) {
-//                username = "";
-//                statusMessage = "Something went wrong while editing user's profile! See: " + e.getMessage();
-//                return "";
-//            }
-//            // Account update is completed, redirect to show the Profile page.
-//            return "Profile.xhtml?faces-redirect=true";
-//        }
-//        return "";
-//    }
+    public String updateAccount() throws Exception {
+
+        if (statusMessage == null || statusMessage.isEmpty()) {
+
+            // Obtain the signed-in user's username
+            String user_name = (String) FacesContext.getCurrentInstance().
+                    getExternalContext().getSessionMap().get("username");
+
+            // Obtain the object reference of the signed-in user
+            Responder editResponder = getResponderFacade().findByUsername(user_name);
+
+            try {
+                /*
+                Set the signed-in user's properties to the values entered by
+                the user in the EditAccountProfileForm in EditAccount.xhtml.
+                 */
+                editResponder.setResponderName(this.selected.getResponderName());
+                editResponder.setEmail(this.selected.getEmail());
+                Location userLocation = getLatLongFromAddress(city, state, zipcode);
+                editResponder.setLocationId(userLocation);
+
+                // It is optional for the user to change his/her password
+                String new_Password = getNewPassword();
+
+                if (new_Password == null || new_Password.isEmpty()) {
+                    // Do nothing. The user does not want to change the password.
+                } else {
+                    editResponder.setPassword(new_Password);
+                    // Password changed successfully!
+                    // Password was first validated by invoking the validatePasswordChange method below.
+                }
+
+                // Store the changes in the CloudDriveDB database
+                getResponderFacade().edit(editResponder);
+
+            } catch (EJBException e) {
+                username = "";
+                statusMessage = "Something went wrong while editing user's profile! See: " + e.getMessage();
+                return "";
+            }
+            // Account update is completed, redirect to show the Profile page.
+            return "Profile.xhtml?faces-redirect=true";
+        }
+        return "";
+    }
     
     /*
     
