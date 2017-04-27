@@ -31,10 +31,9 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
                             <a href="AddressListContainer.xhtml" target="_blank">
                                 <h:outputLabel id="locationName" value="#{mapView.marker.title.replace('_', ' ')}" />
                             </a>
-                            
-                            <c:if test="#{locationController.getLocation(mapView.marker.data).getSelected().isTriggered()}"
 
-\                        </h:panelGroup>
+                            <!-- <c:if test="#{locationController.getLocation(mapView.marker.data).isTriggered()}" /> -->
+                        </h:panelGroup>
                     </p:gmapInfoWindow>
                 </p:gmap>
             </h:form>
