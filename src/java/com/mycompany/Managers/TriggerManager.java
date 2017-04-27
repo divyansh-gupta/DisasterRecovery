@@ -38,7 +38,7 @@ public class TriggerManager implements Serializable {
         Location userLocation = user.getLocationId();
         // TODO: Send Message to Nearby Responders
         userLocation.setTriggered(Boolean.TRUE);
-        userLocation.setDescription(emergencyDescription);
+        userLocation.setEmergencyDescription(emergencyDescription);
         locationFacade.edit(userLocation);
         return "/Map.xhtml?faces-redirect=true";
     }
@@ -46,7 +46,7 @@ public class TriggerManager implements Serializable {
     public String unTriggerEmergency(Responder user) {
         Location userLocation = user.getLocationId();
         userLocation.setTriggered(Boolean.FALSE);
-        userLocation.setDescription("");
+        userLocation.setEmergencyDescription("");
         locationFacade.edit(userLocation);
         return "/Profile.xhtml?faces-redirect=true";
     }
