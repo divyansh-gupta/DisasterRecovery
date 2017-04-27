@@ -69,7 +69,6 @@ public class Location implements Serializable {
     private Boolean triggered;
     
     @Basic(optional = false)
-    @NotNull
     @Column(name = "emergency_description")
     private String emergencyDescription;
     
