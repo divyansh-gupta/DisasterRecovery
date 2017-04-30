@@ -51,7 +51,7 @@ public class MapView implements Serializable {
 
     private static final String TRIGGERED_ICON = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
     private static final String UNTRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
-    private static final String MYLOCATION_ICON = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+    private static final String MYLOCATION_ICON = "resources/images/mylocation.png";
 
     @PostConstruct
     public void init() {
@@ -62,7 +62,7 @@ public class MapView implements Serializable {
             Marker newMarker = new Marker(coord, location.getLocationName(), location);
             newMarker.setIcon(UNTRIGGERED_ICON);
             
-            if (Objects.equals(accountManager.getSelected().getLocationId().getId(), location.getId())) {
+            if (accountManager.isLoggedIn() && Objects.equals(accountManager.getSelected().getLocationId().getId(), location.getId())) {
                 newMarker.setIcon(MYLOCATION_ICON);
             }
             
