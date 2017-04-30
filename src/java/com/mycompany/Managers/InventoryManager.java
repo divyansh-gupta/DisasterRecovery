@@ -70,8 +70,10 @@ public class InventoryManager implements Serializable {
 
     public Integer getWaterCount() {
 //        Location userLocation = getLoggedInUser().getLocationId();
+//        System.out.println(userLocation.getItemCollection());
 //        Map<String, Item> typeItemMap = userLocation.getItemCollection().stream()
 //            .collect(Collectors.toMap(item -> item.getItemType(), item -> item));
+////        System.out.println(typeItemMap);
 //        return typeItemMap.get("WATER").getQuantity();
         return waterCount;
     }

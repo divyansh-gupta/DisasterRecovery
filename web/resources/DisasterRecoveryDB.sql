@@ -55,12 +55,13 @@ CREATE TABLE Item (
 
 -- Locations
 INSERT INTO Location (location_name, latitude, longitude, triggered) VALUES
-('Burruss_Hall', 37.229, -80.42371, false), ('McBride_Hall', 37.23062, -80.42178, false), ('New_Classroom_Building', 37.229270, -80.427207, false);
-
+('Blacksburg, VA 24060', 37.2724841, -80.4326521, false), ('Richmond, VA 23173', 37.5745428,37.5745428, false), ('Roanoke, VA 24001', 37.27, -79.94, false);
 
 -- Responders
 INSERT INTO Responder (username, email, responder_name, image, password, location_id) VALUES
-('mr_root', 'divyg@vt.edu', 'Responder1', '', 'password', 1), ('mr_root2', 'bhaanuk5@vt.edu', 'Responder2', '', 'password', 1), ('mr_root3', 'bhaanukaul@gmail.com', 'Responder3', '', 'password', 1);
+('mr_root', 'divyg@vt.edu', 'Responder1', '', 'password', 1),
+('mr_root2', 'bhaanuk5@vt.edu', 'Responder2', '', 'password', 1),
+('mr_root3', 'bhaanukaul@gmail.com', 'Responder3', '', 'password', 1);
 
 -- Resquests
 INSERT INTO Request (status, from_location_id, to_location_id) VALUES
@@ -72,6 +73,8 @@ INSERT INTO Need (item_id, request_id, quantity) VALUES
 
 -- Items
 INSERT INTO Item (location_id, item_type, quantity) VALUES
-(1, 'WATER', 5), (1, 'CANNED_GOODS', 5), (1, 'BLANKETS', 5);
+(1, 'WATER', 5), (1, 'CANNED_GOODS', 5), (1, 'BLANKETS', 5), (1, 'USD', 5), (1, 'SHELTER', 5), (1, 'EMERGENCY_KITS', 5),
+(2, 'WATER', 5), (2, 'CANNED_GOODS', 5), (2, 'BLANKETS', 5), (2, 'USD', 5), (2, 'SHELTER', 5), (2, 'EMERGENCY_KITS', 5),
+(3, 'WATER', 5), (3, 'CANNED_GOODS', 5), (3, 'BLANKETS', 5), (3, 'USD', 5), (3, 'SHELTER', 5), (3, 'EMERGENCY_KITS', 5);
 
 SET FOREIGN_KEY_CHECKS = 1;
