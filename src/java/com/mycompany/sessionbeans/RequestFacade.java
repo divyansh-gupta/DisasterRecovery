@@ -40,4 +40,8 @@ public class RequestFacade extends AbstractFacade<Request> {
                 + "WHERE c.fromLocationId=:location"
                 + " OR c.toLocationId=:location ORDER BY c.status ASC").setParameter("location", location).getResultList();
     }
+    
+    public Request findById(Request id) {
+        return (Request) em.createQuery("SELECT r FROM Request r WHERE r.id = :id").setParameter("id", id).getSingleResult();
+    }
 }

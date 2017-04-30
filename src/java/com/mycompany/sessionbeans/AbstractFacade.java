@@ -27,7 +27,7 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
+    public T create(T entity) {
 //        getEntityManager().persist(entity);
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         javax.validation.Validator validator = factory.getValidator();
@@ -42,11 +42,16 @@ public abstract class AbstractFacade<T> {
             }
         } else {
             getEntityManager().persist(entity);
+            getEntityManager().flush();
+            return entity;
         }
+        return null;
     }
 
-    public void edit(T entity) {
+    public T edit(T entity) {
         getEntityManager().merge(entity);
+        getEntityManager().flush();
+        return entity;
     }
 
     public void remove(T entity) {

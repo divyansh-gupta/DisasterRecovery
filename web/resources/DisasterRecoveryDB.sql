@@ -19,7 +19,7 @@ CREATE TABLE Responder (
 );
 
 CREATE TABLE Request (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ID INT PRIMARY KEY NOT NULL,
     status ENUM('REQUESTED', 'IN_PROGRESS', 'COMPLETED') NOT NULL,
     from_location_id INT NOT NULL,
     to_location_id INT NOT NULL,
@@ -64,12 +64,12 @@ INSERT INTO Responder (username, email, responder_name, image, password, locatio
 ('mr_root3', 'bhaanukaul@gmail.com', 'Responder3', '', 'password', 1);
 
 -- Resquests
-INSERT INTO Request (status, from_location_id, to_location_id) VALUES
-('REQUESTED', 1, 2), ('IN_PROGRESS', 1, 2), ('COMPLETED', 1, 2);
+INSERT INTO Request (ID, status, from_location_id, to_location_id) VALUES
+(1, 'REQUESTED', 1, 2), (2, 'IN_PROGRESS', 1, 2), (3, 'COMPLETED', 1, 2);
 
 -- Needs
-INSERT INTO Need (item_id, request_id, quantity) VALUES
-(1, 1, 5), (2, 1, 5), (3, 1, 10);
+-- INSERT INTO Need (item_id, request_id, quantity) VALUES
+-- (1, 1, 5), (2, 1, 5), (3, 1, 10);
 
 -- Items
 INSERT INTO Item (location_id, item_type, quantity) VALUES

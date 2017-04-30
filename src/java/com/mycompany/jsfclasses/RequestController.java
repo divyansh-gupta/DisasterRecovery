@@ -1,18 +1,19 @@
 package com.mycompany.jsfclasses;
 
-
 import com.mycompany.DisasterRecovery.Item;
 
 import com.mycompany.DisasterRecovery.Need;
 import com.mycompany.DisasterRecovery.Request;
 import com.mycompany.jsfclasses.util.JsfUtil;
 import com.mycompany.jsfclasses.util.JsfUtil.PersistAction;
+import com.mycompany.sessionbeans.ItemFacade;
 import com.mycompany.sessionbeans.NeedFacade;
 import com.mycompany.sessionbeans.RequestFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -27,6 +28,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import java.util.Random;
 
 @Named("requestController")
 @SessionScoped
@@ -34,10 +36,24 @@ public class RequestController implements Serializable {
 
     @EJB
     private com.mycompany.sessionbeans.RequestFacade ejbFacade;
-    
+
     @EJB
     NeedFacade needFacade;
+
+    @EJB
+    private ItemFacade itemFacade;
     
+    @EJB
+    private RequestFacade requestFacade;
+
+    public RequestFacade getRequestFacade() {
+        return requestFacade;
+    }
+
+    public void setRequestFacade(RequestFacade requestFacade) {
+        this.requestFacade = requestFacade;
+    }
+
     private List<Request> items = null;
     private List<Need> needs = null;
 
@@ -60,6 +76,14 @@ public class RequestController implements Serializable {
 
     public RequestFacade getEjbFacade() {
         return ejbFacade;
+    }
+
+    public ItemFacade getItemFacade() {
+        return itemFacade;
+    }
+
+    public void setItemFacade(ItemFacade itemFacade) {
+        this.itemFacade = itemFacade;
     }
 
     public void setEjbFacade(RequestFacade ejbFacade) {
@@ -151,8 +175,10 @@ public class RequestController implements Serializable {
 
     public void createRequest() {
         Collection<Need> needList = new ArrayList();
-        Map<String, Item> fromLocationMap = selected.getFromLocationId().getItemCollection()
+        Map<String, Item> fromLocationMap = getItemFacade().findByLocationId(selected.getFromLocationId())
                 .stream().collect(Collectors.toMap(i -> i.getItemType(), i -> i));
+
+        System.out.println(selected.getFromLocationId());
 
         waterNeed.setItemId(fromLocationMap.get("WATER"));
         cannedNeed.setItemId(fromLocationMap.get("CANNED_GOODS"));
@@ -160,31 +186,47 @@ public class RequestController implements Serializable {
         shelterNeed.setItemId(fromLocationMap.get("BLANKETS"));
         usdNeed.setItemId(fromLocationMap.get("EMERGENCY_KITS"));
         emergencyNeed.setItemId(fromLocationMap.get("USD"));
+//                waterNeed.setQuantity(0);
+//        blanketNeed.setQuantity(0);
+//        shelterNeed.setQuantity(0);
+//        usdNeed.setQuantity(0);
+//        cannedNeed.setQuantity(0);
+//        emergencyNeed.setQuantity(0);
 
-        waterNeed.setQuantity(0);
-        blanketNeed.setQuantity(0);
-        shelterNeed.setQuantity(0);
-        usdNeed.setQuantity(0);
-        cannedNeed.setQuantity(0);
-        emergencyNeed.setQuantity(0);
+        waterNeed.setRequestId(selected);
+        cannedNeed.setRequestId(selected);
+        blanketNeed.setRequestId(selected);
+        shelterNeed.setRequestId(selected);
+        usdNeed.setRequestId(selected);
+        emergencyNeed.setRequestId(selected);
         
 
         if (waterNeed.getQuantity() > 0) {
+            getNeedFacade().create(waterNeed);
             needList.add(waterNeed);
         }
         if (blanketNeed.getQuantity() > 0) {
+            getNeedFacade().create(blanketNeed);
+
             needList.add(blanketNeed);
         }
         if (shelterNeed.getQuantity() > 0) {
+            getNeedFacade().create(shelterNeed);
+
             needList.add(shelterNeed);
         }
         if (cannedNeed.getQuantity() > 0) {
+            getNeedFacade().create(cannedNeed);
+
             needList.add(cannedNeed);
         }
         if (emergencyNeed.getQuantity() > 0) {
+            getNeedFacade().create(emergencyNeed);
+
             needList.add(emergencyNeed);
         }
         if (usdNeed.getQuantity() > 0) {
+            getNeedFacade().create(usdNeed);
 
             needList.add(usdNeed);
         }
@@ -194,13 +236,20 @@ public class RequestController implements Serializable {
     }
 
     public void create() {
-        createRequest();
-
+        Date date = new Date();
+        Random rand = new Random(date.getTime());
+        int temp = rand.nextInt();
+        selected.setId(Math.abs(temp));
+//        System.out.println("Temp: " + temp);
         this.selected.setStatus("REQUESTED");
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RequestCreated"));
+        selected = persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RequestCreated"));
+        
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
+//        System.out.println("id: " + selected.getId());
+        
+       createRequest();
     }
 
     public void update() {
@@ -229,18 +278,18 @@ public class RequestController implements Serializable {
     public void setNeeds(List<Need> needs) {
         this.needs = needs;
     }
-    
+
     public List<Need> getNeedList(Request req) {
         needs = needFacade.findByLocation(req);
         return needs;
     }
 
-    private void persist(PersistAction persistAction, String successMessage) {
+    private Request persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
+                    return (Request) getFacade().edit(selected);
                 } else {
                     getFacade().remove(selected);
                 }
@@ -261,6 +310,7 @@ public class RequestController implements Serializable {
                 JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
         }
+        return null;
     }
 
     public Request getRequest(java.lang.Integer id) {
