@@ -41,8 +41,8 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <h:outputLabel value="USD ($)" for="dollarCount" />
                         <p:inputNumber id="dollarCount" value="#{inventoryManager.dollarCount}" required="true" styleClass="signInInputTextField"
                                       converterMessage="Please enter valid dollar amounts only." label="dollarCount" 
-                                      symbol=" CHF" symbolPosition="s" 
-                                      decimalSeparator="," thousandSeparator="."/>
+                                      symbol=" USD" symbolPosition="s"
+                                      decimalSeparator="." thousandSeparator=","/>
                     </p:panelGrid>
                     <p:commandButton id="trigger" value="Update Inventory" action="#{inventoryManager.updateInventory(accountManager.selected)}"
                                  styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
