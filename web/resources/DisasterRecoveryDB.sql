@@ -53,6 +53,14 @@ CREATE TABLE Item (
     FOREIGN KEY (location_id) REFERENCES Location(ID)
 );
 
+CREATE TABLE Message (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    time_stamp DATETIME NOT NULL,
+    sender_location INT NOT NULL,
+    reciever_location INT NOT NULL,
+    description VARCHAR(500) NOT NULL
+);
+
 -- Locations
 INSERT INTO Location (location_name, latitude, longitude, triggered) VALUES
 ('Blacksburg, VA 24060', 37.2724841, -80.4326521, false), ('Richmond, VA 23173', 37.5745428,37.5745428, false), ('Roanoke, VA 24001', 37.27, -79.94, false);

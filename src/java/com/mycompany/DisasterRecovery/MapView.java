@@ -65,7 +65,7 @@ public class MapView implements Serializable {
             if (accountManager.isLoggedIn() && Objects.equals(accountManager.getSelected().getLocationId().getId(), location.getId())) {
                 newMarker.setIcon(MYLOCATION_ICON);
             }
-            
+
             if (location.isTriggered()) {
                 newMarker.setIcon(TRIGGERED_ICON);
             }
