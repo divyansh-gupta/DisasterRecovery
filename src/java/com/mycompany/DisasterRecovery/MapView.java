@@ -85,6 +85,10 @@ public class MapView implements Serializable {
         marker = (Marker) event.getOverlay();
         locationManager.setSelected(locationFacade.findLocationByName(marker.getTitle()));
     }
+    
+    public String getData() {
+        return locationManager.getSelected().getEmergencyDescription();
+    }
 
     public Marker getMarker() {
         return marker;
