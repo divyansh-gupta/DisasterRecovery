@@ -21,7 +21,7 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
             <h:form>
                 <p:gmap id="gmap" center="#{mapView.getMapCenter()}" zoom="13" type="HYBRID" model="#{mapView.advancedModel}" style="width:100%;height:800px">
 
-                    <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />
+                    <p:ajax event="overlaySelect" listener="#{mapView.onMarkerSelect}" />                  
 
                     <p:gmapInfoWindow id="infoWindow">
                         <h:panelGroup id="display">
@@ -30,7 +30,7 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
                             <a href="AddressListContainer.xhtml" target="_blank">
                                 <h:outputLabel id="locationName" value="#{mapView.marker.title.replace('_', ' ')}" />
                             </a>
-                            
+
                             <c:if test="#{LocationManager.selected.isTriggered()}" >
                                 <br/>
                                 <h:outputLabel for="locationDescription" value="Description:" style="font-weight:bold"/>

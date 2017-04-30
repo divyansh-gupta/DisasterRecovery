@@ -29,35 +29,34 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <c:if test="#{accountManager.isLoggedIn() == false}">
                             <h:link outcome="/SignIn"><img src="#{resource['images/DisasterRecoveryLogo.png']}"
-                                                         style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                                         alt="Disaster Recovery Logo" />
+                                                           style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                                           alt="Disaster Recovery Logo" />
                             </h:link>
                         </c:if>
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == true}">
                                 <h:link outcome="/Map"><img src="#{resource['images/DisasterRecoveryLogo.png']}"
-                                                         style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                                         alt="Disaster Recovery Logo" />
+                                                            style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                                            alt="Disaster Recovery Logo" />
                                 </h:link>
                             </c:if>
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == false}">
                                 <h:link outcome="/Profile"><img src="#{resource['images/DisasterRecoveryLogo.png']}"
-                                                         style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                                         alt="Disaster Recovery Logo" />
+                                                                style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                                                alt="Disaster Recovery Logo" />
                                 </h:link>
                             </c:if>
                         </c:if>
                     </td>
+
                     <td align="center" valign="middle">
 
                         <!-- Welcome the user if signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == true}">
                                 <h1>Your location has an emergency triggered!</h1>
-                                <h:form>
-                                    <p:commandButton id="trigger" value="Untrigger Emergency" action="#{triggerManager.unTriggerEmergency(accountManager.selected)}"
-                                     styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
-                                </h:form>
+                                <p:commandButton id="trigger" value="Untrigger Emergency" action="#{triggerManager.unTriggerEmergency(accountManager.selected)}"
+                                                 styleClass="commandButton" ajax="false" icon="fa fa-exclamation-triangle" />
                             </c:if>
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == false}">
                                 <h1>There is currently no emergency triggered in your area.</h1>
@@ -65,6 +64,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         </c:if>
 
                     </td>
+
                     <td align="right" valign="middle">
 
                         <!-- 
