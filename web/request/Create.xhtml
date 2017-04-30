@@ -7,14 +7,14 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
+                                <p:messages id="msgtext"></p:messages>
+
         <p:dialog id="RequestCreateDlg" widgetVar="RequestCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRequestTitle}">
             <h:form id="RequestCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-                        <p:messages id="msgtext"></p:messages>
                         <p:outputLabel value="#{bundle.CreateRequestLabel_fromLocationId}" for="fromLocationId" />
                         <p:selectOneMenu id="fromLocationId" value="#{requestController.selected.fromLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_fromLocationId}">
-                            <!--<p:ajax event="change" update="msgtext" listener="#{requestController.selected.fromLocationId.itemCollectionString}" />-->
                             <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
 
                                            var="fromLocationIdItem"

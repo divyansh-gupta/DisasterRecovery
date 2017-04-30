@@ -59,7 +59,7 @@ public class Request implements Serializable {
     @ManyToOne(optional = false)
     private Location toLocationId;
     
-   
+      
 
     public Request() {
     }
@@ -121,6 +121,9 @@ public class Request implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
+    
+    
+    
 
     @Override
     public boolean equals(Object object) {

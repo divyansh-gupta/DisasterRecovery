@@ -7,6 +7,7 @@ package com.mycompany.DisasterRecovery;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -71,6 +72,7 @@ public class Location implements Serializable {
     @Basic(optional = false)
     @Column(name = "emergency_description")
     private String emergencyDescription;
+
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locationId")
     private Collection<Item> itemCollection;
@@ -152,7 +154,7 @@ public class Location implements Serializable {
     public Collection<Item> getItemCollection() {
         return itemCollection;
     }
-
+    
     public void setItemCollection(Collection<Item> itemCollection) {
         this.itemCollection = itemCollection;
     }
