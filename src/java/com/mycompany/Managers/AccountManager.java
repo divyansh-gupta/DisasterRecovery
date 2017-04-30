@@ -1,4 +1,3 @@
-
 /*
  * Created by Osman Balci on 2017.01.28  * 
  * Copyright © 2017 Osman Balci. All rights reserved. * 
@@ -11,8 +10,6 @@ import com.mycompany.DisasterRecovery.Responder;
 import static com.mycompany.Managers.Constants.DEFAULT_PHOTO_RELATIVE_PATH;
 import com.mycompany.sessionbeans.ItemFacade;
 import com.mycompany.sessionbeans.LocationFacade;
-//import com.mycompany.Managers.Constants;
-
 import com.mycompany.sessionbeans.ResponderFacade;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
