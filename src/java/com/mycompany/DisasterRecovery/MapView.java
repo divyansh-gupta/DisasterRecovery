@@ -4,12 +4,14 @@
  */
 package com.mycompany.DisasterRecovery;
 
+import com.mycompany.Managers.AccountManager;
 import com.mycompany.sessionbeans.LocationFacade;
 import com.mycompany.sessionbeans.NeedFacade;
 import com.mycompany.sessionbeans.RequestFacade;
 import com.mycompany.sessionbeans.ResponderFacade;
 import com.mycompany.requestList.LocationManager;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -40,12 +42,16 @@ public class MapView implements Serializable {
 
     @Inject
     private LocationManager locationManager;
+    
+    @Inject
+    private AccountManager accountManager;
 
     private MapModel advancedModel;
     private Marker marker;
 
     private static final String TRIGGERED_ICON = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
     private static final String UNTRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
+    private static final String MYLOCATION_ICON = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
 
     @PostConstruct
     public void init() {
@@ -56,9 +62,14 @@ public class MapView implements Serializable {
             Marker newMarker = new Marker(coord, location.getLocationName(), location);
             newMarker.setIcon(UNTRIGGERED_ICON);
             
+            if (Objects.equals(accountManager.getSelected().getLocationId().getId(), location.getId())) {
+                newMarker.setIcon(MYLOCATION_ICON);
+            }
+            
             if (location.isTriggered()) {
                 newMarker.setIcon(TRIGGERED_ICON);
             }
+                                    
             advancedModel.addOverlay(newMarker);
         });
     }
