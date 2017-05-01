@@ -449,23 +449,22 @@ public class AccountManager implements Serializable {
         }
         return "";
     }
-
-    /*
+/*
      Update the signed-in user's account profile. Return "" if an error occurs;w
      otherwise, upon successful account update, redirect to show the Profile page.
      */
-
+ 
     public String updateAccount() throws Exception {
-
+ 
         if (statusMessage == null || statusMessage.isEmpty()) {
-
+ 
             // Obtain the signed-in user's username
             String user_name = (String) FacesContext.getCurrentInstance().
                     getExternalContext().getSessionMap().get("username");
-
+ 
             // Obtain the object reference of the signed-in user
             Responder editResponder = getResponderFacade().findByUsername(user_name);
-
+ 
             try {
                 /*
                 Set the signed-in user's properties to the values entered by
@@ -473,12 +472,14 @@ public class AccountManager implements Serializable {
                  */
                 editResponder.setResponderName(this.selected.getResponderName());
                 editResponder.setEmail(this.selected.getEmail());
-                Location userLocation = getLatLongFromAddress(city, state, zipcode);
-                editResponder.setLocationId(userLocation);
-
+                editResponder.setLocationName(this.selected.getLocationId().getLocationName());
+                editResponder.setUsername(this.selected.getUsername());
+//                Location userLocation = getLatLongFromAddress(city, state, zipcode);
+//                editResponder.setLocationId(userLocation);
+ 
                 // It is optional for the user to change his/her password
                 String new_Password = getNewPassword();
-
+ 
                 if (new_Password == null || new_Password.isEmpty()) {
                     // Do nothing. The user does not want to change the password.
                 } else {
@@ -486,10 +487,10 @@ public class AccountManager implements Serializable {
                     // Password changed successfully!
                     // Password was first validated by invoking the validatePasswordChange method below.
                 }
-
+ 
                 // Store the changes in the CloudDriveDB database
                 getResponderFacade().edit(editResponder);
-
+ 
             } catch (EJBException e) {
                 username = "";
                 statusMessage = "Something went wrong while editing user's profile! See: " + e.getMessage();
