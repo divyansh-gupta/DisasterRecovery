@@ -47,7 +47,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <!-- CITY -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_city}" for="city" />
                         <p:inputText id="city" value="#{accountManager.city}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_city}" label="City">
+                                     requiredMessage="#{bundle.EditResponderRequiredMessage_city}" label="City">
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
@@ -61,7 +61,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <!-- ZIP CODE -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_zipcode}" for="zipcode" />
                         <p:inputText id="zipcode" value="#{accountManager.zipcode}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_zipcode}" label="Zip Code" >
+                                     requiredMessage="#{bundle.EditResponderRequiredMessage_zipcode}" label="Zip Code" >
                             <f:validateLength minimum="5" />
                             <f:validator validatorId="zipCodeValidator"/> 
                         </p:inputText>
