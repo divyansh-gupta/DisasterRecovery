@@ -97,7 +97,7 @@ public class Request implements Serializable {
     public void setNeedCollection(Collection<Need> needCollection) {
         this.needCollection = needCollection;
     }
-
+    
     public Location getFromLocationId() {
         return fromLocationId;
     }

@@ -66,7 +66,7 @@ public class Subscriber implements MessageListener {
         
         try {
             Message message = messageFacade.find(Integer.valueOf(txtMsg.getJMSMessageID()));
-            Map<Location, Map<Integer, Message>> toLocationMessageMap = messageManager.getLocationMessagesMap();
+            //Map<Location, Map<Integer, Message>> toLocationMessageMap = messageManager.getLocationMessagesMap();
             
         } catch (JMSException ex) {
             Logger.getLogger(Subscriber.class.getName()).log(Level.SEVERE, null, ex);

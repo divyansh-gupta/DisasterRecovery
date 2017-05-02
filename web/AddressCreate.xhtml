@@ -10,7 +10,8 @@
         <p:dialog id="RequestCreateDlg" widgetVar="RequestCreateDialog" 
                   modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRequestTitle} from #{LocationManager.selected.getLocationName()}">
             <h:form id="AddressRequestCreateForm">
-                <p:inputText  id="fromLocationId" type="hidden" value="#{LocationManager.selected}"/>
+               #{requestController.selected.setFromLocationId(LocationManager.selected)}
+
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateRequestLabel_toLocationId}" for="toLocationId" />
