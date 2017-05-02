@@ -21,6 +21,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
 import javax.naming.NamingException;
@@ -38,6 +39,8 @@ public class MessageManager implements Serializable {
     private Publisher publisher;
     private Subscriber subscriber;
 
+    @Inject
+    private AccountManager accountManager;
     
     @EJB
     private MessageFacade messageFacade;
@@ -74,16 +77,17 @@ public class MessageManager implements Serializable {
         }
     }
     
-    public Map<Location, List<Message>> getLocationMessagesMap(Responder currentUser) {
-        int userLocId = currentUser.getLocationId().getId();
-        Map<Location, List<Message>> locationMessagesMap = messageFacade.findAll().stream().distinct()
-                .filter((message) -> (message.getRecieverLocation().getId() == userLocId) || (message.getSenderLocation().getId() == userLocId))
+    public Map<Location, List<Message>> getLocationMessagesMap() {
+        int userLocId = accountManager.getSelected().getLocationId().getId();
+        locationMessagesMap = messageFacade.findAll().stream().distinct()
+                .filter(message -> (message.getRecieverLocation().getId() == userLocId) || (message.getSenderLocation().getId() == userLocId))
                 .collect(Collectors.groupingBy(Message::getSenderLocation));
-//        for (Message msg : userMessages) {
-//            locationMessagesMap.put(msg., value)
-//        }
-//                .collect(Collectors.toMap(, valueMapper))
+        System.out.println(locationMessagesMap);
         return locationMessagesMap;
+    }
+    
+    public List<Location> getMessageLocations() {
+        return new ArrayList(getLocationMessagesMap().keySet());
     }
 
     public void setLocationMessagesMap(Map<Location, List<Message>> locationMessagesMap) {
@@ -93,7 +97,6 @@ public class MessageManager implements Serializable {
     public MessageFacade getMessageFacade() {
         return messageFacade;
     }
-    
 
     public void setMessageFacade(MessageFacade messageFacade) {
         this.messageFacade = messageFacade;
