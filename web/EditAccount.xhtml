@@ -39,31 +39,29 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <!-- RESPONDER NAME -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_responderName}" for="responderName" />
-                        <p:inputText id="responderName" value="#{accountManager.selected.responderName}" 
-                                     required="true" styleClass="accountInputTextField"
+                        <p:inputText id="responderName" value="#{accountManager.selected.responderName}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.EditResponderRequiredMessage_responderName}" label="Responder Name">
                             <f:validateLength minimum="2" />
                         </p:inputText>   
 
                         <!-- CITY -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_city}" for="city" />
-                        <p:inputText id="city" value="#{accountManager.getCityName()}" 
-                                     required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditResponderRequiredMessage_city}" label="City" >
+                        <p:inputText id="city" value="#{accountManager.city}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditUserRequiredMessage_city}" label="City">
                             <f:validateLength minimum="2" />
                         </p:inputText>
 
                         <!-- STATE ABBREVIATION -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_state}" for="state" />
-                        <h:selectOneMenu id="state" value="#{accountManager.getStateName()}" required="true" >
+                        <h:selectOneMenu id="state" value="#{accountManager.state}" required="true" >
                             <f:selectItems value="#{accountManager.listOfStates}" var="state"
                                            itemLabel="#{state}" itemValue="#{state}" />
                         </h:selectOneMenu>
 
                         <!-- ZIP CODE -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_zipcode}" for="zipcode" />
-                        <p:inputText id="zipcode" value="#{accountManager.getZipCodeName()}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditResponderRequiredMessage_zipcode}" label="Zip Code" >
+                        <p:inputText id="zipcode" value="#{accountManager.zipcode}" required="true" styleClass="accountInputTextField"
+                                     requiredMessage="#{bundle.EditUserRequiredMessage_zipcode}" label="Zip Code" >
                             <f:validateLength minimum="5" />
                             <f:validator validatorId="zipCodeValidator"/> 
                         </p:inputText>

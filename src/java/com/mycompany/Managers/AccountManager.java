@@ -548,18 +548,6 @@ public class AccountManager implements Serializable {
         }
         return "";
     }
-    
-    public String getCityName() {
-        return this.selected.getLocationId().getLocationName().split(",| ")[0];
-    }
-    
-    public String getStateName() {
-        return this.selected.getLocationId().getLocationName().split(",| ")[2];
-    }
-    
-    public String getZipCodeName() {
-        return this.selected.getLocationId().getLocationName().split(",| ")[3];
-    }
 
     // Validate if the entered password matches the entered confirm password
     public void validateInformation(ComponentSystemEvent event) {
