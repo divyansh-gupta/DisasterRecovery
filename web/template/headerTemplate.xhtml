@@ -50,8 +50,6 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     </td>
 
                     <td align="center" valign="middle">
-
-                        <!-- Welcome the user if signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <c:if test="#{triggerManager.userLocationIsTriggered(accountManager.selected) == true}">
                                 <h1>Your location has an emergency triggered!</h1>
@@ -66,13 +64,6 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     </td>
 
                     <td align="right" valign="middle">
-
-                        <!-- 
-                        With the i tag, you can access an icon given at http://fontawesome.io/icons/ by using
-                        its class name. For this to work, the following must be specified in the siteTemplate file:
-                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
-                        -->
-
                         <h:link outcome="/Map" styleClass="arialTen">
                             <i class="fa fa-map">&nbsp;</i>Map
                         </h:link>&nbsp;&nbsp;
