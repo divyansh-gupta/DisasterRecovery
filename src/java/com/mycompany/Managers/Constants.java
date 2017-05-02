@@ -12,7 +12,7 @@ public final class Constants {
 
     public static final String GMAPS_GEOCODE_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
     public static final String GMAPS_GEOCODE_API = "key=***REMOVED***";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/Cheng/NetbeansProjects/DisasterRecoveryStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/cheng/NetBeansProjects/DisasterRecovery/DisasterRecoveryStorage/";
     public static final String PHOTOS_RELATIVE_PATH = "DisasterRecoveryStorage/";
     public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage/defaultResponderPhoto.png";
 

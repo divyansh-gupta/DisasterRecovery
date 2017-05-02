@@ -31,26 +31,26 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     <h2>Please Choose Your Photo File and Upload It</h2>
 
                     <!-- See p:fileUpload documentation in PrimeFaces User Guide -->
-                    <p:fileUpload id="file" value="#{photoFileManager.file}" mode="simple" />
+                    <p:fileUpload id="file" value="#{photoManager.file}" mode="simple" />
                     <br/>
                     <br/>
                     <!-- fieldset is an HTML tag that draws a box around the content enclosed within it -->
                     <fieldset>
                         <!-- Upload action is performed with this command button -->
                         <p:commandButton id="upload" value="Upload" ajax="false" styleClass="commandButton"
-                                         action="#{photoFileManager.upload()}" icon="ui-icon-arrowthick-1-n" />
+                                         action="#{photoManager.upload()}" icon="ui-icon-arrowthick-1-n" />
                     </fieldset>
 
                     <br/>
                     <!-- Error messages are displayed here -->
-                    <h:outputText styleClass="errorMessages" value="#{photoFileManager.message}" />
+                    <h:outputText styleClass="errorMessages" value="#{photoManager.message}" />
                     
                     <br/>
                     <p:commandButton id="cancel" value="Cancel" ajax="false" styleClass="commandButton"
-                                         action="#{photoFileManager.cancel()}" icon="ui-icon-cancel" />
+                                         action="#{photoManager.cancel()}" icon="ui-icon-cancel" />
                     &nbsp;
                     <p:commandButton id="clear" value="Clear" ajax="false" styleClass="commandButton"
-                                         action="#{photoFileManager.clearErrorMessage()}" icon="ui-icon-refresh" />
+                                         action="#{photoManager.clearErrorMessage()}" icon="ui-icon-refresh" />
                 </h:form>
             </div>
 
