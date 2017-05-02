@@ -4,7 +4,9 @@
  */
 package com.mycompany.jms;
 
+import java.util.Date;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
@@ -37,8 +39,12 @@ public class Publisher {
         topicConnection.stop();
     }
 
-    public void sendMessageToTopic(String msg) throws JMSException {
-        topicPublisher.publish(topicSession.createTextMessage(msg));
+    public void sendMessageToTopic(String msgText, int msgId, int senderLocation, int recieverLocation, Date date) throws JMSException {
+        Message msg = topicSession.createTextMessage(msgText);
+        msg.setJMSMessageID(String.valueOf(msgId));
+        msg.setIntProperty("SenderLocationId", senderLocation);
+        msg.setIntProperty("RecieverLocationId", recieverLocation);
+        msg.setJMSTimestamp(date.getTime());
+        topicPublisher.publish(msg);
     }
-
 }

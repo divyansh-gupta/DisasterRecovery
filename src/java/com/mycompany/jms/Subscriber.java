@@ -4,6 +4,8 @@
  */
 package com.mycompany.jms;
 
+import com.mycompany.Managers.MessageManager;
+import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -25,6 +27,9 @@ public class Subscriber implements MessageListener {
     private final String topicName = "jms/DisasterRecoveryTopic";
     private Topic topic;
     private TopicSubscriber topicSubscriber;
+    
+    @Inject
+    private MessageManager messageManager;
 
     public Subscriber(String uname, String pwd) throws NamingException, JMSException {
         InitialContext ctx = new InitialContext();
@@ -41,13 +46,14 @@ public class Subscriber implements MessageListener {
     public void onMessage(Message msg) {
         try {
             TextMessage txtMsg = (TextMessage) msg;
-            String text = txtMsg.getText();
+            String msgTxt = txtMsg.getText();
+            
 
-            if (!text.equalsIgnoreCase("exit")) {
-                System.out.println("Notice text: " + text);
-            } else {
-                System.out.println("Good");
-            }
+//            if (!text.equalsIgnoreCase("exit")) {
+//                System.out.println("Notice text: " + text);
+//            } else {
+//                System.out.println("Good");
+//            }
         } catch (JMSException je) {
             je.printStackTrace();
         }

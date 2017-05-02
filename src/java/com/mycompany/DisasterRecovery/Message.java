@@ -1,5 +1,5 @@
 /*
- * Created by Divyansh Gupta on 2017.04.30  * 
+ * Created by Divyansh Gupta on 2017.05.02  * 
  * Copyright © 2017 Divyansh Gupta. All rights reserved. * 
  */
 package com.mycompany.DisasterRecovery;
@@ -9,9 +9,9 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -32,15 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m")
     , @NamedQuery(name = "Message.findById", query = "SELECT m FROM Message m WHERE m.id = :id")
     , @NamedQuery(name = "Message.findByTimeStamp", query = "SELECT m FROM Message m WHERE m.timeStamp = :timeStamp")
-    , @NamedQuery(name = "Message.findBySenderLocation", query = "SELECT m FROM Message m WHERE m.senderLocation = :senderLocation")
-    , @NamedQuery(name = "Message.findByRecieverLocation", query = "SELECT m FROM Message m WHERE m.recieverLocation = :recieverLocation")
     , @NamedQuery(name = "Message.findByDescription", query = "SELECT m FROM Message m WHERE m.description = :description")})
 public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ID")
     private Integer id;
     @Basic(optional = false)
@@ -50,17 +48,15 @@ public class Message implements Serializable {
     private Date timeStamp;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "sender_location")
-    private int senderLocation;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "reciever_location")
-    private int recieverLocation;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 500)
     @Column(name = "description")
     private String description;
+    @JoinColumn(name = "sender_location", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Location senderLocation;
+    @JoinColumn(name = "reciever_location", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Location recieverLocation;
 
     public Message() {
     }
@@ -69,11 +65,9 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public Message(Integer id, Date timeStamp, int senderLocation, int recieverLocation, String description) {
+    public Message(Integer id, Date timeStamp, String description) {
         this.id = id;
         this.timeStamp = timeStamp;
-        this.senderLocation = senderLocation;
-        this.recieverLocation = recieverLocation;
         this.description = description;
     }
 
@@ -93,28 +87,28 @@ public class Message implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public int getSenderLocation() {
-        return senderLocation;
-    }
-
-    public void setSenderLocation(int senderLocation) {
-        this.senderLocation = senderLocation;
-    }
-
-    public int getRecieverLocation() {
-        return recieverLocation;
-    }
-
-    public void setRecieverLocation(int recieverLocation) {
-        this.recieverLocation = recieverLocation;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Location getSenderLocation() {
+        return senderLocation;
+    }
+
+    public void setSenderLocation(Location senderLocation) {
+        this.senderLocation = senderLocation;
+    }
+
+    public Location getRecieverLocation() {
+        return recieverLocation;
+    }
+
+    public void setRecieverLocation(Location recieverLocation) {
+        this.recieverLocation = recieverLocation;
     }
 
     @Override

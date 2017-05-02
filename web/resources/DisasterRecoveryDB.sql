@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Location, Locations;
 DROP TABLE IF EXISTS Item, Items;
 DROP TABLE IF EXISTS Need, Needs;
 DROP TABLE IF EXISTS Triggered;
+DROP TABLE IF EXISTS MESSAGE;
 
 CREATE TABLE Responder (
     ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,7 +34,7 @@ CREATE TABLE Need (
     request_id INT NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (item_id) REFERENCES Item(ID),
-    FOREIGN KEY (request_id) REFERENCES Request(ID)
+    FOREIGN KEY (request_id) REFE RENCES Request(ID)
 );
 
 CREATE TABLE Location (
@@ -54,16 +55,19 @@ CREATE TABLE Item (
 );
 
 CREATE TABLE Message (
-    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ID INT PRIMARY KEY NOT NULL,
     time_stamp DATETIME NOT NULL,
     sender_location INT NOT NULL,
     reciever_location INT NOT NULL,
-    description VARCHAR(500) NOT NULL
+    description VARCHAR(500) NOT NULL,
+    FOREIGN KEY (sender_location) REFERENCES Location(ID),
+    FOREIGN KEY (reciever_location) REFERENCES Location(ID)
 );
 
 -- Locations
 INSERT INTO Location (location_name, latitude, longitude, triggered) VALUES
-('Blacksburg, VA 24060', 37.2724841, -80.4326521, false), ('Richmond, VA 23173', 37.5745428,37.5745428, false), ('Roanoke, VA 24001', 37.27, -79.94, false);
+('Blacksburg, VA 24060', 37.2724841, -80.4326521, false), ('Richmond, VA 23173', 37.5745428,37.5745428, false),
+('Roanoke, VA 24001', 37.27, -79.94, false);
 
 -- Responders
 INSERT INTO Responder (username, email, responder_name, image, password, location_id) VALUES
@@ -74,10 +78,6 @@ INSERT INTO Responder (username, email, responder_name, image, password, locatio
 -- Resquests
 INSERT INTO Request (ID, status, from_location_id, to_location_id) VALUES
 (1, 'REQUESTED', 1, 2), (2, 'IN_PROGRESS', 1, 2), (3, 'COMPLETED', 1, 2);
-
--- Needs
--- INSERT INTO Need (item_id, request_id, quantity) VALUES
--- (1, 1, 5), (2, 1, 5), (3, 1, 10);
 
 -- Items
 INSERT INTO Item (location_id, item_type, quantity) VALUES

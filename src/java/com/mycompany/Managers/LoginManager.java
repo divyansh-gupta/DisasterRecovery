@@ -137,7 +137,7 @@ public class LoginManager implements Serializable {
     }
     
     public String redirectIfSignedIn(Responder user) {
-        if (user.getLocationId().isTriggered()) {
+        if (user.getLocationId().getTriggered()) {
             return "/Map.xhtml?faces-redirect=true";
         }
         return "/Profile.xhtml?faces-redirect=true";

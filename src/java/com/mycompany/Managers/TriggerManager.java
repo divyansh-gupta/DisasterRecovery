@@ -59,6 +59,6 @@ public class TriggerManager implements Serializable {
         if (userLocation == null) {
             return false;
         }
-        return userLocation.isTriggered();
+        return userLocation.getTriggered();
     }
 }

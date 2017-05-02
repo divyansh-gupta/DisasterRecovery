@@ -42,6 +42,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findByLongitude", query = "SELECT l FROM Location l WHERE l.longitude = :longitude")})
 public class Location implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "triggered")
+    private boolean triggered;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderLocation")
+    private Collection<Message> messageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recieverLocation")
+    private Collection<Message> messageCollection1;
+
 //    @EJB
 //    ItemFacade itemFacade;
 //
@@ -76,10 +85,6 @@ public class Location implements Serializable {
     @Column(name = "longitude")
     private BigDecimal longitude;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "triggered")
-    private Boolean triggered;
 
     @Basic(optional = false)
     @Column(name = "emergency_description")
@@ -149,13 +154,6 @@ public class Location implements Serializable {
         return longitude;
     }
 
-    public Boolean isTriggered() {
-        return triggered;
-    }
-
-    public void setTriggered(Boolean triggered) {
-        this.triggered = triggered;
-    }
 
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
@@ -224,6 +222,32 @@ public class Location implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.DiasasterRecovery.Location[ id=" + id + " ]";
+    }
+
+    public boolean getTriggered() {
+        return triggered;
+    }
+
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+
+    @XmlTransient
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
+    }
+
+    @XmlTransient
+    public Collection<Message> getMessageCollection1() {
+        return messageCollection1;
+    }
+
+    public void setMessageCollection1(Collection<Message> messageCollection1) {
+        this.messageCollection1 = messageCollection1;
     }
 
 }
