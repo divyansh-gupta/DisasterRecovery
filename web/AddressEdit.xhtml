@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="RequestEditDlg" widgetVar="RequestEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditRequestTitle}">
+            <h:form id="AddressRequestEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
+                    
+                       
+                        <p:outputLabel value="#{bundle.EditRequestLabel_status}" for="status" />
+                        <p:selectOneMenu id="status" value="#{requestController.selected.status}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_status}">
+                            <f:selectItem itemLabel="IN_PROGRESS" itemValue="IN_PROGRESS"/>
+                            <f:selectItem itemLabel="COMPLETED" itemValue="COMPLETED"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{requestController.update}" value="#{bundle.Save}" update="display,:AddressRequestListForm:datalist,:growl" oncomplete="PF('RequestEditDialog').hide();"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RequestEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

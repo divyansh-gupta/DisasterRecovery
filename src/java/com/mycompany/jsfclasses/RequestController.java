@@ -240,16 +240,13 @@ public class RequestController implements Serializable {
         Random rand = new Random(date.getTime());
         int temp = rand.nextInt();
         selected.setId(Math.abs(temp));
-//        System.out.println("Temp: " + temp);
         this.selected.setStatus("REQUESTED");
         selected = persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("RequestCreated"));
         
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
-//        System.out.println("id: " + selected.getId());
-        
-       createRequest();
+        createRequest();
     }
 
     public void update() {
