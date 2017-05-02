@@ -12,14 +12,18 @@
             <h:form id="RequestViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-                        <h:outputText value="#{bundle.ViewRequestLabel_id}"/>
-                        <h:outputText value="#{requestController.selected.id}" title="#{bundle.ViewRequestTitle_id}"/>
+
                         <h:outputText value="#{bundle.ViewRequestLabel_status}"/>
                         <h:outputText value="#{requestController.selected.status}" title="#{bundle.ViewRequestTitle_status}"/>
                         <h:outputText value="#{bundle.ViewRequestLabel_fromLocationId}"/>
-                        <h:outputText value="#{requestController.selected.fromLocationId}" title="#{bundle.ViewRequestTitle_fromLocationId}"/>
+                        <h:outputText value="#{requestController.selected.fromLocationId.locationName}" title="#{bundle.ViewRequestTitle_fromLocationId}"/>
                         <h:outputText value="#{bundle.ViewRequestLabel_toLocationId}"/>
-                        <h:outputText value="#{requestController.selected.toLocationId}" title="#{bundle.ViewRequestTitle_toLocationId}"/>
+                        <h:outputText value="#{requestController.selected.toLocationId.locationName}" title="#{bundle.ViewRequestTitle_toLocationId}"/>
+                        <ui:repeat value="#{requestController.selected.needCollection}" var="need">
+                            <h:outputText value="#{need.itemId.itemType}"/>
+                            <h:outputText value="#{need.quantity}"/>
+
+                        </ui:repeat>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="RequestViewDialog.hide()"/>
                 </h:panelGroup>

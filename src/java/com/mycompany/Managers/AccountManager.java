@@ -311,7 +311,17 @@ public class AccountManager implements Serializable {
     public boolean isLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username") != null;
     }
-
+    
+    /**
+     *  This function utilizes the google maps to get Latitude and Longitude values
+     *  based on a City, State and Zipcode. These values are used to create a Location
+     *  Object which is stored in the database. 
+     * @param city
+     * @param State
+     * @param zipcode
+     * @return
+     * @throws Exception 
+     */
     public Location getLatLongFromAddress(String city, String State, String zipcode) throws Exception {
         String api_call_init = Constants.GMAPS_GEOCODE_BASE_URL + city + ", "
                 + State + ", " + zipcode + "&"
@@ -346,7 +356,14 @@ public class AccountManager implements Serializable {
             return newEntry;
         }
     }
-
+    
+    /**
+     * Creates and stores an initial item list for a location. All
+     * items start out with a value with 0. A user will have to manually updated
+     * the values from another page.
+     * @param location
+     * @return 
+     */
     public Collection<Item> createInitItemList(Location location) {
         Item water = new Item();
         water.setItemType("WATER");

@@ -3,4 +3,5 @@
 /nbproject/private/*
 nbproject/private/private.properties
 src/java/com/mycompany/Managers/Constants.java
+src/conf/*
 web/WEB-INF/*

@@ -12,23 +12,12 @@
             <h:form id="RequestEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditRequestLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{requestController.selected.id}" title="#{bundle.EditRequestTitle_id}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_id}"/>
+                    
+                       
                         <p:outputLabel value="#{bundle.EditRequestLabel_status}" for="status" />
-                        <p:inputText id="status" value="#{requestController.selected.status}" title="#{bundle.EditRequestTitle_status}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_status}"/>
-                        <p:outputLabel value="#{bundle.EditRequestLabel_fromLocationId}" for="fromLocationId" />
-                        <p:selectOneMenu id="fromLocationId" value="#{requestController.selected.fromLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_fromLocationId}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
-                                           var="fromLocationIdItem"
-                                           itemValue="#{fromLocationIdItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditRequestLabel_toLocationId}" for="toLocationId" />
-                        <p:selectOneMenu id="toLocationId" value="#{requestController.selected.toLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_toLocationId}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
-                                           var="toLocationIdItem"
-                                           itemValue="#{toLocationIdItem}"/>
+                        <p:selectOneMenu id="status" value="#{requestController.selected.status}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_status}">
+                            <f:selectItem itemLabel="IN_PROGRESS" itemValue="IN_PROGRESS"/>
+                            <f:selectItem itemLabel="COMPLETED" itemValue="COMPLETED"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{requestController.update}" value="#{bundle.Save}" update="display,:RequestListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RequestEditDialog');"/>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Divyansh Gupta on 2017.02.21 
+Copyright © 2017 Divyansh Gupta. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="My Account"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <!--
+                You can place p:growl anywhere on your JSF page since the messages are displayed
+                as an overlay. The life attribute defines how long the message will be displayed 
+                in milliseconds after which it will fade away. 5000 milliseconds = 5 seconds
+                
+                All 'FacesMessage resultMsg' will be displayed here.
+            -->
+            <p:growl id="growl" life="5000" />
+            <div style="float: left">
+                <ui:repeat value="#{messageManager.locationMessagesMap.keySet}" var="location">
+                    
+                    <h:outputText value="#{location.locationName}" />
+                </ui:repeat>
+                
+            </div>
+            <div style="text-align: center">
+                
+                
+            <div style="overflow-y: scroll" height="500">
+                <ui:repeat value="" var="message">
+                    <h:outputText value="#{message}"></h:outputText>
+                </ui:repeat>
+                
+            </div>
+            
+            <p:inputText value=""></p:inputText>
+            <p:commandButton value="Send" />
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>

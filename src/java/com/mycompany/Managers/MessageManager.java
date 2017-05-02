@@ -12,6 +12,7 @@ import com.mycompany.jms.Publisher;
 import com.mycompany.jms.Subscriber;
 import com.mycompany.sessionbeans.LocationFacade;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class MessageManager implements Serializable {
     private Map<Location, List<Message>> locationMessagesMap;
     private Publisher publisher;
     private Subscriber subscriber;
+
 
     @EJB
     private MessageFacade messageFacade;
@@ -81,6 +83,7 @@ public class MessageManager implements Serializable {
     public MessageFacade getMessageFacade() {
         return messageFacade;
     }
+    
 
     public void setMessageFacade(MessageFacade messageFacade) {
         this.messageFacade = messageFacade;
