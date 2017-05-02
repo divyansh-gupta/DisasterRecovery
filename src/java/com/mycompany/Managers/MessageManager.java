@@ -32,7 +32,7 @@ import javax.naming.NamingException;
 @SessionScoped
 public class MessageManager implements Serializable {
 
-    private Map<Location, List<Message>> locationMessagesMap;
+    private Map<Location, Map<Integer, Message>> locationMessagesMap;
     private Publisher publisher;
     private Subscriber subscriber;
 
@@ -52,11 +52,7 @@ public class MessageManager implements Serializable {
             System.exit(-1);
         }
     }
-
-    public Map<Location, List<Message>> getLocationMessagesMap() {
-        return locationMessagesMap;
-    }
-
+    
     public void sendMessage(String msgTxt, Location sendTo, Responder currentUser) {
         Date date = new Date();
         Random rand = new Random(date.getTime());
@@ -75,8 +71,12 @@ public class MessageManager implements Serializable {
             System.exit(-1);
         }
     }
+    
+    public Map<Location, Map<Integer, Message>> getLocationMessagesMap() {
+        return locationMessagesMap;
+    }
 
-    public void setLocationMessagesMap(Map<Location, List<Message>> locationMessagesMap) {
+    public void setLocationMessagesMap(Map<Location, Map<Integer, Message>> locationMessagesMap) {
         this.locationMessagesMap = locationMessagesMap;
     }
 

@@ -4,10 +4,18 @@
  */
 package com.mycompany.jms;
 
+import com.mycompany.DisasterRecovery.Location;
+import com.mycompany.DisasterRecovery.Message;
 import com.mycompany.Managers.MessageManager;
+import com.mycompany.sessionbeans.LocationFacade;
+import com.mycompany.sessionbeans.MessageFacade;
+import java.util.Date;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -27,9 +35,15 @@ public class Subscriber implements MessageListener {
     private final String topicName = "jms/DisasterRecoveryTopic";
     private Topic topic;
     private TopicSubscriber topicSubscriber;
-    
+
     @Inject
     private MessageManager messageManager;
+    
+    @EJB
+    private MessageFacade messageFacade;
+
+    @EJB
+    private LocationFacade locationFacade;
 
     public Subscriber(String uname, String pwd) throws NamingException, JMSException {
         InitialContext ctx = new InitialContext();
@@ -43,19 +57,19 @@ public class Subscriber implements MessageListener {
     }
 
     @Override
-    public void onMessage(Message msg) {
+    public void onMessage(javax.jms.Message msg) {
+        TextMessage txtMsg = (TextMessage) msg;
+//            String msgTxt = txtMsg.getText();
+//            Location senderLocation = locationFacade.findById(txtMsg.getIntProperty("SenderLocationId"));
+//            Location recieverLocation = locationFacade.findById(txtMsg.getIntProperty("RecieverLocationId"));
+//            Date timestamp = new Date(msg.getJMSTimestamp());
+        
         try {
-            TextMessage txtMsg = (TextMessage) msg;
-            String msgTxt = txtMsg.getText();
+            Message message = messageFacade.find(Integer.valueOf(txtMsg.getJMSMessageID()));
+            Map<Location, Map<Integer, Message>> toLocationMessageMap = messageManager.getLocationMessagesMap();
             
-
-//            if (!text.equalsIgnoreCase("exit")) {
-//                System.out.println("Notice text: " + text);
-//            } else {
-//                System.out.println("Good");
-//            }
-        } catch (JMSException je) {
-            je.printStackTrace();
+        } catch (JMSException ex) {
+            Logger.getLogger(Subscriber.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

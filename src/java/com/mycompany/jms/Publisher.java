@@ -42,9 +42,9 @@ public class Publisher {
     public void sendMessageToTopic(String msgText, int msgId, int senderLocation, int recieverLocation, Date date) throws JMSException {
         Message msg = topicSession.createTextMessage(msgText);
         msg.setJMSMessageID(String.valueOf(msgId));
-        msg.setIntProperty("SenderLocationId", senderLocation);
-        msg.setIntProperty("RecieverLocationId", recieverLocation);
-        msg.setJMSTimestamp(date.getTime());
+//        msg.setIntProperty("SenderLocationId", senderLocation);
+//        msg.setIntProperty("RecieverLocationId", recieverLocation);
+//        msg.setJMSTimestamp(date.getTime());
         topicPublisher.publish(msg);
     }
 }
