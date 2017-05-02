@@ -30,24 +30,31 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
             -->
             <p:growl id="growl" life="5000" />
             <div style="float: left">
-                <ui:repeat value="#{messageManager.locationMessagesMap.keySet}" var="location">
-                    
-                    <h:outputText value="#{location.locationName}" />
-                </ui:repeat>
-                
+                <p:dataTable value="#{messageManager.getLocationMessagesMap(accountManager.selected)}" var="location" selection="#{requestController.selected}">
+
+                    <h:outputText value="#{location.locationName}"/>
+                    <!--<p:commandButton action="#{messageController.getAllMessagesForLocation}" update=":MessageViewForm" value="View Messages"/>-->
+                </p:dataTable>
+
             </div>
             <div style="text-align: center">
-                
-                
-            <div style="overflow-y: scroll" height="500">
-                <ui:repeat value="" var="message">
-                    <h:outputText value="#{message}"></h:outputText>
-                </ui:repeat>
-                
-            </div>
-            
-            <p:inputText value=""></p:inputText>
-            <p:commandButton value="Send" />
+                <h:form id="MessageViewForm">
+
+
+
+
+
+
+                    <div style="overflow-y: scroll" height="500">
+                        <ui:repeat value="#{messageController.selected.getAllMessages}" var="message">
+                            <h:outputText value="#{message}"></h:outputText>
+                        </ui:repeat>
+
+                    </div>
+
+                    <p:inputText value=""></p:inputText>
+                    <p:commandButton value="Send" />
+                </h:form>
             </div>
 
         </ui:define>

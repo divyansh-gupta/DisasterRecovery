@@ -281,6 +281,7 @@ public class RequestController implements Serializable {
 
     public List<Need> getNeedList(Request req) {
         needs = needFacade.findByLocation(req);
+        System.out.println(needs.toString());
         return needs;
     }
 

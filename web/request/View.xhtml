@@ -19,12 +19,23 @@
                         <h:outputText value="#{requestController.selected.fromLocationId.locationName}" title="#{bundle.ViewRequestTitle_fromLocationId}"/>
                         <h:outputText value="#{bundle.ViewRequestLabel_toLocationId}"/>
                         <h:outputText value="#{requestController.selected.toLocationId.locationName}" title="#{bundle.ViewRequestTitle_toLocationId}"/>
+
+                    </p:panelGrid>
+                    <div style="text-align: center">
+                        <div><p:outputLabel value="Needs"/></div>
+                        <p:panelGrid columns="2">
                         <ui:repeat value="#{requestController.selected.needCollection}" var="need">
-                            <h:outputText value="#{need.itemId.itemType}"/>
-                            <h:outputText value="#{need.quantity}"/>
+                                
+                                <h:outputText style="float: left" value="#{need.itemId.itemType}"/>
+                                <h:outputText style="float: right" value="#{need.quantity}"/>
+
+                                
+
 
                         </ui:repeat>
-                    </p:panelGrid>
+                        </p:panelGrid>
+ 
+                    </div>
                     <p:commandButton value="#{bundle.Close}" onclick="RequestViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
