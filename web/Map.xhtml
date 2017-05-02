@@ -31,7 +31,7 @@ Copyright © 2017 Junjie Cheng. All rights reserved.
                                 <h:outputLabel id="locationName" value="#{mapView.marker.title.replace('_', ' ')}" />
                             </a>
 
-                            <c:if test="#{LocationManager.selected.isTriggered()}" >
+                            <c:if test="#{LocationManager.selected.getTriggered()}" >
                                 <br/>
                                 <h:outputLabel for="locationDescription" value="Description:" style="font-weight:bold"/>
                                 &nbsp;
