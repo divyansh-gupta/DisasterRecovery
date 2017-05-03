@@ -20,7 +20,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 //@Named(value = "publisher")
-//@SessionScoped
+@SessionScoped
 public class Publisher implements Serializable {
 
     private TopicConnectionFactory connectionFactory;

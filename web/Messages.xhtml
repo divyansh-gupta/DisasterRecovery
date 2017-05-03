@@ -19,25 +19,31 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
         <ui:define name="editableContent">
             <script>
-                function ClickButton() {
-                    $('.b#{messageManager.locationEngaged.alternateName}#{messageManager.locationEngaged.id}').each(
-                            function () {
-                                var button = $(this);
-                                console.log($(this) + " being clicked");
-                                button.click();
-                            }
-                    );
-//                    scrollToBottom();
-                }
 
-                function scrollToBottom() {
-//                    console.log("getting called");
-//                    var myDiv = document.getElementsByClassName("datalistMessages")[0];
-//                    myDiv.scrollTop = myDiv.scrollHeight;
-                }
+//                var socket = null;
+                    var socket = new WebSocket("ws://" + location.host + "/DisasterRecovery/actions");
+
+                    function ClickButton() {
+                        $('.b#{messageManager.locationEngaged.alternateName}#{messageManager.locationEngaged.id}').each(
+                                function () {
+                                    var button = $(this);
+                                    console.log($(this) + " being clicked");
+                                    button.click();
+                                }
+                        );
+                    }
+
+                    function sendToWebSocket() {
+                        socket.send("sendingmessage");
+                    }
+
                 $(function () {
-                    setInterval(ClickButton, 1000);
-//                    scrollToBottom();
+                    socket.onopen = function () {
+                        socket.send("Sending message");
+                    };
+                    socket.onmessage = function (e) {
+                        console.log(e.data);
+                    };
                 });
             </script>
             <!--<h:form id="talkingForm">-->
@@ -75,7 +81,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                             </p:dataTable>
                         </div>
                         <p:inputText value="#{messageManager.messageBeingTyped}"></p:inputText>
-                        <p:commandButton value="Send" action="#{messageManager.sendMessage()}" oncomplete="scrollToBottom()" update="MessageViewForm:datalistMessages" />
+                        <p:commandButton value="Send" action="#{messageManager.sendMessage()}" oncomplete="sendToWebSocket()" update="MessageViewForm:datalistMessages" />
                         <p:commandButton style="visibility: hidden" id="messageRefreshButton" update="MessageViewForm:datalistMessages" />
                     </h:form>
                 </div>

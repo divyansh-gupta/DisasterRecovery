@@ -44,7 +44,7 @@ public class MessageManager implements Serializable {
     private Publisher publisher;
 
 //    @Inject
-    private Subscriber subscriber;
+//    private Subscriber subscriber;
 
     @EJB
     private MessageFacade messageFacade;
@@ -55,7 +55,7 @@ public class MessageManager implements Serializable {
     public MessageManager() {
         try {
             publisher = new Publisher();
-            subscriber = new Subscriber();
+//            subscriber = new Subscriber();
         } catch (Exception e) {
             System.out.println(e);
         }
