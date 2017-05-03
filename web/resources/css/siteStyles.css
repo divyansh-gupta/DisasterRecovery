@@ -553,3 +553,8 @@ if content overflows an element's box.
 .ui-panel, .ui-panel-content {
     background-color: rgba(7, 157, 83, 0.75);
 }
+
+#talkingTo {
+    font-weight:bolder;
+    color:rgb(0, 157, 83);
+}

@@ -93,7 +93,7 @@ public class MessageManager implements Serializable {
                 .filter(message
                         -> (message.getRecieverLocation().getId() == userLocId && Objects.equals(message.getSenderLocation().getId(), this.locationEngaged.getId()))
                 || (message.getSenderLocation().getId() == userLocId && Objects.equals(message.getRecieverLocation().getId(), this.locationEngaged.getId())))
-                .sorted((Message one, Message two) -> one.getTimeStamp().compareTo(two.getTimeStamp()))
+                .sorted((Message one, Message two) -> -(one.getTimeStamp().compareTo(two.getTimeStamp())))
                 .collect(Collectors.toList());
         System.out.println("Message sample: " + locationMessages);
         return locationMessages;

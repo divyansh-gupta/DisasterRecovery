@@ -23,13 +23,21 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     $('.b#{messageManager.locationEngaged.alternateName}#{messageManager.locationEngaged.id}').each(
                             function () {
                                 var button = $(this);
-//                                console.log($(this) + " being clicked");
+                                console.log($(this) + " being clicked");
                                 button.click();
                             }
                     );
+//                    scrollToBottom();
+                }
+
+                function scrollToBottom() {
+//                    console.log("getting called");
+//                    var myDiv = document.getElementsByClassName("datalistMessages")[0];
+//                    myDiv.scrollTop = myDiv.scrollHeight;
                 }
                 $(function () {
-                    setInterval(ClickButton, 1000)
+                    setInterval(ClickButton, 1000);
+//                    scrollToBottom();
                 });
             </script>
             <!--<h:form id="talkingForm">-->
@@ -37,36 +45,42 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
             <!--</h:form>-->
             <p:growl id="growl" life="5000" />
             <h:form>
-                <p:layout style="min-width:400px;min-height:400px;">
-                    <p:layoutUnit position="west" resizable="true" size="100" minSize="100" maxSize="200">
-                        <c:forEach items="#{messageManager.getMessageLocations()}" var="location">
-                            <p:commandButton class="b#{location.alternateName}#{location.id}" value="#{location.locationName}"
-                                             update="MessageViewForm:datalistMessages talkingTo"
-                                             actionListener="#{messageManager.setLocationEngaged(location)}" >
-                            </p:commandButton>
-                        </c:forEach>
-                    </p:layoutUnit>
-                    <p:layoutUnit position="center">
-                        <div style="text-align: center">
-                            <h:form id="MessageViewForm" >
-                                <!--<p:ajax event="change" update="datalistMessages" listener="#{messageManager.messagesBetweenSelectedLocationAndUser()}" />-->
-                                <div style="overflow-y: scroll" height="500">
-                                    <p:dataTable id="datalistMessages" value="#{messageManager.locationMessages}" var="message">
-                                        <p:column>
-                                            <div style="float: left"><h:outputText rendered="#{not messageManager.messageFromMe(message.id)}"   value="#{message.description}"/></div>
-                                        </p:column>
-                                        <p:column>
-                                            <div style="float: right"> <h:outputText rendered="#{messageManager.messageFromMe(message.id)}"  value="#{message.description}"/> </div>
-                                        </p:column>
-                                    </p:dataTable>
-                                </div>
-                                <p:inputText value="#{messageManager.messageBeingTyped}"></p:inputText>
-                                <p:commandButton value="Send" action="#{messageManager.sendMessage()}" update="MessageViewForm:datalistMessages" />
-                                <p:commandButton style="visibility: hidden" id="messageRefreshButton" update="MessageViewForm:datalistMessages" />
-                            </h:form>
+                <!--<p:layout style="min-width:400px;min-height:400px; overflow: hidden">-->
+                <!--<p:layoutUnit position="west" resizable="true" size="100" minSize="100" maxSize="200">-->
+                <div style="float: left; max-height: 250px; overflow-y: scroll; overflow-x: hidden">
+
+                    <c:forEach items="#{messageManager.getMessageLocations()}" var="location">
+                        <p:commandButton style="width: 100%;" class="b#{location.alternateName}#{location.id}" value="#{location.locationName}"
+                                         update="MessageViewForm:datalistMessages talkingTo"
+
+                                         actionListener="#{messageManager.setLocationEngaged(location)}" >
+                        </p:commandButton>
+                        <br/>
+                    </c:forEach>
+                </div>
+
+                <!--</p:layoutUnit>-->
+                <!--<p:layoutUnit position="center" >-->
+                <div style="text-align: center">
+                    <h:form id="MessageViewForm" >
+                        <!--<p:ajax event="change" update="datalistMessages" listener="#{messageManager.messagesBetweenSelectedLocationAndUser()}" />-->
+                        <div>
+                            <p:dataTable style="max-height: 250px; overflow-y: scroll;" class="datalistMessages" id="datalistMessages" value="#{messageManager.locationMessages}" var="message">
+                                <p:column>
+                                    <div style="float: left"><h:outputText rendered="#{not messageManager.messageFromMe(message.id)}"   value="#{message.description}"/></div>
+                                </p:column>
+                                <p:column>
+                                    <div style="float: right"> <h:outputText rendered="#{messageManager.messageFromMe(message.id)}"  value="#{message.description}"/> </div>
+                                </p:column>
+                            </p:dataTable>
                         </div>
-                    </p:layoutUnit>
-                </p:layout>
+                        <p:inputText value="#{messageManager.messageBeingTyped}"></p:inputText>
+                        <p:commandButton value="Send" action="#{messageManager.sendMessage()}" oncomplete="scrollToBottom()" update="MessageViewForm:datalistMessages" />
+                        <p:commandButton style="visibility: hidden" id="messageRefreshButton" update="MessageViewForm:datalistMessages" />
+                    </h:form>
+                </div>
+                <!--</p:layoutUnit>-->
+                <!--</p:layout>-->
             </h:form>
         </ui:define>
 
