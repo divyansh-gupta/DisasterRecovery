@@ -14,9 +14,8 @@ import com.mycompany.sessionbeans.LocationFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 import javax.ejb.EJB;
@@ -24,7 +23,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
-import javax.naming.NamingException;
 
 /**
  *
@@ -35,30 +33,18 @@ import javax.naming.NamingException;
 @SessionScoped
 public class MessageManager implements Serializable {
 
-    private Map<Location, List<Message>> locationMessagesMap;
-    private Publisher publisher;
-    private Subscriber subscriber;
+    private List<Message> locationMessages;
+
     private Location locationEngaged;
-
-    public String getMessageBeingTyped() {
-        return messageBeingTyped;
-    }
-
-    public void setMessageBeingTyped(String messageBeingTyped) {
-        this.messageBeingTyped = messageBeingTyped;
-    }
-    private String messageBeingTyped;
-
-    public Location getLocationEngaged() {
-        return locationEngaged;
-    }
-
-    public void setLocationEngaged(Location locationEngaged) {
-        this.locationEngaged = locationEngaged;
-    }
 
     @Inject
     private AccountManager accountManager;
+
+//    @Inject
+    private Publisher publisher;
+
+//    @Inject
+    private Subscriber subscriber;
 
     @EJB
     private MessageFacade messageFacade;
@@ -68,11 +54,10 @@ public class MessageManager implements Serializable {
 
     public MessageManager() {
         try {
-            publisher = new Publisher("Publisher", "Password");
-            subscriber = new Subscriber("Subscriber", "Password");
-        } catch (JMSException | NamingException e) {
-            System.err.println(e);
-            System.exit(-1);
+            publisher = new Publisher();
+            subscriber = new Subscriber();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -89,42 +74,63 @@ public class MessageManager implements Serializable {
         msg.setTimeStamp(date);
         messageFacade.create(msg);
         try {
-            publisher.sendMessageToTopic(this.messageBeingTyped, randId, currentUser.getLocationId().getId(), locationEngaged.getId(), date);
+            publisher.sendMessageToTopic(this.messageBeingTyped, randId, currentUser.getLocationId().getId(), this.locationEngaged.getId(), date);
+            messagesBetweenSelectedLocationAndUser();
         } catch (JMSException e) {
-            System.err.println(e);
-            System.exit(-1);
+            System.out.println(e);
         }
         this.messageBeingTyped = "";
     }
 
-    public Map<Location, List<Message>> getLocationMessagesMap() {
-        int userLocId = accountManager.getSelected().getLocationId().getId();
-        locationMessagesMap = messageFacade.findAll().stream().distinct()
-                .filter(message -> (message.getRecieverLocation().getId() == userLocId) || (message.getSenderLocation().getId() == userLocId))
-                .collect(Collectors.groupingBy(Message::getSenderLocation));
-        System.out.println(locationMessagesMap);
-        return locationMessagesMap;
-    }
-
     public List<Message> messagesBetweenSelectedLocationAndUser() {
+        System.out.println("messagesBetweenSelectedLocationAndUser running");
+
         if (this.locationEngaged == null) {
             return new ArrayList();
         }
-        List<Message> compiled = getLocationMessagesMap().get(this.locationEngaged);
-        compiled.addAll(locationMessagesMap.get(accountManager.getSelected().getLocationId()));
-        return compiled;
+        int userLocId = accountManager.getSelected().getLocationId().getId();
+        locationMessages = messageFacade.findAll().stream().distinct()
+                .filter(message
+                        -> (message.getRecieverLocation().getId() == userLocId && Objects.equals(message.getSenderLocation().getId(), this.locationEngaged.getId()))
+                || (message.getSenderLocation().getId() == userLocId && Objects.equals(message.getRecieverLocation().getId(), this.locationEngaged.getId())))
+                .sorted((Message one, Message two) -> one.getTimeStamp().compareTo(two.getTimeStamp()))
+                .collect(Collectors.toList());
+        System.out.println("Message sample: " + locationMessages);
+        return locationMessages;
+    }
+
+    public boolean messageFromMe(int msgId) {
+        Message msg = messageFacade.find(msgId);
+        if (accountManager.getSelected() == null || msg == null) {
+            return false;
+        }
+        boolean toReturn = msg.getSenderLocation().equals(accountManager.getSelected().getLocationId());
+        return toReturn;
     }
 
     public List<Location> getMessageLocations() {
-        List<Location> locations = new ArrayList(getLocationMessagesMap().keySet());
-        if (locations.size() > 0) {
-            this.locationEngaged = locations.get(0);
-        }
+        List<Location> locations = locationFacade.findAll();
         return locations;
     }
 
-    public void setLocationMessagesMap(Map<Location, List<Message>> locationMessagesMap) {
-        this.locationMessagesMap = locationMessagesMap;
+    public String getMessageBeingTyped() {
+        return messageBeingTyped;
+    }
+
+    public void setMessageBeingTyped(String messageBeingTyped) {
+        this.messageBeingTyped = messageBeingTyped;
+    }
+    private String messageBeingTyped;
+
+    public Location getLocationEngaged() {
+//        System.out.println("Get location engaged is running with value: " + this.locationEngaged.getLocationName());
+        return locationEngaged;
+    }
+
+    public void setLocationEngaged(Location locationEngaged) {
+//        System.out.println("New location picked: " + locationEngaged.getLocationName());
+        this.locationEngaged = locationEngaged;
+        messagesBetweenSelectedLocationAndUser();
     }
 
     public MessageFacade getMessageFacade() {
@@ -141,5 +147,13 @@ public class MessageManager implements Serializable {
 
     public void setLocationFacade(LocationFacade locationFacade) {
         this.locationFacade = locationFacade;
+    }
+
+    public List<Message> getLocationMessages() {
+        return locationMessages;
+    }
+
+    public void setLocationMessages(List<Message> locationMessages) {
+        this.locationMessages = locationMessages;
     }
 }

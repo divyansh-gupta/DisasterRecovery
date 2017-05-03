@@ -70,11 +70,14 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <h:link outcome="/Inventory" styleClass="arialTen">
-                                <i class="fa fa-map">&nbsp;</i>Your Inventory
+                                <i class="fa fa-list">&nbsp;</i>Inventory
                             </h:link>&nbsp;&nbsp;
 
                             <h:link outcome="/request/List" styleClass="arialTen">
-                                <i class="fa fa-youtube-play">&nbsp;</i>Requests
+                                <i class="fa fa-envelope">&nbsp;</i>Requests
+                            </h:link>&nbsp;&nbsp;
+                            <h:link outcome="/Messages" styleClass="arialTen">
+                                <i class="fa fa-comments">&nbsp;</i>Messages
                             </h:link>&nbsp;&nbsp;
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
                                 <i class="fa fa-sign-out">&nbsp;</i>Sign Out

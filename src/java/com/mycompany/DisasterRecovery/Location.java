@@ -51,16 +51,6 @@ public class Location implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recieverLocation")
     private Collection<Message> messageCollection1;
 
-//    @EJB
-//    ItemFacade itemFacade;
-//
-//    public ItemFacade getItemFacade() {
-//        return itemFacade;
-//    }
-//
-//    public void setItemFacade(ItemFacade itemFacade) {
-//        this.itemFacade = itemFacade;
-//    }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -161,13 +151,9 @@ public class Location implements Serializable {
 
     @XmlTransient
     public Collection<Item> getItemCollection() {
-//        return getItemFacade().findByLocationId(this.id);
         return itemCollection;
     }
 
-//    public Collection<Item> getItems() {
-//        return 
-//    }
     public void setItemCollection(Collection<Item> itemCollection) {
         this.itemCollection = itemCollection;
     }
@@ -248,6 +234,10 @@ public class Location implements Serializable {
 
     public void setMessageCollection1(Collection<Message> messageCollection1) {
         this.messageCollection1 = messageCollection1;
+    }
+    
+    public String getAlternateName() {
+        return this.locationName.split(",")[0];
     }
 
 }

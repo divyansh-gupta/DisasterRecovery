@@ -4,21 +4,15 @@
  */
 package com.mycompany.jms;
 
-import com.mycompany.DisasterRecovery.Location;
-import com.mycompany.DisasterRecovery.Message;
 import com.mycompany.Managers.MessageManager;
 import com.mycompany.sessionbeans.LocationFacade;
 import com.mycompany.sessionbeans.MessageFacade;
-import java.util.Date;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.MessageListener;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
@@ -26,8 +20,9 @@ import javax.jms.TopicSubscriber;
 import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import org.primefaces.context.RequestContext;
 
-public class Subscriber implements MessageListener {
+public class Subscriber implements MessageListener, Serializable {
 
     private TopicConnectionFactory connectionFactory;
     private TopicConnection connection;
@@ -38,18 +33,18 @@ public class Subscriber implements MessageListener {
 
     @Inject
     private MessageManager messageManager;
-    
+
     @EJB
     private MessageFacade messageFacade;
 
     @EJB
     private LocationFacade locationFacade;
 
-    public Subscriber(String uname, String pwd) throws NamingException, JMSException {
+    public Subscriber() throws NamingException, JMSException {
         InitialContext ctx = new InitialContext();
         connectionFactory = (TopicConnectionFactory) ctx.lookup("jms/DisasterRecoveryConnectionFactory");
         topic = (Topic) ctx.lookup(topicName);
-        connection = connectionFactory.createTopicConnection(uname, pwd);
+        connection = connectionFactory.createTopicConnection();
         subscriberSession = connection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
         topicSubscriber = subscriberSession.createSubscriber(topic);
         topicSubscriber.setMessageListener(this);
@@ -58,18 +53,13 @@ public class Subscriber implements MessageListener {
 
     @Override
     public void onMessage(javax.jms.Message msg) {
-        TextMessage txtMsg = (TextMessage) msg;
-//            String msgTxt = txtMsg.getText();
-//            Location senderLocation = locationFacade.findById(txtMsg.getIntProperty("SenderLocationId"));
-//            Location recieverLocation = locationFacade.findById(txtMsg.getIntProperty("RecieverLocationId"));
-//            Date timestamp = new Date(msg.getJMSTimestamp());
-        
-        try {
-            Message message = messageFacade.find(Integer.valueOf(txtMsg.getJMSMessageID()));
-            
-        } catch (JMSException ex) {
-            Logger.getLogger(Subscriber.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        System.out.println("on message running!");
+        String buttonID = messageManager.getLocationEngaged().getAlternateName() + messageManager.getLocationEngaged().getId();
+        String jsToExecute = "document.getElementsByClassName(" + buttonID + ")[0].click()";
+//        System.out.println(jsToExecute);
+        messageManager.messagesBetweenSelectedLocationAndUser();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute(jsToExecute);
     }
 
     public void exit() {

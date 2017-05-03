@@ -4,7 +4,10 @@
  */
 package com.mycompany.jms;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -16,7 +19,9 @@ import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-public class Publisher {
+//@Named(value = "publisher")
+//@SessionScoped
+public class Publisher implements Serializable {
 
     private TopicConnectionFactory connectionFactory;
     private TopicConnection topicConnection;
@@ -25,11 +30,11 @@ public class Publisher {
     private Topic topic;
     private TopicPublisher topicPublisher;
 
-    public Publisher(String uname, String pwd) throws NamingException, JMSException {
+    public Publisher() throws NamingException, JMSException {
         InitialContext ctx = new InitialContext();
         connectionFactory = (TopicConnectionFactory) ctx.lookup("jms/DisasterRecoveryConnectionFactory");
         topic = (Topic) ctx.lookup(topicName);
-        topicConnection = connectionFactory.createTopicConnection(uname, pwd);
+        topicConnection = connectionFactory.createTopicConnection();
         topicSession = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
         topicPublisher = topicSession.createPublisher(topic);
         topicConnection.start();
@@ -45,6 +50,8 @@ public class Publisher {
 //        msg.setIntProperty("SenderLocationId", senderLocation);
 //        msg.setIntProperty("RecieverLocationId", recieverLocation);
 //        msg.setJMSTimestamp(date.getTime());
+        System.out.println("Trying to send msg: " + msgText);
         topicPublisher.publish(msg);
+        System.out.println("After trying to send msg: " + msgText);
     }
 }
