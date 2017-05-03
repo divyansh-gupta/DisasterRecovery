@@ -66,12 +66,12 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                 <p:commandButton id="viewButton"   icon="ui-icon-search" 
                                                  value="#{bundle.View}" update=":AddressRequestViewForm" 
                                                  oncomplete="PF('RequestViewDialog').show()" 
-                                                 disabled="#{empty LocationManager.selected}"/>
+                                                 disabled="#{empty requestController.selected}"/>
                                 
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" 
                                                  value="#{bundle.Edit}" update=":AddressRequestEditForm" 
                                                  oncomplete="PF('RequestEditDialog').show()" 
-                                                 disabled="#{empty LocationManager.selected}"/>
+                                                 disabled="#{empty requestController.selected}"/>
                                 
                                 <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
                                     <div align="center">

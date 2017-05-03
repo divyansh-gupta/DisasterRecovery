@@ -15,18 +15,23 @@ html, body {
     /* background-color: #DCDCDC;   /* Gainsboro */
     /* background-color: #FFFFF0;   /* Ivory */
     /* background-color: #FAF0E6;   /* Linen */
-    background-color: #FDF5E6;   /* OldLace */
+    /* background-color: #FDF5E6;    OldLace */
+    background-image:-webkit-linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(http://www.desktopwallpaperhd.net/wallpapers/10/f/desktop-wallpapers-desktoplaptop-theme-black-stunning-disaster-109919.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(http://www.desktopwallpaperhd.net/wallpapers/10/f/desktop-wallpapers-desktoplaptop-theme-black-stunning-disaster-109919.jpg);
     /* background-color: #FFEFD5;   /* PapayaWhip */
     /* background-color: #F5DEB3;   /* Wheat */
     /* background-color: #B0E0E6;   /* PowderBlue */
 
     /* Stretch the background image to cover the entire screen. 
     This is used only if you choose to display a background image. */
-    -webkit-background-size: cover; /* For WebKit */
-    -moz-background-size: cover;    /* For Mozilla */
-    -o-background-size: cover;      /* For Opera */
-    background-size: cover;         /* Generic */
-    background-repeat: no-repeat;   /* Do not repeat the image */
+    -webkit-background-size: cover;  /*For WebKit */
+    -moz-background-size: cover;     /*For Mozilla */
+    -o-background-size: cover;       /*For Opera */
+    background-size: cover;          /*Generic */
+    background-repeat: no-repeat;    /*Do not repeat the image*/
+    
+    background-position: center;
+    background-attachment: fixed;
 
     width: 100%;                    /* Set page width horizontally 100% */
     height: 100%;                   /* Set page height vertically 100% */
@@ -68,9 +73,9 @@ h2 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12pt;
     font-style: normal;
-    font-weight: normal;
+    font-weight:bolder;
     text-decoration: none;
-    color: #800000; /* Maroon */
+    color: rgb(0, 145, 74);
 }
 
 /*
@@ -127,6 +132,8 @@ Since ids are unique, the #id styling is used only once.
 Style the div component whose unique id is "page" per reference
 <div id="page"> in siteTemplate.xhtml
 */
+
+
 #page {
     font-family: "Times New Roman", Times, Serif;
     font-size: 12pt;
@@ -140,7 +147,8 @@ Style the div component whose unique id is "header" per reference
 <div id="header"> in siteTemplate.xhtml
 */
 #header {
-    background-color: #F0FFFF;   /* Azure */
+    /*background-color: #F0FFFF;    Azure */
+    background-color: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 84px;
     position: absolute;
@@ -185,21 +193,20 @@ Vertical Navigation Menu
     margin: 0;
     padding: 0;
     width: 180px;
-    background-color: #F0FFFF; /* Azure */
-    border: 1px solid #555;
-
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(7, 157, 83, 0.75);
 }
 
 /* Style class for <li> */
 .verticalMenuItem {
     text-align: left;
-    border-bottom: 1px solid #555;
+    border-bottom: 1px solid rgba(7, 157, 83, 0.75);
 }
 
 /* Style class for <li> and the <a> tag that defines a hyperlink */
 .verticalMenuItem a {
     display: block;
-    color: black;
+    color: rgba(7, 157, 83, 0.75);
     padding: 8px 16px;
     text-decoration: none;  /* Do not underline the hyperlink */
 }
@@ -235,6 +242,7 @@ Other Style Definitions
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
+    color: rgba(7, 157, 83, 0.75);
 }
 
 /* Used in EditAccount and UserFiles */
@@ -263,15 +271,17 @@ Other Style Definitions
 /* Used in CreateAccount, EditAccount, SignIn, and Profile */
 .accountColumn1, .signInColumn1, .profileColumn1 {
     text-align: right;
-    background-color: #FFE4C4;   /* Bisque */
+    background-color: rgba(0, 0, 0, 0.8);
     white-space: nowrap;  /* Disallow line break */
+    color: rgba(7, 157, 83, 0.75);
 }
 
 /* Used in CreateAccount and EditAccount */
 .accountColumn2, .signInColumn2, .profileColumn2 {
     text-align: left;
-    background-color: #FFEBCD;   /* Blanched Almond  */
+    background-color: rgba(0, 0, 0, 0.8);
     white-space: nowrap;  /* Disallow line break */
+    color:rgba(7, 157, 83, 0.75);
 }
 
 /* Style error messages text */
@@ -535,3 +545,11 @@ if content overflows an element's box.
     margin-top: 10px !important;
 }
 
+/* custom settings */
+.signinText {
+    color:rgba(7, 157, 83, 0.75);
+}
+
+.ui-panel, .ui-panel-content {
+    background-color: rgba(7, 157, 83, 0.75);
+}
