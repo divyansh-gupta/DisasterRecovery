@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Jinwoo Yom on 2017.04.01 
+Copyright © 2017 Jinwoo Yom. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -7,23 +11,28 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
+        <!-- View Dialog for Requests -->
         <p:dialog id="RequestViewDlg" widgetVar="RequestViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRequestTitle}">
             <h:form id="AddressRequestViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
+                        <!-- Request ID -->
                         <h:outputText value="#{bundle.ViewRequestLabel_id}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.id}" title="#{bundle.ViewRequestLabel_id}"/>
+                        <!-- Request status -->
                         <h:outputText value="#{bundle.ViewRequestLabel_status}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.status}" title="#{bundle.ViewRequestTitle_status}"/>
+                        <!-- Request from location ID -->
                         <h:outputText value="#{bundle.ViewRequestLabel_fromLocationId}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.fromLocationId}" title="#{bundle.ViewRequestTitle_fromLocationId}"/>
+                        <!-- Request to location ID -->
                         <h:outputText value="#{bundle.ViewRequestLabel_toLocationId}" style="text-align: right;"/>
                         <h:outputText value="#{requestController.selected.toLocationId}" title="#{bundle.ViewRequestTitle_toLocationId}"/>
                     </p:panelGrid>
                     <p:dataList value="#{requestController.getNeedList(requestController.selected)}" var="s" id="updatecomponet" style="text-align: left;">
                             <p:outputLabel value="#{needController.needToString(s)}" style="text-align: left;"></p:outputLabel>
                     </p:dataList>
+                    <!-- Button -->
                     <p:commandButton value="#{bundle.Close}" onclick="RequestViewDialog.hide()" />
                 </h:panelGroup>
             </h:form>

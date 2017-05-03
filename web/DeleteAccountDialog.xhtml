@@ -22,16 +22,17 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     
                     <p:panel >
                         <p:panelGrid columns="2" columnClasses="signInColumn1, signInColumn2" >
-                            
+                            <!-- Password -->
                             <p:outputLabel value="Password" for="password" style="width:100px;height:20px" />
                             <h:inputSecret id="password" value="#{accountManager.selected.password}" required="true" 
                                            requiredMessage="Password field is required!" label="Password" />
-
+                            <!-- Confirm Password -->
                             <p:outputLabel value="Confirm Password" for="confirmPassword" style="width:100px;height:20px" />
                             <h:inputSecret id="confirmPassword" required="true" 
                                            requiredMessage="Confirm Password field is required!" label="Confirm Password" />
                         </p:panelGrid>
 
+                        <!-- Buttons -->
                         <div align="center">
                             <p:commandButton id="cancel" value="Cancel" icon="ui-icon-close" styleClass="commandButton"
                                              oncomplete="PF('ConfirmPasswordDialog').hide()" >
@@ -48,10 +49,8 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     <!-- Error messages will be shown here if any -->
                     <p:messages id="msgs" showIcon="false" style="errorMessages" />
                     <h:outputLabel value="#{accountManager.statusMessage}" style="errorMessages" />
-                    
                 </h:form>
             </div>
         </p:dialog>
-
     </ui:composition>
 </html>

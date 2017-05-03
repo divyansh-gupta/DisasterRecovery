@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Bhaanu Kual on 2017.04.01 
+Copyright © 2017 Bhaanu Kual. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -7,35 +11,29 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
+        <!-- View Dialog for Requests -->
         <p:dialog id="RequestViewDlg" widgetVar="RequestViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRequestTitle}">
             <h:form id="RequestViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
-
                         <h:outputText value="#{bundle.ViewRequestLabel_status}"/>
                         <h:outputText value="#{requestController.selected.status}" title="#{bundle.ViewRequestTitle_status}"/>
                         <h:outputText value="#{bundle.ViewRequestLabel_fromLocationId}"/>
                         <h:outputText value="#{requestController.selected.fromLocationId.locationName}" title="#{bundle.ViewRequestTitle_fromLocationId}"/>
                         <h:outputText value="#{bundle.ViewRequestLabel_toLocationId}"/>
                         <h:outputText value="#{requestController.selected.toLocationId.locationName}" title="#{bundle.ViewRequestTitle_toLocationId}"/>
-
                     </p:panelGrid>
                     <div style="text-align: center">
                         <div><p:outputLabel value="Needs"/></div>
                         <p:panelGrid columns="2">
-                        <ui:repeat value="#{requestController.selected.needCollection}" var="need">
-                                
+                            <!-- Listing all needs related to the selected request -->
+                            <ui:repeat value="#{requestController.selected.needCollection}" var="need">
                                 <h:outputText style="float: left" value="#{need.itemId.itemType}"/>
                                 <h:outputText style="float: right" value="#{need.quantity}"/>
-
-                                
-
-
-                        </ui:repeat>
+                            </ui:repeat>
                         </p:panelGrid>
- 
                     </div>
+                    <!-- Close Button -->
                     <p:commandButton value="#{bundle.Close}" onclick="RequestViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

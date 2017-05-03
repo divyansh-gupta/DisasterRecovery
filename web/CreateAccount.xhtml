@@ -19,67 +19,66 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
         <ui:define name="editableContent">
 
             <div align="center" style="width:50%; margin:0 auto;">
-
+                <!-- Error Messages -->
                 <p:messages id="msgs" showIcon="false"/>
                 <h:outputLabel id="form-error-message" class="errorMessages" value="#{accountManager.statusMessage}"/>
 
                 <h:form id="AccountCreationForm">
-
                     <h2>Create an Account</h2>
                     <f:event listener="#{accountManager.validateInformation}" type="postValidate"/>
 
                     <p:panelGrid columns="2" columnClasses="accountColumn1, accountColumn2">
-
+                        <!-- Name -->
                         <p:outputLabel value="Name" for="responderName" />
                         <p:inputText id="responderName" value="#{accountManager.name}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.CreateResponderRequiredMessage_responderName}" label="responder Name">
                             <f:validateLength minimum="2" />
                         </p:inputText>
-
+                        <!-- City -->
                         <p:outputLabel value="#{bundle.CreateUserLabel_city}" for="city" />
                         <p:inputText id="city" value="#{accountManager.city}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.CreateUserRequiredMessage_city}" label="City">
                             <f:validateLength minimum="2" />
                         </p:inputText>
-
+                        <!-- State -->
                         <p:outputLabel value="#{bundle.CreateUserLabel_state}" for="state" />
                         <h:selectOneMenu id="state" value="#{accountManager.state}" required="true">
                             <f:selectItems value="#{accountManager.listOfStates}" var="state"
                                            itemLabel="#{state}" itemValue="#{state}" />
                         </h:selectOneMenu>
-
+                        <!-- ZipCode -->
                         <p:outputLabel value="#{bundle.CreateUserLabel_zipcode}" for="zipcode" />
                         <p:inputText id="zipcode" value="#{accountManager.zipcode}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.CreateUserRequiredMessage_zipcode}" label="Zip Code">
                             <f:validateLength minimum="5" />
                             <f:validator validatorId="zipCodeValidator"/> 
                         </p:inputText>
-
+                        <!-- Email -->
                         <p:outputLabel value="#{bundle.CreateUserLabel_email}" for="email" />
                         <p:inputText id="email" value="#{accountManager.email}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.CreateUserRequiredMessage_email}" label="Email">
                             <f:validateLength minimum="2" />
                             <f:validator validatorId="emailValidator" />  
                         </p:inputText>
-
+                        <!-- Username -->
                         <p:outputLabel value="#{bundle.CreateUserLabel_username}" for="username" />
                         <p:inputText id="username" value="#{accountManager.username}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username">
                             <f:validator validatorId="usernameValidator"/> 
                         </p:inputText>
-
+                        <!-- Password -->
                         <h:outputLabel value="#{bundle.CreateUserLabel_password} *" for="password" />
                         <p:password id="password" value="#{accountManager.password}" feedback="true" required="true" styleClass="accountInputTextField">
                             <f:validator validatorId="passwordValidator" /> 
                         </p:password>
-
+                        <!-- Confirm Password -->
                         <h:outputLabel value="Confirm Password: *" for="confirmPassword" />
                         <p:password id="confirmPassword" value="ToBeReadFromThisFieldByAccountManager" required="true" 
                                     styleClass="accountInputTextField"/>
-
                     </p:panelGrid>
                     <br />
                     
+                    <!-- Submit Button -->
                     <p:commandButton id="Submit" value="Submit" action="#{accountManager.createAccount()}" 
                                      styleClass="commandButton" ajax="false" icon="ui-icon-extlink" />
                     &nbsp;&nbsp;

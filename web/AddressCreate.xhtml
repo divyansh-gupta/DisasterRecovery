@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Created by Jinwoo Yom on 2017.04.01 
+Copyright © 2017 Jinwoo Yom. All rights reserved.
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -7,13 +11,15 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
+        <!-- Edit Dialog for request -->
         <p:dialog id="RequestCreateDlg" widgetVar="RequestCreateDialog" 
                   modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRequestTitle} from #{LocationManager.selected.getLocationName()}">
             <h:form id="AddressRequestCreateForm">
-               #{requestController.selected.setFromLocationId(LocationManager.selected)}
-
+                <!-- setting the from location -->
+                #{requestController.selected.setFromLocationId(LocationManager.selected)}
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{requestController.selected != null}">
+                        <!-- To Location -->
                         <p:outputLabel value="#{bundle.CreateRequestLabel_toLocationId}" for="toLocationId" />
                         <p:selectOneMenu id="toLocationId" value="#{requestController.selected.toLocationId}" required="true" requiredMessage="#{bundle.EditRequestRequiredMessage_toLocationId}">
                             <f:selectItems value="#{locationController.itemsAvailableSelectOne}"
@@ -21,17 +27,14 @@
                                            itemLabel = "#{toLocationIdItem.locationName}"
                                            itemValue="#{toLocationIdItem}"/>
                         </p:selectOneMenu>
-
                     </p:panelGrid>
                     <br/>
+                    <!-- Rest of the create form -->
                     <h:form>
                         <div style="text-align: center; font-size: large; font-weight: bold;">
                             List of Needs
                         </div>
-                        <br/>
-                        <br/>
-
-
+                        <br/><br/>
                         <div>
                             <div>
                                 <p:outputLabel style="font-weight: bold" value="Water"/>
@@ -42,46 +45,35 @@
                                 <p:outputLabel style="font-weight: bold" value="Canned Goods"/>
                                 <p:inputNumber style="float: right" value="#{requestController.cannedNeed.quantity}"/>
                             </div>
-
                             <br/>
                             <div>
                                 <p:outputLabel style="font-weight: bold" value="Blankets"/>
                                 <p:inputNumber style="float: right" value="#{requestController.blanketNeed.quantity}"/>
                             </div>
-
                             <br/>
                             <div>
                                 <p:outputLabel style="font-weight: bold" value="Shelter"/>
                                 <p:inputNumber style="float: right" value="#{requestController.shelterNeed.quantity}"/>
                             </div>
-
                             <br/>
                             <div>
                                 <p:outputLabel style="font-weight: bold" value="Emergency Kits"/>
                                 <p:inputNumber style="float: right" value="#{requestController.emergencyNeed.quantity}"/>
 
                             </div>
-
                             <br/>
                             <div>
                                 <p:outputLabel style="font-weight: bold" value="USD"/>
                                 <p:inputNumber style="float: right" value="#{requestController.usdNeed.quantity}"/> 
                             </div>
-
                         </div>
-
-                        <br />
-                        <br/>
-                        <br/>
-                        <br/>
-
-
+                        <br/><br/><br/><br/>
                     </h:form>
+                    <!-- Buttons -->
                     <div style="text-align: center">
                         <p:commandButton actionListener="#{requestController.create}" value="#{bundle.Save}" update="display,:AddressRequestListForm:datalist,:growl" oncomplete="PF('RequestCreateDialog').hide();"/>
                         <p:commandButton value="#{bundle.Cancel}" onclick="RequestCreateDialog.hide()"/>
                     </div>
-
                 </h:panelGroup>
             </h:form>
         </p:dialog>

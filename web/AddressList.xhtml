@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Jinwoo Yom on 2017.04.11 
+Created by Jinwoo Yom on 2017.04.01 
 Copyright © 2017 Jinwoo Yom. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -10,9 +10,7 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
-    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
-
+    
     <!-- This page is constructed based on the siteTemplate -->
     <ui:composition template="/template/siteTemplate.xhtml">
         <ui:define name="title">
@@ -22,10 +20,11 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
 
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
-            
             <div align="center" style="width:97%">
+                <!-- Error Messages -->
                 <p:growl id="growl" life="4000" />
-            
+                
+                <!-- List of All related requests -->
                 <h:form id="AddressRequestListForm">
                     <p:panel header="Request List for #{LocationManager.getLocation()}">
                         <p:dataTable id="datalist" value="#{LocationManager.items}" var="item"
@@ -34,9 +33,10 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                      rowKey="#{item.id}"
                                      rows="10"
                                      rowsPerPageTemplate="10,20,30,40,50">
-
                             <p:ajax event="rowSelect"   update="createButton viewButton editButton"/>
-                            <p:ajax event="rowUnselect" update="createButton viewButton editButton"/>                            
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton"/>   
+                            
+                            <!-- Request Status -->
                             <p:column sortBy="#{item.getStatus()}" style="width: 100px; text-align: left;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_status}"/>
@@ -44,6 +44,7 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                 <h:outputText value="#{item.getStatus().replace('_', ' ')}"/>
                             </p:column>
                             
+                            <!-- Request from location -->
                             <p:column style="width: 80px; text-align: left;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_fromLocationId}"/>
@@ -51,6 +52,7 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                 <h:outputText value="#{item.getFromLocationId().getLocationName().replace('_', ' ')}"/>
                             </p:column>
                             
+                            <!-- Request to location -->
                             <p:column style="width: 250px; text-align: left;">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListRequestTitle_toLocationId}"/>
@@ -58,6 +60,7 @@ Copyright © 2017 Jinwoo Yom. All rights reserved.
                                 <h:outputText value="#{item.getToLocationId().getLocationName().replace('_', ' ')}"/>
                             </p:column>
                             
+                            <!-- Buttons -->
                             <f:facet name="footer">
                                 <p:commandButton id="createButton" icon="ui-icon-plus"   
                                                  value="#{bundle.Create}" update=":AddressRequestCreateForm"
