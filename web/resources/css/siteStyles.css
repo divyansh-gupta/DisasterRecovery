@@ -194,19 +194,19 @@ Vertical Navigation Menu
     padding: 0;
     width: 180px;
     background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(7, 157, 83, 0.75);
+    border: 1px solid rgb(0, 145, 74);
 }
 
 /* Style class for <li> */
 .verticalMenuItem {
     text-align: left;
-    border-bottom: 1px solid rgba(7, 157, 83, 0.75);
+    border-bottom: 1px solid rgb(0, 145, 74);
 }
 
 /* Style class for <li> and the <a> tag that defines a hyperlink */
 .verticalMenuItem a {
     display: block;
-    color: rgba(7, 157, 83, 0.75);
+    color: rgb(0, 145, 74);
     padding: 8px 16px;
     text-decoration: none;  /* Do not underline the hyperlink */
 }
@@ -242,7 +242,7 @@ Other Style Definitions
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
-    color: rgba(7, 157, 83, 0.75);
+    color: rgb(0, 145, 74);
 }
 
 /* Used in EditAccount and UserFiles */
@@ -273,7 +273,7 @@ Other Style Definitions
     text-align: right;
     background-color: rgba(0, 0, 0, 0.8);
     white-space: nowrap;  /* Disallow line break */
-    color: rgba(7, 157, 83, 0.75);
+    color: rgb(0, 145, 74);
 }
 
 /* Used in CreateAccount and EditAccount */
@@ -281,7 +281,7 @@ Other Style Definitions
     text-align: left;
     background-color: rgba(0, 0, 0, 0.8);
     white-space: nowrap;  /* Disallow line break */
-    color:rgba(7, 157, 83, 0.75);
+    color:rgb(0, 145, 74);
 }
 
 /* Style error messages text */
@@ -547,14 +547,14 @@ if content overflows an element's box.
 
 /* custom settings */
 .signinText {
-    color:rgba(7, 157, 83, 0.75);
+    color:rgb(0, 145, 74);
 }
 
 .ui-panel, .ui-panel-content {
-    background-color: rgba(7, 157, 83, 0.75);
+    background-color: rgba(0, 145, 74, 0.5);
 }
 
 #talkingTo {
     font-weight:bolder;
-    color:rgb(0, 157, 83);
+    color:rgb(0, 145, 74);
 }

@@ -24,6 +24,10 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+/**
+ *
+ * @author Jinwoo Yom
+ */
 @ManagedBean
 @ViewScoped
 public class MapView implements Serializable {
@@ -53,6 +57,9 @@ public class MapView implements Serializable {
     private static final String UNTRIGGERED_ICON = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
     private static final String MYLOCATION_ICON = "resources/images/mylocation.png";
 
+    /**
+     * Initialization of Mapview
+     */
     @PostConstruct
     public void init() {
         advancedModel = new DefaultMapModel();
@@ -74,6 +81,10 @@ public class MapView implements Serializable {
         });
     }
 
+    /**
+     *
+     * @return Map Center
+     */
     public String getMapCenter() {
         Location center = locationFacade.find(1);
         if (responderFacade.isLoggedIn()) {
@@ -88,19 +99,35 @@ public class MapView implements Serializable {
         return center.getLatitude().doubleValue() + ", " + center.getLongitude().doubleValue();
     }
 
+    /**
+     *
+     * @return Advance Model
+     */
     public MapModel getAdvancedModel() {
         return advancedModel;
     }
 
+    /**
+     * Runs when a marker is selected
+     * @param event
+     */
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
         locationManager.setSelected(locationFacade.findLocationByName(marker.getTitle()));
     }
     
+    /**
+     *
+     * @return Emergency Description of selected location
+     */
     public String getData() {
         return locationManager.getSelected().getEmergencyDescription();
     }
 
+    /**
+     *
+     * @return Selected marker
+     */
     public Marker getMarker() {
         return marker;
     }

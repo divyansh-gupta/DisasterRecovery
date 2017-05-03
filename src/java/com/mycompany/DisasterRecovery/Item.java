@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author divyansh
  */
+// Item class
 @Entity
 @Table(name = "Item")
 @XmlRootElement
@@ -36,83 +37,144 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id")
     , @NamedQuery(name = "Item.findByItemType", query = "SELECT i FROM Item i WHERE i.itemType = :itemType")
     , @NamedQuery(name = "Item.findByQuantity", query = "SELECT i FROM Item i WHERE i.quantity = :quantity")})
-public class Item implements Serializable {
+public class Item implements Serializable {// Item class
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
-    private Integer id;
+    private Integer id;         // Item ID
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 14)
     @Column(name = "item_type")
-    private String itemType;
+    private String itemType;    // Item type
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
-    private int quantity;
+    private int quantity;       // Item Quantity
+
     @JoinColumn(name = "location_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Location locationId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
-    private Collection<Need> needCollection;
+    private Location locationId;    // Item Location ID
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "itemId")
+    private Collection<Need> needCollection;    // Collection of Needs
+
+
+    /**
+     * Empty Constructor
+     */
     public Item() {
     }
 
+    /**
+     * Item Constructor with id
+     * @param id
+     */
     public Item(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Overloaded Item constructor
+     * @param id
+     * @param itemType
+     * @param quantity
+     */
     public Item(Integer id, String itemType, int quantity) {
         this.id = id;
         this.itemType = itemType;
         this.quantity = quantity;
     }
+    
+    // Getters and setters
 
+    /**
+     * Get ID
+     * @return Item ID
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Set ID
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Get Item Type
+     * @return Item Type
+     */
     public String getItemType() {
         return itemType;
     }
 
+    /**
+     * Set Item Type
+     * @param itemType
+     */
     public void setItemType(String itemType) {
         this.itemType = itemType;
     }
 
+    /**
+     * Get Quantity
+     * @return Item Quantity
+     */
     public int getQuantity() {
         return quantity;
     }
 
+    /**
+     *
+     * @param quantity
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     *
+     * @return Item Location
+     */
     public Location getLocationId() {
         return locationId;
     }
 
+    /**
+     *
+     * @param locationId
+     */
     public void setLocationId(Location locationId) {
         this.locationId = locationId;
     }
 
+    /**
+     *
+     * @return Need Collection
+     */
     @XmlTransient
     public Collection<Need> getNeedCollection() {
         return needCollection;
     }
 
+    /**
+     *
+     * @param needCollection
+     */
     public void setNeedCollection(Collection<Need> needCollection) {
         this.needCollection = needCollection;
     }
 
+    // Override functions
     @Override
     public int hashCode() {
         int hash = 0;
@@ -137,5 +199,5 @@ public class Item implements Serializable {
     public String toString() {
         return "com.mycompany.DiasasterRecovery.Item[ id=" + id + " ]";
     }
-    
+
 }

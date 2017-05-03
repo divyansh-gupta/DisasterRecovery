@@ -78,13 +78,27 @@ public class Responder implements Serializable {
     @ManyToOne
     private Location locationId;
  
+    /**
+     * Empty Constructor
+     */
     public Responder() {
     }
  
+    /**
+     * Responder constructor with id
+     * @param id
+     */
     public Responder(Integer id) {
         this.id = id;
     }
  
+    /**
+     * Overloaded Responder constructor
+     * @param id
+     * @param username
+     * @param responderName
+     * @param image
+     */
     public Responder(Integer id, String username, String responderName, String image) {
         this.id = id;
         this.username = username;
@@ -92,51 +106,128 @@ public class Responder implements Serializable {
         this.image = image;
     }
    
+    /**
+     *
+     * @return Responder's ID
+     */
     public Integer getId() {
         return id;
     }
  
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
  
+    /**
+     *
+     * @return Responder's Username
+     */
     public String getUsername() {
         return username;
     }
  
+    /**
+     *
+     * @param username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
  
+    /**
+     *
+     * @return Responder's name
+     */
     public String getResponderName() {
         return responderName;
     }
  
+    /**
+     *
+     * @param responderName
+     */
     public void setResponderName(String responderName) {
         this.responderName = responderName;
     }
  
+    /**
+     *
+     * @return Responder's Image
+     */
     public String getImage() {
         return image;
     }
  
+    /**
+     *
+     * @param image
+     */
     public void setImage(String image) {
         this.image = image;
     }
  
+    /**
+     *
+     * @return Responder's Location ID
+     */
     public Location getLocationId() {
         return locationId;
     }
  
+    /**
+     *
+     * @param locationId
+     */
     public void setLocationId(Location locationId) {
         this.locationId = locationId;
     }
    
+    /**
+     *
+     * @param locationName Responder's Location Name
+     */
     public void setLocationName(String locationName){
         String curLocationName = this.locationId.getLocationName();
         curLocationName = locationName;
     }
+    
+     /**
+     *
+     * @return Responder's Email
+     */
+    public String getEmail() {
+        return email;
+    }
  
+    /**
+     *
+     * @param email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+ 
+    /**
+     *
+     * @return Responder's Password
+     */
+    public String getPassword() {
+        return password;
+    }
+ 
+    /**
+     *
+     * @param password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+ 
+    // Override functions
     @Override
     public int hashCode() {
         int hash = 0;
@@ -161,21 +252,4 @@ public class Responder implements Serializable {
     public String toString() {
         return "com.mycompany.DiasasterRecovery.Responder[ id=" + id + " ]";
     }
- 
-    public String getEmail() {
-        return email;
-    }
- 
-    public void setEmail(String email) {
-        this.email = email;
-    }
- 
-    public String getPassword() {
-        return password;
-    }
- 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-   
 }

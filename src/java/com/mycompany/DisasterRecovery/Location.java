@@ -92,13 +92,29 @@ public class Location implements Serializable {
     @OneToMany(mappedBy = "locationId")
     private Collection<Responder> responderCollection;
 
+    /**
+     * Empty Constructor
+     */
     public Location() {
     }
 
+    /**
+     * Constructor with id
+     * @param id
+     */
     public Location(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Overloaded Constructor
+     * @param id
+     * @param locationName
+     * @param latitude
+     * @param longitude
+     * @param triggered
+     * @param emergencyDescription
+     */
     public Location(Integer id, String locationName, BigDecimal latitude, BigDecimal longitude, Boolean triggered, String emergencyDescription) {
         this.id = id;
         this.locationName = locationName;
@@ -108,83 +124,213 @@ public class Location implements Serializable {
         this.emergencyDescription = emergencyDescription;
     }
 
+    /**
+     *
+     * @return Emergency Description
+     */
     public String getEmergencyDescription() {
         return emergencyDescription;
     }
 
+    /**
+     *
+     * @param emergencyDescription
+     */
     public void setEmergencyDescription(String emergencyDescription) {
         this.emergencyDescription = emergencyDescription;
     }
 
+    /**
+     *
+     * @return Location ID
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return Location Name
+     */
     public String getLocationName() {
         return locationName;
     }
 
+    /**
+     *
+     * @param locationName
+     */
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
 
+    /**
+     *
+     * @return Location Latitude
+     */
     public BigDecimal getLatitude() {
         return latitude;
     }
 
+    /**
+     *
+     * @param latitude
+     */
     public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     *
+     * @return Location Longitude
+     */
     public BigDecimal getLongitude() {
         return longitude;
     }
 
-
+    /**
+     *
+     * @param longitude
+     */
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
+    /**
+     *
+     * @return Location Item Collection
+     */
     @XmlTransient
     public Collection<Item> getItemCollection() {
         return itemCollection;
     }
 
+    /**
+     *
+     * @param itemCollection
+     */
     public void setItemCollection(Collection<Item> itemCollection) {
         this.itemCollection = itemCollection;
     }
 
+    /**
+     *
+     * @return Location Request Collection
+     */
     @XmlTransient
     public Collection<Request> getRequestCollection() {
         return requestCollection;
     }
 
+    /**
+     *
+     * @param requestCollection
+     */
     public void setRequestCollection(Collection<Request> requestCollection) {
         this.requestCollection = requestCollection;
     }
 
+    /**
+     *
+     * @return Location Request Collection 1
+     */
     @XmlTransient
     public Collection<Request> getRequestCollection1() {
         return requestCollection1;
     }
 
+    /**
+     *
+     * @param requestCollection1
+     */
     public void setRequestCollection1(Collection<Request> requestCollection1) {
         this.requestCollection1 = requestCollection1;
     }
 
+    /**
+     *
+     * @return Location Responder Collection
+     */
     @XmlTransient
     public Collection<Responder> getResponderCollection() {
         return responderCollection;
     }
 
+    /**
+     *
+     * @param responderCollection
+     */
     public void setResponderCollection(Collection<Responder> responderCollection) {
         this.responderCollection = responderCollection;
     }
+    
+    /**
+     *
+     * @return Location Triggered
+     */
+    public boolean getTriggered() {
+        return triggered;
+    }
 
+    /**
+     *
+     * @param triggered
+     */
+    public void setTriggered(boolean triggered) {
+        this.triggered = triggered;
+    }
+
+    /**
+     *
+     * @return Location Message Collection
+     */
+    @XmlTransient
+    public Collection<Message> getMessageCollection() {
+        return messageCollection;
+    }
+
+    /**
+     *
+     * @param messageCollection
+     */
+    public void setMessageCollection(Collection<Message> messageCollection) {
+        this.messageCollection = messageCollection;
+    }
+
+    /**
+     *
+     * @return Location Message Collection1
+     */
+    @XmlTransient
+    public Collection<Message> getMessageCollection1() {
+        return messageCollection1;
+    }
+
+    /**
+     *
+     * @param messageCollection1
+     */
+    public void setMessageCollection1(Collection<Message> messageCollection1) {
+        this.messageCollection1 = messageCollection1;
+    }
+    
+    /**
+     *
+     * @return Location Alternate Name
+     */
+    public String getAlternateName() {
+        return this.locationName.split(",")[0];
+    }
+
+    // Override functions
     @Override
     public int hashCode() {
         int hash = 0;
@@ -209,35 +355,4 @@ public class Location implements Serializable {
     public String toString() {
         return "com.mycompany.DiasasterRecovery.Location[ id=" + id + " ]";
     }
-
-    public boolean getTriggered() {
-        return triggered;
-    }
-
-    public void setTriggered(boolean triggered) {
-        this.triggered = triggered;
-    }
-
-    @XmlTransient
-    public Collection<Message> getMessageCollection() {
-        return messageCollection;
-    }
-
-    public void setMessageCollection(Collection<Message> messageCollection) {
-        this.messageCollection = messageCollection;
-    }
-
-    @XmlTransient
-    public Collection<Message> getMessageCollection1() {
-        return messageCollection1;
-    }
-
-    public void setMessageCollection1(Collection<Message> messageCollection1) {
-        this.messageCollection1 = messageCollection1;
-    }
-    
-    public String getAlternateName() {
-        return this.locationName.split(",")[0];
-    }
-
 }

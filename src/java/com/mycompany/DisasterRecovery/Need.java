@@ -40,63 +40,109 @@ public class Need implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
     private int quantity;
+    
     @JoinColumn(name = "item_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Item itemId;
+    
     @JoinColumn(name = "request_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Request requestId;
     
-
+    /**
+     * Empty Constructor
+     */
     public Need() {
     }
 
+    /**
+     * Need Constructor with ID
+     * @param id
+     */
     public Need(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Overloaded Need Constructor
+     * @param id
+     * @param quantity
+     */
     public Need(Integer id, int quantity) {
         this.id = id;
         this.quantity = quantity;
     }
 
+    /**
+     * 
+     * @return Need ID
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return Need Quantity
+     */
     public int getQuantity() {
         return quantity;
     }
 
+    /**
+     *
+     * @param quantity
+     */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
+    /**
+     *
+     * @return Need Item ID
+     */
     public Item getItemId() {
         return itemId;
     }
     
-
+    /**
+     *
+     * @param itemId
+     */
     public void setItemId(Item itemId) {
         this.itemId = itemId;
     }
 
+    /**
+     *
+     * @return Need Request ID
+     */
     public Request getRequestId() {
         return requestId;
     }
 
+    /**
+     *
+     * @param requestId
+     */
     public void setRequestId(Request requestId) {
         this.requestId = requestId;
     }
 
+    // Overloaded functions
     @Override
     public int hashCode() {
         int hash = 0;

@@ -41,80 +41,133 @@ public class Request implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 11)
     @Column(name = "status")
     private String status;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requestId")
     private Collection<Need> needCollection;
+    
     @JoinColumn(name = "from_location_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Location fromLocationId;
+    
     @JoinColumn(name = "to_location_id", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Location toLocationId;
     
-      
-
+    /**
+     * Empty Constructor
+     */
     public Request() {
     }
 
+    /**
+     * Request Constructor ID
+     * @param id
+     */
     public Request(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Overloaded Request constructor
+     * @param id
+     * @param status
+     */
     public Request(Integer id, String status) {
         this.id = id;
         this.status = status;
     }
 
+    /**
+     *
+     * @return Request ID
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return Request Status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     *
+     * @param status
+     */
     public void setStatus(String status) {
         this.status = status;
     }
 
+    /**
+     *
+     * @return Request need collection
+     */
     @XmlTransient
     public Collection<Need> getNeedCollection() {
         return needCollection;
     }
 
+    /**
+     *
+     * @param needCollection
+     */
     public void setNeedCollection(Collection<Need> needCollection) {
         this.needCollection = needCollection;
     }
     
+    /**
+     *
+     * @return Request's From location ID
+     */
     public Location getFromLocationId() {
         return fromLocationId;
     }
 
+    /**
+     *
+     * @param fromLocationId
+     */
     public void setFromLocationId(Location fromLocationId) {
         this.fromLocationId = fromLocationId;
     }
 
+    /**
+     *
+     * @return Request's to location ID
+     */
     public Location getToLocationId() {
         return toLocationId;
     }
 
+    /**
+     *
+     * @param toLocationId
+     */
     public void setToLocationId(Location toLocationId) {
         this.toLocationId = toLocationId;
     }
     
-    
+    // Overloaded functions
     @Override
     public int hashCode() {
         int hash = 0;
@@ -122,9 +175,6 @@ public class Request implements Serializable {
         return hash;
     }
     
-    
-    
-
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
