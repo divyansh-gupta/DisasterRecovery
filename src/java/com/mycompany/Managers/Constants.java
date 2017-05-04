@@ -16,8 +16,9 @@ public final class Constants {
     public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/DisasterRecoveryStorage/";
 
     public static final String PHOTOS_RELATIVE_PATH = "DisasterRecoveryStorage/";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage/defaultResponderPhoto.png";
-
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage/";
+    public static final String SET_DEFAULT_PHOTO_RELATIVE_PATH = "defaultResponderPhoto.png";
+    
     /* Temporary filename */
     public static final String TEMP_FILE = "tmp_file";
 
