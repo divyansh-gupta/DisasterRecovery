@@ -35,55 +35,41 @@ public class NeedController implements Serializable {
     private Need selected;
     
     /**
-     *
+     * Default constructor
      */
     public NeedController() {
     }
 
     /**
-     *
-     * @return
+     * Get selected need
+     * @return need
      */
     public Need getSelected() {
         return selected;
     }
 
     /**
-     *
-     * @param selected
+     * Set selected need
+     * @param selected need
      */
     public void setSelected(Need selected) {
         this.selected = selected;
-    }
-
-    /**
-     *
-     */
-    protected void setEmbeddableKeys() {
-    }
-
-    /**
-     *
-     */
-    protected void initializeEmbeddableKey() {
     }
 
     private NeedFacade getFacade() {
         return ejbFacade;
     }
 
-    /**
-     *
-     * @return
+    /** 
+     * Prepare create
      */
     public Need prepareCreate() {
         selected = new Need();
-        initializeEmbeddableKey();
         return selected;
     }
 
     /**
-     *
+     * Create
      */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NeedCreated"));
@@ -93,14 +79,14 @@ public class NeedController implements Serializable {
     }
 
     /**
-     *
+     * Update
      */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NeedUpdated"));
     }
 
     /**
-     *
+     * Destroy
      */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NeedDeleted"));
@@ -111,8 +97,8 @@ public class NeedController implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get needs
+     * @return list of needs
      */
     public List<Need> getItems() {
         if (items == null) {
@@ -121,9 +107,13 @@ public class NeedController implements Serializable {
         return items;
     }
 
+    /**
+     * Persist
+     * @param persistAction
+     * @param successMessage 
+     */
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
@@ -150,42 +140,36 @@ public class NeedController implements Serializable {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Get need
+     * @param id id
+     * @return need
      */
     public Need getNeed(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
     /**
-     *
-     * @return
+     * Get needs available
      */
     public List<Need> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
     /**
-     *
-     * @return
+     * Get needs available
      */
     public List<Need> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
     /**
-     *
+     * Converter
      */
     @FacesConverter(forClass = Need.class)
     public static class NeedControllerConverter implements Converter {
 
         /**
-         *
-         * @param facesContext
-         * @param component
-         * @param value
-         * @return
+         * Get as object
          */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -210,11 +194,7 @@ public class NeedController implements Serializable {
         }
 
         /**
-         *
-         * @param facesContext
-         * @param component
-         * @param object
-         * @return
+         * Get as string
          */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
@@ -233,9 +213,7 @@ public class NeedController implements Serializable {
     }
     
     /**
-     *
-     * @param n
-     * @return
+     * Need to string
      */
     public String needToString(Need n) {
         return n.getQuantity()+ " of " + n.getItemId().getItemType().replace('_', ' ');

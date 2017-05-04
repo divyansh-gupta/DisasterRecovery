@@ -31,7 +31,7 @@ import javax.faces.convert.FacesConverter;
 import java.util.Random;
 
 /**
- *
+ * Request controller
  * @author cheng
  */
 @Named("requestController")
@@ -50,40 +50,12 @@ public class RequestController implements Serializable {
     @EJB
     private RequestFacade requestFacade;
 
-    /**
-     *
-     * @return
-     */
-    public RequestFacade getRequestFacade() {
-        return requestFacade;
-    }
-
-    /**
-     *
-     * @param requestFacade
-     */
-    public void setRequestFacade(RequestFacade requestFacade) {
-        this.requestFacade = requestFacade;
-    }
-
+  
     private List<Request> items = null;
     private List<Need> needs = null;
 
-    /**
-     *
-     * @return
-     */
-    public NeedFacade getNeedFacade() {
-        return needFacade;
-    }
+  
 
-    /**
-     *
-     * @param needFacade
-     */
-    public void setNeedFacade(NeedFacade needFacade) {
-        this.needFacade = needFacade;
-    }
     private Request selected;
     private NeedController needCtrl = new NeedController();
 
@@ -103,184 +75,148 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get item facade
      */
     public ItemFacade getItemFacade() {
         return itemFacade;
     }
-
+    
     /**
-     *
-     * @param itemFacade
+     * Get need facade
      */
-    public void setItemFacade(ItemFacade itemFacade) {
-        this.itemFacade = itemFacade;
+    public NeedFacade getNeedFacade() {
+        return needFacade;
+    }
+    
+    /**
+     * Get request facade
+     */
+    public RequestFacade getRequestFacade() {
+        return requestFacade;
     }
 
     /**
-     *
-     * @param ejbFacade
-     */
-    public void setEjbFacade(RequestFacade ejbFacade) {
-        this.ejbFacade = ejbFacade;
-    }
-
-    /**
-     *
-     * @return
+     * Get water need
      */
     public Need getWaterNeed() {
         return waterNeed;
     }
 
     /**
-     *
-     * @param waterNeed
+     * Set water need
      */
     public void setWaterNeed(Need waterNeed) {
         this.waterNeed = waterNeed;
     }
 
     /**
-     *
-     * @return
+     * Get canned need
      */
     public Need getCannedNeed() {
         return cannedNeed;
     }
 
     /**
-     *
-     * @param cannedNeed
+     * Set canned need
      */
     public void setCannedNeed(Need cannedNeed) {
         this.cannedNeed = cannedNeed;
     }
 
     /**
-     *
-     * @return
+     * Get blanket need
      */
     public Need getBlanketNeed() {
         return blanketNeed;
     }
 
     /**
-     *
-     * @param blanketNeed
+     * Set blanket need
      */
     public void setBlanketNeed(Need blanketNeed) {
         this.blanketNeed = blanketNeed;
     }
 
     /**
-     *
-     * @return
+     * Get shelter need
      */
     public Need getShelterNeed() {
         return shelterNeed;
     }
 
     /**
-     *
-     * @param shelterNeed
+     * Set shelter need
      */
     public void setShelterNeed(Need shelterNeed) {
         this.shelterNeed = shelterNeed;
     }
 
     /**
-     *
-     * @return
+     * Get usd need
      */
     public Need getUsdNeed() {
         return usdNeed;
     }
 
     /**
-     *
-     * @param usdNeed
+     * Set usd need
      */
     public void setUsdNeed(Need usdNeed) {
         this.usdNeed = usdNeed;
     }
 
     /**
-     *
-     * @return
+     * Get emergency need
      */
     public Need getEmergencyNeed() {
         return emergencyNeed;
     }
 
     /**
-     *
-     * @param emergencyNeed
+     * Set emergency need
      */
     public void setEmergencyNeed(Need emergencyNeed) {
         this.emergencyNeed = emergencyNeed;
     }
 
-//    public List<Need> getNeedsToAdd() {
-//        return needsToAdd;
-//    }
-//
-//    public void setNeedsToAdd(List<Need> needsToAdd) {
-//        this.needsToAdd = needsToAdd;
-//    }
-
     /**
-     *
+     * Default constructor
      */
     public RequestController() {
 
     }
 
     /**
-     *
-     * @return
+     * Get selected need
      */
     public Request getSelected() {
         return selected;
     }
 
     /**
-     *
-     * @param selected
+     * Set selected need
      */
     public void setSelected(Request selected) {
         this.selected = selected;
     }
 
     /**
-     *
+     * Get facade
      */
-    protected void setEmbeddableKeys() {
-    }
-
-    /**
-     *
-     */
-    protected void initializeEmbeddableKey() {
-    }
-
     private RequestFacade getFacade() {
         return ejbFacade;
     }
 
     /**
-     *
-     * @return
+     * Prepare create
      */
     public Request prepareCreate() {
         selected = new Request();
-        initializeEmbeddableKey();
         return selected;
     }
 
     /**
-     *
+     * Create need
      */
     public void createRequest() {
         Collection<Need> needList = new ArrayList();
@@ -345,7 +281,7 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
+     * create
      */
     public void create() {
         Date date = new Date();
@@ -362,14 +298,14 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
+     * update
      */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RequestUpdated"));
     }
 
     /**
-     *
+     * destroy
      */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("RequestDeleted"));
@@ -380,8 +316,7 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get items
      */
     public List<Request> getItems() {
         if (items == null) {
@@ -391,25 +326,21 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get needs
      */
     public List<Need> getNeeds() {
         return needs;
     }
 
     /**
-     *
-     * @param needs
+     * Set needs
      */
     public void setNeeds(List<Need> needs) {
         this.needs = needs;
     }
 
     /**
-     *
-     * @param req
-     * @return
+     * Get need list
      */
     public List<Need> getNeedList(Request req) {
         needs = needFacade.findByLocation(req);
@@ -417,9 +348,11 @@ public class RequestController implements Serializable {
         return needs;
     }
 
+    /**
+     * Persist
+     */
     private Request persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     return (Request) getFacade().edit(selected);
@@ -447,7 +380,7 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
+     * Get request
      * @param id
      * @return
      */
@@ -456,34 +389,25 @@ public class RequestController implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get item available
      */
     public List<Request> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
     /**
-     *
-     * @return
+     * Get item available
      */
     public List<Request> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
     /**
-     *
+     * Converter
      */
     @FacesConverter(forClass = Request.class)
     public static class RequestControllerConverter implements Converter {
 
-        /**
-         *
-         * @param facesContext
-         * @param component
-         * @param value
-         * @return
-         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -506,13 +430,6 @@ public class RequestController implements Serializable {
             return sb.toString();
         }
 
-        /**
-         *
-         * @param facesContext
-         * @param component
-         * @param object
-         * @return
-         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {

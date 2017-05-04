@@ -20,7 +20,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 /**
- *
+ * Responder controller
  * @author cheng
  */
 @Named("responderController")
@@ -33,55 +33,42 @@ public class ResponderController implements Serializable {
     private Responder selected;
 
     /**
-     *
+     * Default constructor
      */
     public ResponderController() {
     }
 
     /**
-     *
-     * @return
+     * Get selected
      */
     public Responder getSelected() {
         return selected;
     }
 
     /**
-     *
-     * @param selected
+     * Set selected
      */
     public void setSelected(Responder selected) {
         this.selected = selected;
     }
 
     /**
-     *
+     * Get facade
      */
-    protected void setEmbeddableKeys() {
-    }
-
-    /**
-     *
-     */
-    protected void initializeEmbeddableKey() {
-    }
-
     private ResponderFacade getFacade() {
         return ejbFacade;
     }
 
     /**
-     *
-     * @return
+     * Prepare create
      */
     public Responder prepareCreate() {
         selected = new Responder();
-        initializeEmbeddableKey();
         return selected;
     }
 
     /**
-     *
+     * Create
      */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ResponderCreated"));
@@ -91,14 +78,14 @@ public class ResponderController implements Serializable {
     }
 
     /**
-     *
+     * Update
      */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ResponderUpdated"));
     }
 
     /**
-     *
+     * Destroy
      */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ResponderDeleted"));
@@ -109,8 +96,7 @@ public class ResponderController implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get items
      */
     public List<Responder> getItems() {
         if (items == null) {
@@ -119,9 +105,11 @@ public class ResponderController implements Serializable {
         return items;
     }
 
+    /**
+     * Persist
+     */
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
@@ -148,43 +136,32 @@ public class ResponderController implements Serializable {
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Get responder
      */
     public Responder getResponder(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
     /**
-     *
-     * @return
+     * Get item available
      */
     public List<Responder> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
     /**
-     *
-     * @return
+     * Get item available
      */
     public List<Responder> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
     /**
-     *
+     * Converter
      */
     @FacesConverter(forClass = Responder.class)
     public static class ResponderControllerConverter implements Converter {
 
-        /**
-         *
-         * @param facesContext
-         * @param component
-         * @param value
-         * @return
-         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -207,13 +184,6 @@ public class ResponderController implements Serializable {
             return sb.toString();
         }
 
-        /**
-         *
-         * @param facesContext
-         * @param component
-         * @param object
-         * @return
-         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
