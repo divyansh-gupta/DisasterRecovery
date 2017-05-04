@@ -141,7 +141,7 @@ Style the div component whose unique id is "page" per reference
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: black;
+    color: rgb(0, 200, 100);
 }
 /* 
 Style the div component whose unique id is "header" per reference 
