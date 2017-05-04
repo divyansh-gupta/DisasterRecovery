@@ -23,7 +23,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
-import javax.naming.NamingException;
+import org.primefaces.context.RequestContext;
 
 /**
  * Message manager
@@ -43,8 +43,6 @@ public class MessageManager implements Serializable {
 
     private Publisher publisher;
 
-    private Subscriber subscriber;
-
     @EJB
     private MessageFacade messageFacade;
 
@@ -57,10 +55,20 @@ public class MessageManager implements Serializable {
     public MessageManager() {
         try {
             publisher = new Publisher();
-            subscriber = new Subscriber();
-        } catch (JMSException | NamingException e) {
+//            subscriber = new Subscriber();
+        } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    /*
+     * Click button
+    */
+    public void clickButton() {
+        String jsToRun = "document.getElementsByClassName('b"
+                + this.locationEngaged.getAlternateName() + this.locationEngaged.getId() + "')[0].click()";
+        System.out.println(jsToRun);
+        RequestContext.getCurrentInstance().execute(jsToRun);
     }
 
     /**
@@ -92,6 +100,30 @@ public class MessageManager implements Serializable {
         }
         
         this.messageBeingTyped = "";
+    }
+
+    /*
+     * Send trigger
+    */
+    public void sendTrigger(Location sender, String description) {
+        Date date = new Date();
+        Random rand = new Random(date.getTime());
+        locationFacade.findAll().forEach(loc -> {
+            int randId = Math.abs(rand.nextInt());
+            Message msg = new Message();
+            msg.setDescription("Emergency triggered!: " + description);
+            msg.setId(randId);
+            msg.setSenderLocation(sender);
+            msg.setReceiverLocation(loc);
+            msg.setTimeStamp(date);
+            messageFacade.create(msg);
+            try {
+                publisher.sendMessageToTopic("Emergency triggered!: " + description, randId, sender.getId(), loc.getId(), date);
+                messagesBetweenSelectedLocationAndUser();
+            } catch (JMSException e) {
+                System.out.println(e);
+            }
+        });
     }
 
     /**

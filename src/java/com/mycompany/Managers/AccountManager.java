@@ -572,7 +572,7 @@ public class AccountManager implements Serializable {
                 newResponder.setLocationId(userLocation);
                 newResponder.setUsername(username);
 
-                newResponder.setImage(DEFAULT_PHOTO_RELATIVE_PATH);
+                newResponder.setImage(Constants.SET_DEFAULT_PHOTO_RELATIVE_PATH);
 
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {

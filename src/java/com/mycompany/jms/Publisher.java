@@ -6,6 +6,7 @@ package com.mycompany.jms;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.enterprise.context.SessionScoped;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -17,6 +18,8 @@ import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+
+@SessionScoped
 public class Publisher implements Serializable {
 
     /*

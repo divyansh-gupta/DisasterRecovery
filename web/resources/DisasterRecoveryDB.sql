@@ -70,9 +70,9 @@ INSERT INTO Location (location_name, latitude, longitude, triggered) VALUES
 
 -- Responders
 INSERT INTO Responder (username, email, responder_name, image, password, location_id) VALUES
-('mr_root', 'divyg@vt.edu', 'Responder1', '', 'password', 1),
-('mr_root2', 'bhaanuk5@vt.edu', 'Responder2', '', 'password', 1),
-('mr_root3', 'bhaanukaul@gmail.com', 'Responder3', '', 'password', 1);
+('mr_root', 'divyg@vt.edu', 'Responder1', 'defaultResponderPhoto.png', 'password', 1),
+('mr_root2', 'bhaanuk5@vt.edu', 'Responder2', 'defaultResponderPhoto.png', 'password', 1),
+('mr_root3', 'bhaanukaul@gmail.com', 'Responder3', 'defaultResponderPhoto.png', 'password', 1);
 
 -- Resquests
 INSERT INTO Request (ID, status, from_location_id, to_location_id) VALUES

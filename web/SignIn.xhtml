@@ -44,7 +44,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
                         <h:outputLabel value="Username:" for="username" />
                         <p:inputText id="username" value="#{loginManager.username}" required="true" styleClass="signInInputTextField"
-                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username" >
+                                     requiredMessage="Please enter a valid username" label="Username" >
                         </p:inputText>
 
                         <h:outputLabel value="Password:" for="password" />
@@ -60,9 +60,6 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                     &nbsp;
                     <p:commandButton id="login" value="Sign In" action="#{loginManager.loginUser(false)}"
                                      styleClass="commandButton" ajax="false" icon="ui-icon-arrowthick-1-e" />
-                    &nbsp;
-                    <p:commandButton id="create" value="Create an Account" action="#{loginManager.createUser()}" 
-                                     styleClass="commandButton" ajax="false" icon="ui-icon-plus" />
                     &nbsp;
                     <p:commandButton id="retrieve" value="Forgot Password" action="#{loginManager.resetPassword()}" 
                                      styleClass="commandButton" ajax="false" icon="ui-icon-refresh" />

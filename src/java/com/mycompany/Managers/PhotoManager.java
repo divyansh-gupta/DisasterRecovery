@@ -244,6 +244,7 @@ public class PhotoManager implements Serializable {
 //            }
 
             responder.setImage(responder.getId() + "." + fileExtension);
+            responderFacade.edit(responder);
 //            // Construct a new Photo object with file extension and user's object reference
 //            UserPhoto newPhoto = new UserPhoto(fileExtension, user);
 //
