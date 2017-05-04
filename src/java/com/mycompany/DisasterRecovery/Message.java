@@ -60,7 +60,7 @@ public class Message implements Serializable {
     
     @JoinColumn(name = "reciever_location", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Location recieverLocation;
+    private Location receiverLocation;
 
     /**
      * Empty Constructor
@@ -70,7 +70,7 @@ public class Message implements Serializable {
 
     /**
      * Message Constructor with id
-     * @param id
+     * @param id id
      */
     public Message(Integer id) {
         this.id = id;
@@ -78,9 +78,9 @@ public class Message implements Serializable {
 
     /**
      * Overloaded Message Constructor
-     * @param id
-     * @param timeStamp
-     * @param description
+     * @param id id
+     * @param timeStamp time stamp
+     * @param description description
      */
     public Message(Integer id, Date timeStamp, String description) {
         this.id = id;
@@ -89,7 +89,7 @@ public class Message implements Serializable {
     }
 
     /**
-     *
+     * Get id
      * @return Message ID
      */
     public Integer getId() {
@@ -97,15 +97,15 @@ public class Message implements Serializable {
     }
 
     /**
-     *
-     * @param id
+     * Set id
+     * @param id id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     *
+     * Get time stamp
      * @return Message Time stamp
      */
     public Date getTimeStamp() {
@@ -113,15 +113,15 @@ public class Message implements Serializable {
     }
 
     /**
-     *
-     * @param timeStamp
+     * Set time stamp
+     * @param timeStamp time stamp
      */
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
 
     /**
-     *
+     * Get description
      * @return Message Description
      */
     public String getDescription() {
@@ -129,15 +129,15 @@ public class Message implements Serializable {
     }
 
     /**
-     *
-     * @param description
+     * Set description
+     * @param description description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     *
+     * Get sender's location
      * @return Message Sender Location
      */
     public Location getSenderLocation() {
@@ -145,27 +145,27 @@ public class Message implements Serializable {
     }
 
     /**
-     *
-     * @param senderLocation
+     * Set sender's location
+     * @param senderLocation location
      */
     public void setSenderLocation(Location senderLocation) {
         this.senderLocation = senderLocation;
     }
 
     /**
-     *
+     * Get receiver's location
      * @return Message Receiver Location
      */
-    public Location getRecieverLocation() {
-        return recieverLocation;
+    public Location getReceiverLocation() {
+        return receiverLocation;
     }
 
     /**
-     *
-     * @param recieverLocation
+     * Set receiver's location
+     * @param receiverLocation location
      */
-    public void setRecieverLocation(Location recieverLocation) {
-        this.recieverLocation = recieverLocation;
+    public void setReceiverLocation(Location receiverLocation) {
+        this.receiverLocation = receiverLocation;
     }
 
     // Overloaded functions

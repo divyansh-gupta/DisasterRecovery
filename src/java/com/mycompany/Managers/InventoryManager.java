@@ -26,12 +26,21 @@ import javax.inject.Named;
 @SessionScoped
 public class InventoryManager implements Serializable {
     
+    /*
+     Location facade
+    */
     @EJB
     LocationFacade locationFacade;
     
+    /*
+     Responder facade
+    */
     @EJB
     ResponderFacade responderFacade;
     
+    /*
+     Item facade
+    */
     @EJB
     ItemFacade itemFacade;
     
@@ -42,6 +51,11 @@ public class InventoryManager implements Serializable {
     private Integer emergencyKitCount;
     private Integer dollarCount;
     
+    /**
+     * Update inventory in selected location
+     * @param user responder
+     * @return redirect to Inventory page
+     */
     public String updateInventory(Responder user) {
         Location userLocation = user.getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -63,6 +77,10 @@ public class InventoryManager implements Serializable {
         return "/Inventory.xhtml";
     }
     
+    /**
+     * Get logged in user
+     * @return responder
+     */
     public Responder getLoggedInUser() {
         Responder selected = null;
         int userPrimaryKey = (int) FacesContext.getCurrentInstance().
@@ -75,14 +93,18 @@ public class InventoryManager implements Serializable {
         return selected;
     }
 
+    /**
+     * Get location facade
+     * @return location facade
+     */
     public LocationFacade getLocationFacade() {
         return locationFacade;
     }
 
-    public void setLocationFacade(LocationFacade locationFacade) {
-        this.locationFacade = locationFacade;
-    }
-
+    /**
+     * Get water count
+     * @return water count
+     */
     public Integer getWaterCount() {
         Location userLocation = getLoggedInUser().getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -90,10 +112,18 @@ public class InventoryManager implements Serializable {
         return typeItemMap.get("WATER").getQuantity();
     }
 
+    /**
+     * Set water count
+     * @param waterCount
+     */
     public void setWaterCount(Integer waterCount) {
         this.waterCount = waterCount;
     }
     
+    /**
+     * Get canned goods count
+     * @return canned goods count
+     */
     public Integer getCannedGoodsCount() {
         Location userLocation = getLoggedInUser().getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -101,10 +131,18 @@ public class InventoryManager implements Serializable {
         return typeItemMap.get("CANNED_GOODS").getQuantity();
     }
 
+    /**
+     * Set canned goods count
+     * @param cannedGoodsCount canned goods count
+     */
     public void setCannedGoodsCount(Integer cannedGoodsCount) {
         this.cannedGoodsCount = cannedGoodsCount;
     }
 
+    /**
+     * Get blankets count
+     * @return blankets count
+     */
     public Integer getBlanketsCount() {
         Location userLocation = getLoggedInUser().getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -112,10 +150,18 @@ public class InventoryManager implements Serializable {
         return typeItemMap.get("BLANKETS").getQuantity();
     }
 
+    /**
+     * Set blankets count
+     * @param blanketsCount blankets count
+     */
     public void setBlanketsCount(Integer blanketsCount) {
         this.blanketsCount = blanketsCount;
     }
 
+    /**
+     * Get shelter count
+     * @return shelter count
+     */
     public Integer getShelterCount() {
         Location userLocation = getLoggedInUser().getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -123,10 +169,18 @@ public class InventoryManager implements Serializable {
         return typeItemMap.get("SHELTER").getQuantity();
     }
 
+    /**
+     * Set shelter count
+     * @param shelterCount shelter count
+     */
     public void setShelterCount(Integer shelterCount) {
         this.shelterCount = shelterCount;
     }
 
+    /**
+     * Get emergency count
+     * @return emergency count
+     */
     public Integer getEmergencyKitCount() {
         Location userLocation = getLoggedInUser().getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -134,10 +188,18 @@ public class InventoryManager implements Serializable {
         return typeItemMap.get("EMERGENCY_KITS").getQuantity();
     }
 
+    /**
+     * Set emergency count
+     * @param emergencyKitCount emergency count
+     */
     public void setEmergencyKitCount(Integer emergencyKitCount) {
         this.emergencyKitCount = emergencyKitCount;
     }
 
+    /**
+     * Get dollar count
+     * @return dollar count
+     */
     public Integer getDollarCount() {
         Location userLocation = getLoggedInUser().getLocationId();
         Map<String, Item> typeItemMap = itemFacade.findByLocationId(userLocation).stream()
@@ -145,6 +207,10 @@ public class InventoryManager implements Serializable {
         return typeItemMap.get("USD").getQuantity();
     }
 
+    /**
+     * Set dollar count
+     * @param dollarCount dollar count
+     */
     public void setDollarCount(Integer dollarCount) {
         this.dollarCount = dollarCount;
     }

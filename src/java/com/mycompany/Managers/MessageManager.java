@@ -23,9 +23,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
+import javax.naming.NamingException;
 
 /**
- *
+ * Message manager
  *
  * @author divyansh
  */
@@ -40,10 +41,8 @@ public class MessageManager implements Serializable {
     @Inject
     private AccountManager accountManager;
 
-//    @Inject
     private Publisher publisher;
 
-//    @Inject
     private Subscriber subscriber;
 
     @EJB
@@ -52,36 +51,53 @@ public class MessageManager implements Serializable {
     @EJB
     private LocationFacade locationFacade;
 
+    /**
+     * Constructor
+     */
     public MessageManager() {
         try {
             publisher = new Publisher();
             subscriber = new Subscriber();
-        } catch (Exception e) {
+        } catch (JMSException | NamingException e) {
             System.out.println(e);
         }
     }
 
+    /**
+     * Send message
+     */
     public void sendMessage() {
+        // Get current user
         Responder currentUser = accountManager.getSelected();
+        
         Date date = new Date();
         Random rand = new Random(date.getTime());
         int randId = Math.abs(rand.nextInt());
+        
+        // Set message information
         Message msg = new Message();
         msg.setDescription(this.messageBeingTyped);
         msg.setId(randId);
         msg.setSenderLocation(currentUser.getLocationId());
-        msg.setRecieverLocation(this.locationEngaged);
+        msg.setReceiverLocation(this.locationEngaged);
         msg.setTimeStamp(date);
         messageFacade.create(msg);
+        
+        // Send message
         try {
             publisher.sendMessageToTopic(this.messageBeingTyped, randId, currentUser.getLocationId().getId(), this.locationEngaged.getId(), date);
             messagesBetweenSelectedLocationAndUser();
         } catch (JMSException e) {
             System.out.println(e);
         }
+        
         this.messageBeingTyped = "";
     }
 
+    /**
+     * Get messages between selected location and user
+     * @return list of message
+     */
     public List<Message> messagesBetweenSelectedLocationAndUser() {
         System.out.println("messagesBetweenSelectedLocationAndUser running");
 
@@ -91,14 +107,19 @@ public class MessageManager implements Serializable {
         int userLocId = accountManager.getSelected().getLocationId().getId();
         locationMessages = messageFacade.findAll().stream().distinct()
                 .filter(message
-                        -> (message.getRecieverLocation().getId() == userLocId && Objects.equals(message.getSenderLocation().getId(), this.locationEngaged.getId()))
-                || (message.getSenderLocation().getId() == userLocId && Objects.equals(message.getRecieverLocation().getId(), this.locationEngaged.getId())))
+                        -> (message.getReceiverLocation().getId() == userLocId && Objects.equals(message.getSenderLocation().getId(), this.locationEngaged.getId()))
+                || (message.getSenderLocation().getId() == userLocId && Objects.equals(message.getReceiverLocation().getId(), this.locationEngaged.getId())))
                 .sorted((Message one, Message two) -> -(one.getTimeStamp().compareTo(two.getTimeStamp())))
                 .collect(Collectors.toList());
         System.out.println("Message sample: " + locationMessages);
         return locationMessages;
     }
 
+    /**
+     * Check if this message comes from myself
+     * @param msgId message id
+     * @return true if it comes from myself, otherwise false.
+     */
     public boolean messageFromMe(int msgId) {
         Message msg = messageFacade.find(msgId);
         if (accountManager.getSelected() == null || msg == null) {
@@ -108,51 +129,79 @@ public class MessageManager implements Serializable {
         return toReturn;
     }
 
+    /**
+     * Get message location
+     * @return list of location
+     */
     public List<Location> getMessageLocations() {
         List<Location> locations = locationFacade.findAll();
         return locations;
     }
 
+    /**
+     * Get message being typed
+     * @return message
+     */
     public String getMessageBeingTyped() {
         return messageBeingTyped;
     }
 
+    /**
+     * Set message being typed
+     * @param messageBeingTyped message
+     */
     public void setMessageBeingTyped(String messageBeingTyped) {
         this.messageBeingTyped = messageBeingTyped;
     }
     private String messageBeingTyped;
 
+    /**
+     * Get location engaged
+     * @return location
+     */
     public Location getLocationEngaged() {
 //        System.out.println("Get location engaged is running with value: " + this.locationEngaged.getLocationName());
         return locationEngaged;
     }
 
+    /**
+     * Set location engaged
+     * @param locationEngaged location
+     */
     public void setLocationEngaged(Location locationEngaged) {
 //        System.out.println("New location picked: " + locationEngaged.getLocationName());
         this.locationEngaged = locationEngaged;
         messagesBetweenSelectedLocationAndUser();
     }
 
+    /**
+     * Get message facade
+     * @return message facade
+     */
     public MessageFacade getMessageFacade() {
         return messageFacade;
     }
 
-    public void setMessageFacade(MessageFacade messageFacade) {
-        this.messageFacade = messageFacade;
-    }
-
+    /**
+     * Get location facade
+     * @return location facade
+     */
     public LocationFacade getLocationFacade() {
         return locationFacade;
     }
 
-    public void setLocationFacade(LocationFacade locationFacade) {
-        this.locationFacade = locationFacade;
-    }
-
+    /**
+     * Get location messages
+     * @return list of message
+     */
     public List<Message> getLocationMessages() {
         return locationMessages;
     }
 
+    /**
+     * Set location message
+     * @param locationMessages list of message
+     */
     public void setLocationMessages(List<Message> locationMessages) {
         this.locationMessages = locationMessages;
     }

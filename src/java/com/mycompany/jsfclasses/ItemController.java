@@ -19,42 +19,64 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ * Item controller
+ * @author cheng
+ */
 @Named("itemController")
 @SessionScoped
 public class ItemController implements Serializable {
 
+    /*
+    ===============================
+    Instance Variables (Properties)
+    ===============================
+     */
+    
     @EJB
     private com.mycompany.sessionbeans.ItemFacade ejbFacade;
+    
     private List<Item> items = null;
     private Item selected;
 
+    /**
+     * Default constructor
+     */
     public ItemController() {
     }
 
+    /**
+     * Get selected item
+     * @return item
+     */
     public Item getSelected() {
         return selected;
     }
 
+    /**
+     * Set selected item
+     * @param selected item
+     */
     public void setSelected(Item selected) {
         this.selected = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
     }
 
     private ItemFacade getFacade() {
         return ejbFacade;
     }
 
+    /**
+     * Prepare create
+     * @return item
+     */
     public Item prepareCreate() {
         selected = new Item();
-        initializeEmbeddableKey();
         return selected;
     }
 
+    /**
+     * Create item
+     */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ItemCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -62,10 +84,16 @@ public class ItemController implements Serializable {
         }
     }
 
+    /**
+     * Update item
+     */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ItemUpdated"));
     }
 
+    /**
+     * Destroy item
+     */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ItemDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -74,6 +102,10 @@ public class ItemController implements Serializable {
         }
     }
 
+    /**
+     * Get items
+     * @return list of item
+     */
     public List<Item> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -81,9 +113,11 @@ public class ItemController implements Serializable {
         return items;
     }
 
+    /*
+     * persist
+     */
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
@@ -109,21 +143,44 @@ public class ItemController implements Serializable {
         }
     }
 
+    /**
+     * Get item
+     * @param id id
+     * @return item
+     */
     public Item getItem(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
+    /**
+     * Get item available
+     * @return list of item
+     */
     public List<Item> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    /**
+     * Get item available
+     * @return list of item
+     */ 
     public List<Item> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
+    /**
+     * Item controller converter
+     */
     @FacesConverter(forClass = Item.class)
     public static class ItemControllerConverter implements Converter {
 
+        /**
+         * Get as object
+         * @param facesContext context
+         * @param component component
+         * @param value value
+         * @return object
+         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -146,6 +203,13 @@ public class ItemController implements Serializable {
             return sb.toString();
         }
 
+        /**
+         * Get as string
+         * @param facesContext context 
+         * @param component component
+         * @param object object
+         * @return string
+         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {

@@ -20,6 +20,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ * Need controller
+ * @author cheng
+ */
 @Named("needController")
 @SessionScoped
 public class NeedController implements Serializable {
@@ -30,21 +34,37 @@ public class NeedController implements Serializable {
     private List<Need> items = null;
     private Need selected;
     
-
+    /**
+     *
+     */
     public NeedController() {
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getSelected() {
         return selected;
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void setSelected(Need selected) {
         this.selected = selected;
     }
 
+    /**
+     *
+     */
     protected void setEmbeddableKeys() {
     }
 
+    /**
+     *
+     */
     protected void initializeEmbeddableKey() {
     }
 
@@ -52,12 +72,19 @@ public class NeedController implements Serializable {
         return ejbFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need prepareCreate() {
         selected = new Need();
         initializeEmbeddableKey();
         return selected;
     }
 
+    /**
+     *
+     */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NeedCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -65,10 +92,16 @@ public class NeedController implements Serializable {
         }
     }
 
+    /**
+     *
+     */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NeedUpdated"));
     }
 
+    /**
+     *
+     */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NeedDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -77,6 +110,10 @@ public class NeedController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Need> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -112,21 +149,44 @@ public class NeedController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Need getNeed(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Need> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Need> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
+    /**
+     *
+     */
     @FacesConverter(forClass = Need.class)
     public static class NeedControllerConverter implements Converter {
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param value
+         * @return
+         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -149,6 +209,13 @@ public class NeedController implements Serializable {
             return sb.toString();
         }
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -165,7 +232,11 @@ public class NeedController implements Serializable {
 
     }
     
-    
+    /**
+     *
+     * @param n
+     * @return
+     */
     public String needToString(Need n) {
         return n.getQuantity()+ " of " + n.getItemId().getItemType().replace('_', ' ');
     }

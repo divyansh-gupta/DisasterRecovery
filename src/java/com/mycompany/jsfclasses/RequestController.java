@@ -30,6 +30,10 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import java.util.Random;
 
+/**
+ *
+ * @author cheng
+ */
 @Named("requestController")
 @SessionScoped
 public class RequestController implements Serializable {
@@ -46,10 +50,18 @@ public class RequestController implements Serializable {
     @EJB
     private RequestFacade requestFacade;
 
+    /**
+     *
+     * @return
+     */
     public RequestFacade getRequestFacade() {
         return requestFacade;
     }
 
+    /**
+     *
+     * @param requestFacade
+     */
     public void setRequestFacade(RequestFacade requestFacade) {
         this.requestFacade = requestFacade;
     }
@@ -57,10 +69,18 @@ public class RequestController implements Serializable {
     private List<Request> items = null;
     private List<Need> needs = null;
 
+    /**
+     *
+     * @return
+     */
     public NeedFacade getNeedFacade() {
         return needFacade;
     }
 
+    /**
+     *
+     * @param needFacade
+     */
     public void setNeedFacade(NeedFacade needFacade) {
         this.needFacade = needFacade;
     }
@@ -74,66 +94,130 @@ public class RequestController implements Serializable {
     Need usdNeed = new Need();
     Need emergencyNeed = new Need();
 
+    /**
+     *
+     * @return
+     */
     public RequestFacade getEjbFacade() {
         return ejbFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public ItemFacade getItemFacade() {
         return itemFacade;
     }
 
+    /**
+     *
+     * @param itemFacade
+     */
     public void setItemFacade(ItemFacade itemFacade) {
         this.itemFacade = itemFacade;
     }
 
+    /**
+     *
+     * @param ejbFacade
+     */
     public void setEjbFacade(RequestFacade ejbFacade) {
         this.ejbFacade = ejbFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getWaterNeed() {
         return waterNeed;
     }
 
+    /**
+     *
+     * @param waterNeed
+     */
     public void setWaterNeed(Need waterNeed) {
         this.waterNeed = waterNeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getCannedNeed() {
         return cannedNeed;
     }
 
+    /**
+     *
+     * @param cannedNeed
+     */
     public void setCannedNeed(Need cannedNeed) {
         this.cannedNeed = cannedNeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getBlanketNeed() {
         return blanketNeed;
     }
 
+    /**
+     *
+     * @param blanketNeed
+     */
     public void setBlanketNeed(Need blanketNeed) {
         this.blanketNeed = blanketNeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getShelterNeed() {
         return shelterNeed;
     }
 
+    /**
+     *
+     * @param shelterNeed
+     */
     public void setShelterNeed(Need shelterNeed) {
         this.shelterNeed = shelterNeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getUsdNeed() {
         return usdNeed;
     }
 
+    /**
+     *
+     * @param usdNeed
+     */
     public void setUsdNeed(Need usdNeed) {
         this.usdNeed = usdNeed;
     }
 
+    /**
+     *
+     * @return
+     */
     public Need getEmergencyNeed() {
         return emergencyNeed;
     }
 
+    /**
+     *
+     * @param emergencyNeed
+     */
     public void setEmergencyNeed(Need emergencyNeed) {
         this.emergencyNeed = emergencyNeed;
     }
@@ -145,21 +229,39 @@ public class RequestController implements Serializable {
 //    public void setNeedsToAdd(List<Need> needsToAdd) {
 //        this.needsToAdd = needsToAdd;
 //    }
+
+    /**
+     *
+     */
     public RequestController() {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Request getSelected() {
         return selected;
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void setSelected(Request selected) {
         this.selected = selected;
     }
 
+    /**
+     *
+     */
     protected void setEmbeddableKeys() {
     }
 
+    /**
+     *
+     */
     protected void initializeEmbeddableKey() {
     }
 
@@ -167,12 +269,19 @@ public class RequestController implements Serializable {
         return ejbFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public Request prepareCreate() {
         selected = new Request();
         initializeEmbeddableKey();
         return selected;
     }
 
+    /**
+     *
+     */
     public void createRequest() {
         Collection<Need> needList = new ArrayList();
         Map<String, Item> fromLocationMap = getItemFacade().findByLocationId(selected.getFromLocationId())
@@ -235,6 +344,9 @@ public class RequestController implements Serializable {
 
     }
 
+    /**
+     *
+     */
     public void create() {
         Date date = new Date();
         Random rand = new Random(date.getTime());
@@ -249,10 +361,16 @@ public class RequestController implements Serializable {
         createRequest();
     }
 
+    /**
+     *
+     */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("RequestUpdated"));
     }
 
+    /**
+     *
+     */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("RequestDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -261,6 +379,10 @@ public class RequestController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Request> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -268,14 +390,27 @@ public class RequestController implements Serializable {
         return items;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Need> getNeeds() {
         return needs;
     }
 
+    /**
+     *
+     * @param needs
+     */
     public void setNeeds(List<Need> needs) {
         this.needs = needs;
     }
 
+    /**
+     *
+     * @param req
+     * @return
+     */
     public List<Need> getNeedList(Request req) {
         needs = needFacade.findByLocation(req);
         System.out.println(needs.toString());
@@ -311,21 +446,44 @@ public class RequestController implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Request getRequest(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Request> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Request> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
+    /**
+     *
+     */
     @FacesConverter(forClass = Request.class)
     public static class RequestControllerConverter implements Converter {
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param value
+         * @return
+         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -348,6 +506,13 @@ public class RequestController implements Serializable {
             return sb.toString();
         }
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {

@@ -70,7 +70,7 @@ public class Request implements Serializable {
 
     /**
      * Request Constructor ID
-     * @param id
+     * @param id id
      */
     public Request(Integer id) {
         this.id = id;
@@ -78,8 +78,8 @@ public class Request implements Serializable {
 
     /**
      * Overloaded Request constructor
-     * @param id
-     * @param status
+     * @param id id
+     * @param status status
      */
     public Request(Integer id, String status) {
         this.id = id;
@@ -87,7 +87,7 @@ public class Request implements Serializable {
     }
 
     /**
-     *
+     * Get id
      * @return Request ID
      */
     public Integer getId() {
@@ -95,15 +95,15 @@ public class Request implements Serializable {
     }
 
     /**
-     *
-     * @param id
+     * Get id
+     * @param id id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     *
+     * Get status
      * @return Request Status
      */
     public String getStatus() {
@@ -111,15 +111,15 @@ public class Request implements Serializable {
     }
 
     /**
-     *
-     * @param status
+     * Set status
+     * @param status status
      */
     public void setStatus(String status) {
         this.status = status;
     }
 
     /**
-     *
+     * Get need collection
      * @return Request need collection
      */
     @XmlTransient
@@ -128,15 +128,15 @@ public class Request implements Serializable {
     }
 
     /**
-     *
-     * @param needCollection
+     * Set need collection
+     * @param needCollection need collection
      */
     public void setNeedCollection(Collection<Need> needCollection) {
         this.needCollection = needCollection;
     }
     
     /**
-     *
+     * Get from location id
      * @return Request's From location ID
      */
     public Location getFromLocationId() {
@@ -144,15 +144,15 @@ public class Request implements Serializable {
     }
 
     /**
-     *
-     * @param fromLocationId
+     * Set from location id
+     * @param fromLocationId from location id
      */
     public void setFromLocationId(Location fromLocationId) {
         this.fromLocationId = fromLocationId;
     }
 
     /**
-     *
+     * Get to location id
      * @return Request's to location ID
      */
     public Location getToLocationId() {
@@ -160,8 +160,8 @@ public class Request implements Serializable {
     }
 
     /**
-     *
-     * @param toLocationId
+     * Set to location id
+     * @param toLocationId to location id
      */
     public void setToLocationId(Location toLocationId) {
         this.toLocationId = toLocationId;

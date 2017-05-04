@@ -19,6 +19,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ *
+ * @author cheng
+ */
 @Named("responderController")
 @SessionScoped
 public class ResponderController implements Serializable {
@@ -28,20 +32,37 @@ public class ResponderController implements Serializable {
     private List<Responder> items = null;
     private Responder selected;
 
+    /**
+     *
+     */
     public ResponderController() {
     }
 
+    /**
+     *
+     * @return
+     */
     public Responder getSelected() {
         return selected;
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void setSelected(Responder selected) {
         this.selected = selected;
     }
 
+    /**
+     *
+     */
     protected void setEmbeddableKeys() {
     }
 
+    /**
+     *
+     */
     protected void initializeEmbeddableKey() {
     }
 
@@ -49,12 +70,19 @@ public class ResponderController implements Serializable {
         return ejbFacade;
     }
 
+    /**
+     *
+     * @return
+     */
     public Responder prepareCreate() {
         selected = new Responder();
         initializeEmbeddableKey();
         return selected;
     }
 
+    /**
+     *
+     */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ResponderCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -62,10 +90,16 @@ public class ResponderController implements Serializable {
         }
     }
 
+    /**
+     *
+     */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ResponderUpdated"));
     }
 
+    /**
+     *
+     */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ResponderDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -74,6 +108,10 @@ public class ResponderController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Responder> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -109,21 +147,44 @@ public class ResponderController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Responder getResponder(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Responder> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Responder> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
+    /**
+     *
+     */
     @FacesConverter(forClass = Responder.class)
     public static class ResponderControllerConverter implements Converter {
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param value
+         * @return
+         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -146,6 +207,13 @@ public class ResponderController implements Serializable {
             return sb.toString();
         }
 
+        /**
+         *
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {

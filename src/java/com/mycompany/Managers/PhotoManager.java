@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.enterprise.context.SessionScoped;
@@ -27,9 +24,10 @@ import org.primefaces.model.UploadedFile;
 
 @Named(value = "photoManager")
 @SessionScoped
+
 /**
- *
- * @author Balci
+ * Responder photo manager
+ * @author cheng
  */
 public class PhotoManager implements Serializable {
 
@@ -50,10 +48,19 @@ public class PhotoManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
+
+    /**
+     * Get file
+     * @return file
+     */
     public UploadedFile getFile() {
         return file;
     }
 
+    /**
+     * Set file
+     * @param file file 
+     */
     public void setFile(UploadedFile file) {
         this.file = file;
     }
@@ -68,15 +75,12 @@ public class PhotoManager implements Serializable {
         this.message = message;
     }
 
+    /**
+     * Get responder Facade
+     */
     public ResponderFacade getResponderFacade() {
         return responderFacade;
     }
-
-    public void setResponderFacade(ResponderFacade responderFacade) {
-        this.responderFacade = responderFacade;
-    }
-
-    
 
     //****************  Instance Methods  ********************
     /*
@@ -92,6 +96,11 @@ public class PhotoManager implements Serializable {
     Clear Error Messages
     ====================
      */
+
+    /**
+     * Clear error message
+     * @return redirect to change photo page
+     */
     public String clearErrorMessage() {
         message = "";
         return "ChangePhoto?faces-redirect=true";
@@ -101,6 +110,11 @@ public class PhotoManager implements Serializable {
     ========================
     Handle User Photo Upload
     ========================
+     */
+
+    /**
+     * upload
+     * @return redirect page
      */
     public String upload() {
 
@@ -167,6 +181,11 @@ public class PhotoManager implements Serializable {
     ========================
     Cancel Photo File Upload
     ========================
+     */
+
+    /**
+     * Cancel uploading
+     * @return
      */
     public String cancel() {
         message = "";

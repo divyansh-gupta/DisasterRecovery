@@ -86,8 +86,6 @@ public class AccountManager implements Serializable {
     private String newPassword;
 
     private String name;
-    private String address1;
-    private String address2;
     private String city;
     private String state;
     private String zipcode;
@@ -110,21 +108,40 @@ public class AccountManager implements Serializable {
      */
     @EJB
     private ResponderFacade responderFacade;
+    
+    /*
+     Location facade
+    */
     @EJB
     private LocationFacade locationFacade;
 
+    /*
+     Item facade
+    */
     @EJB
     private ItemFacade itemFacade;
 
+    /**
+     * Get item facade 
+     * @return item facade 
+     */
     public ItemFacade getItemFacade() {
         return itemFacade;
     }
 
+    /**
+     * Set item facade 
+     * @param itemFacade item facade 
+     */
     public void setItemFacade(ItemFacade itemFacade) {
         this.itemFacade = itemFacade;
     }
 
     // Constructor method instantiating an instance of AccountManager
+
+    /**
+     * Empty constructor
+     */
     public AccountManager() {
     }
 
@@ -133,110 +150,188 @@ public class AccountManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
+
+    /**
+     * Get list of states
+     * @return list of states
+     */
+
     public String[] getListOfStates() {
         return listOfStates;
     }
 
+    /**
+     * Get password
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Set password
+     * @param password password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Get new password
+     * @return new password
+     */
     public String getNewPassword() {
         return newPassword;
     }
 
+    /**
+     * Set new password
+     * @param newPassword new password
+     */
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
 
+    /**
+     * Get name
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set name
+     * @param name name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getAddress1() {
-        return address1;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
+    /**
+     * Get city
+     * @return city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Set city
+     * @param city city
+     */
     public void setCity(String city) {
         this.city = city;
     }
 
+    /**
+     * Get state
+     * @return state
+     */
     public String getState() {
         return state;
     }
 
+    /**
+     * Set state
+     * @param state state
+     */
     public void setState(String state) {
         this.state = state;
     }
 
+    /**
+     * Get zip code
+     * @return zip code
+     */
     public String getZipcode() {
         return zipcode;
     }
 
+    /**
+     * Set zip code
+     * @param zip_code zip code
+     */
     public void setZipcode(String zip_code) {
         this.zipcode = zip_code;
     }
 
+    /**
+     * Get security question
+     * @return security question
+     */
     public int getSecurityQuestion() {
         return securityQuestion;
     }
 
+    /**
+     * Set security question
+     * @param securityQuestion security question
+     */
     public void setSecurityQuestion(int securityQuestion) {
         this.securityQuestion = securityQuestion;
     }
 
+    /**
+     * Get security answer
+     * @return security answer
+     */
     public String getSecurityAnswer() {
         return securityAnswer;
     }
 
+    /**
+     * Set security answer
+     * @param securityAnswer security answer
+     */
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
     }
 
+    /**
+     * Get email
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Set email
+     * @param email email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Get responder facade
+     * @return responder facade
+     */
     public ResponderFacade getResponderFacade() {
         return responderFacade;
     }
 
+    /**
+     * Get location facade
+     * @return location facade
+     */
     public LocationFacade getLocationFacade() {
         return locationFacade;
     }
 
+    /**
+     * Get username
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Set username
+     * @param username username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
@@ -252,6 +347,12 @@ public class AccountManager implements Serializable {
     When the user selects a security question, its number (int) is stored; not its String.
     Later, given the number (int), the security question String is retrieved.
      */
+
+    /**
+     * Get security question map
+     * @return security question map
+     */
+
     public Map<String, Object> getSecurity_questions() {
 
         if (security_questions == null) {
@@ -271,14 +372,26 @@ public class AccountManager implements Serializable {
         return security_questions;
     }
 
+    /**
+     * Get status message
+     * @return status message
+     */
     public String getStatusMessage() {
         return statusMessage;
     }
 
+    /**
+     * Set status message
+     * @param statusMessage status message
+     */
     public void setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
     }
 
+    /**
+     * Get selected responder
+     * @return responder
+     */
     public Responder getSelected() {
 
         if (selected == null) {
@@ -298,6 +411,10 @@ public class AccountManager implements Serializable {
         return selected;
     }
 
+    /**
+     * Set selected responder 
+     * @param selectedResponder responder
+     */
     public void setSelected(Responder selectedResponder) {
         this.selected = selectedResponder;
     }
@@ -308,19 +425,24 @@ public class AccountManager implements Serializable {
     ================
      */
     // Return True if a user is logged in; otherwise, return False
+
+    /**
+     * Check if user is logged in
+     * @return boolean
+     */
     public boolean isLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username") != null;
     }
     
     /**
-     *  This function utilizes the google maps to get Latitude and Longitude values
-     *  based on a City, State and Zipcode. These values are used to create a Location
+     *  This function utilizes the Google maps to get Latitude and Longitude values
+     *  based on a City, State and Zip code. These values are used to create a Location
      *  Object which is stored in the database. 
-     * @param city
-     * @param State
-     * @param zipcode
-     * @return
-     * @throws Exception 
+     * @param city city
+     * @param State state
+     * @param zipcode zip code
+     * @return location id
+     * @throws Exception exception
      */
     public Location getLatLongFromAddress(String city, String State, String zipcode) throws Exception {
         String api_call_init = Constants.GMAPS_GEOCODE_BASE_URL + city + ", "
@@ -358,11 +480,11 @@ public class AccountManager implements Serializable {
     }
     
     /**
-     * Creates and stores an initial item list for a location. All
-     * items start out with a value with 0. A user will have to manually updated
+     * Creates and stores an initial item list for a location. 
+     * All items start out with a value with 0. A user will have to manually updated
      * the values from another page.
-     * @param location
-     * @return 
+     * @param location location id
+     * @return item collection
      */
     public Collection<Item> createInitItemList(Location location) {
         Item water = new Item();
@@ -413,10 +535,13 @@ public class AccountManager implements Serializable {
         return returnList;
     }
 
-    /*
-    Create a new new user account. Return "" if an error occurs; otherwise,
-    upon successful account creation, redirect to show the SignIn page.
+    /**
+     * Create a new new responder account.
+     * @return "" if an error occurs; otherwise, upon successful account creation, 
+     * redirect to show the SignIn page.
+     * @throws Exception exception
      */
+
     public String createAccount() throws Exception {
 
         // First, check if the entered username is already being used
@@ -466,11 +591,13 @@ public class AccountManager implements Serializable {
         }
         return "";
     }
-/*
-     Update the signed-in user's account profile. Return "" if an error occurs;w
-     otherwise, upon successful account update, redirect to show the Profile page.
+
+    /**
+     * Update the signed-in user's account profile. Return "" if an error occurs;w
+     * otherwise, upon successful account update, redirect to show the Profile page.
+     * @return ""
+     * @throws Exception exception
      */
- 
     public String updateAccount() throws Exception {
  
         if (statusMessage == null || statusMessage.isEmpty()) {
@@ -518,11 +645,11 @@ public class AccountManager implements Serializable {
         }
         return "";
     }
-    
-/*
-    
-    the signed-in user's account. Return "" if an error occurs; otherwise,
-    upon successful account deletion, redirect to show the index (home) page.
+
+    /**
+     * the signed-in user's account. Return "" if an error occurs; otherwise,
+     * upon successful account deletion, redirect to show the index (home) page.
+     * @return ""
      */
     public String deleteAccount() {
 
@@ -768,7 +895,7 @@ public class AccountManager implements Serializable {
         }
     }
 
-    // Show the Home page
+    // Show the Sign in page
     public String showHomePage() {
         return "/SignIn?faces-redirect=true";
     }
@@ -778,6 +905,10 @@ public class AccountManager implements Serializable {
         return "/Profile?faces-redirect=true";
     }
 
+    /**
+     * Log out
+     * @return redirect to sign in page
+     */
     public String logout() {
 
         // Clear the logged-in Responder's session map
@@ -786,7 +917,7 @@ public class AccountManager implements Serializable {
         // Reset the logged-in Responder's properties
         username = password = "";
         name = "";
-        address1 = address2 = city = state = zipcode = "";
+        city = state = zipcode = "";
         securityQuestion = 0;
         securityAnswer = "";
         email = statusMessage = "";
@@ -798,6 +929,10 @@ public class AccountManager implements Serializable {
         return "/SignIn.xhtml?faces-redirect=true";
     }
 
+    /**
+     * Get responder photo path
+     * @return responder photo path
+     */ 
     public String responderPhoto() {
 
         // Obtain the signed-in user's username

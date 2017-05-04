@@ -12,6 +12,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+/**
+ *
+ * @author cheng
+ */
 @Named(value = "loginManager")
 @SessionScoped
 /**
@@ -37,8 +41,6 @@ public class LoginManager implements Serializable {
     @EJB
     private ResponderFacade responderFacade;
     
-//    @EJB
-//    private TriggerManager triggerManager;
 
     // Constructor method instantiating an instance of LoginManager
     public LoginManager() {
@@ -49,30 +51,59 @@ public class LoginManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
+
+    /**
+     * Get username
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Set username
+     * @param username username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Get password
+     * @return password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Set password
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Get error message
+     * @return error message
+     */
     public String getErrorMessage() {
         return errorMessage;
     }
 
+    /**
+     * Set error message
+     * @param errorMessage error message
+     */
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * Get responder facade
+     * @return responder facade
+     */
     public ResponderFacade getResponderFacade() {
         return responderFacade;
     }
@@ -82,14 +113,19 @@ public class LoginManager implements Serializable {
     Instance Methods
     ================
      */
-    public String createUser() {
 
+    /**
+     * Redirect to create account page
+     */
+    public String createUser() {
         // Redirect to show the CreateAccount page
         return "/CreateAccount.xhtml?faces-redirect=true";
     }
 
+    /**
+     * Redirect to reset password page
+     */
     public String resetPassword() {
-
         // Redirect to show the EnterUsername page
         return "/EnterUsername.xhtml?faces-redirect=true";
     }
@@ -136,6 +172,11 @@ public class LoginManager implements Serializable {
         }
     }
     
+    /**
+     * If triggered, redirect to map, else redirect to profile
+     * @param user responder
+     * @return destination page
+     */
     public String redirectIfSignedIn(Responder user) {
         if (user.getLocationId().getTriggered()) {
             return "/Map.xhtml?faces-redirect=true";

@@ -103,7 +103,7 @@ public class Item implements Serializable {// Item class
 
     /**
      * Set ID
-     * @param id
+     * @param id id
      */
     public void setId(Integer id) {
         this.id = id;
@@ -119,7 +119,7 @@ public class Item implements Serializable {// Item class
 
     /**
      * Set Item Type
-     * @param itemType
+     * @param itemType item type
      */
     public void setItemType(String itemType) {
         this.itemType = itemType;
@@ -134,15 +134,15 @@ public class Item implements Serializable {// Item class
     }
 
     /**
-     *
-     * @param quantity
+     * Set quantity
+     * @param quantity quantity
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
     /**
-     *
+     * Get location id
      * @return Item Location
      */
     public Location getLocationId() {
@@ -150,15 +150,15 @@ public class Item implements Serializable {// Item class
     }
 
     /**
-     *
-     * @param locationId
+     * Set location id
+     * @param locationId location id
      */
     public void setLocationId(Location locationId) {
         this.locationId = locationId;
     }
 
     /**
-     *
+     * Get need collection
      * @return Need Collection
      */
     @XmlTransient
@@ -167,8 +167,8 @@ public class Item implements Serializable {// Item class
     }
 
     /**
-     *
-     * @param needCollection
+     * Set need collection
+     * @param needCollection need collection
      */
     public void setNeedCollection(Collection<Need> needCollection) {
         this.needCollection = needCollection;

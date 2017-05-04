@@ -19,42 +19,63 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ *
+ * @author cheng
+ */
 @Named("messageController")
 @SessionScoped
 public class MessageController implements Serializable {
 
+    /*
+    ===============================
+    Instance Variables (Properties)
+    ===============================
+     */
+    
     @EJB
     private com.mycompany.sessionbeans.MessageFacade ejbFacade;
     private List<Message> items = null;
     private Message selected;
 
+    /**
+     * Default constructor
+     */
     public MessageController() {
     }
 
+    /**
+     * Get selected message
+     */
     public Message getSelected() {
         return selected;
     }
 
+    /**
+     * Set selected message
+     */
     public void setSelected(Message selected) {
         this.selected = selected;
     }
 
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
-    }
-
+    /*
+     * Get facade
+     */
     private MessageFacade getFacade() {
         return ejbFacade;
     }
 
+    /**
+     * prepare create
+     */
     public Message prepareCreate() {
         selected = new Message();
-        initializeEmbeddableKey();
         return selected;
     }
 
+    /**
+     * Create
+     */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundles").getString("MessageCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -62,10 +83,16 @@ public class MessageController implements Serializable {
         }
     }
 
+    /**
+     * Update
+     */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundles").getString("MessageUpdated"));
     }
 
+    /**
+     * Destroy
+     */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundles").getString("MessageDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -74,6 +101,9 @@ public class MessageController implements Serializable {
         }
     }
 
+    /**
+     * Get items
+     */
     public List<Message> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -83,7 +113,6 @@ public class MessageController implements Serializable {
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
@@ -109,21 +138,36 @@ public class MessageController implements Serializable {
         }
     }
 
+    /**
+     * Get message by id
+     */
     public Message getMessage(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
+    /**
+     * Get available items
+     */
     public List<Message> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    /**
+     * Get available items
+     */
     public List<Message> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
+    /**
+     * Converter
+     */
     @FacesConverter(forClass = Message.class)
     public static class MessageControllerConverter implements Converter {
 
+        /**
+         * Get as object
+         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -146,6 +190,9 @@ public class MessageController implements Serializable {
             return sb.toString();
         }
 
+        /**
+         * Get as string
+         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {

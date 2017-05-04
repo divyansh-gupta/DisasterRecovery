@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findByLatitude", query = "SELECT l FROM Location l WHERE l.latitude = :latitude")
     , @NamedQuery(name = "Location.findByLatLong", query = "SELECT l FROM Location l WHERE l.latitude = :latitude AND l.longitude = :longitude")
     , @NamedQuery(name = "Location.findByLongitude", query = "SELECT l FROM Location l WHERE l.longitude = :longitude")})
+
 public class Location implements Serializable {
 
     @Basic(optional = false)
@@ -48,7 +49,7 @@ public class Location implements Serializable {
     private boolean triggered;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderLocation")
     private Collection<Message> messageCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recieverLocation")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverLocation")
     private Collection<Message> messageCollection1;
 
     private static final long serialVersionUID = 1L;
@@ -125,7 +126,7 @@ public class Location implements Serializable {
     }
 
     /**
-     *
+     * Get emergency description
      * @return Emergency Description
      */
     public String getEmergencyDescription() {
@@ -133,15 +134,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param emergencyDescription
+     * Set emergency description
+     * @param emergencyDescription description
      */
     public void setEmergencyDescription(String emergencyDescription) {
         this.emergencyDescription = emergencyDescription;
     }
 
     /**
-     *
+     * Get id
      * @return Location ID
      */
     public Integer getId() {
@@ -149,31 +150,31 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param id
+     * Set id
+     * @param id id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return Location Name
+     * Get location name
+     * @return Location Name 
      */
     public String getLocationName() {
         return locationName;
     }
 
     /**
-     *
-     * @param locationName
+     * Set location name
+     * @param locationName location name
      */
     public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
 
     /**
-     *
+     * Get latitude
      * @return Location Latitude
      */
     public BigDecimal getLatitude() {
@@ -181,15 +182,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param latitude
+     * Set latitude
+     * @param latitude latitude
      */
     public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
     /**
-     *
+     * Get longitude
      * @return Location Longitude
      */
     public BigDecimal getLongitude() {
@@ -197,15 +198,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param longitude
+     * Set longitude
+     * @param longitude longitude
      */
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
     /**
-     *
+     * Get item collection
      * @return Location Item Collection
      */
     @XmlTransient
@@ -214,15 +215,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param itemCollection
+     * Set item collection
+     * @param itemCollection item collection
      */
     public void setItemCollection(Collection<Item> itemCollection) {
         this.itemCollection = itemCollection;
     }
 
     /**
-     *
+     * Get request collection
      * @return Location Request Collection
      */
     @XmlTransient
@@ -231,15 +232,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param requestCollection
+     * Set request collection
+     * @param requestCollection request collection
      */
     public void setRequestCollection(Collection<Request> requestCollection) {
         this.requestCollection = requestCollection;
     }
 
     /**
-     *
+     * Get request collection 1
      * @return Location Request Collection 1
      */
     @XmlTransient
@@ -248,15 +249,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param requestCollection1
+     * Set request collection 1
+     * @param requestCollection1 request collection 1
      */
     public void setRequestCollection1(Collection<Request> requestCollection1) {
         this.requestCollection1 = requestCollection1;
     }
 
     /**
-     *
+     * Get responder collection
      * @return Location Responder Collection
      */
     @XmlTransient
@@ -265,15 +266,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param responderCollection
+     * Set responder collection
+     * @param responderCollection responder collection
      */
     public void setResponderCollection(Collection<Responder> responderCollection) {
         this.responderCollection = responderCollection;
     }
     
     /**
-     *
+     * Get triggered
      * @return Location Triggered
      */
     public boolean getTriggered() {
@@ -281,15 +282,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param triggered
+     * Set triggered
+     * @param triggered triggered
      */
     public void setTriggered(boolean triggered) {
         this.triggered = triggered;
     }
 
     /**
-     *
+     * Get message collection
      * @return Location Message Collection
      */
     @XmlTransient
@@ -298,15 +299,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param messageCollection
+     * Set message collection
+     * @param messageCollection message collection
      */
     public void setMessageCollection(Collection<Message> messageCollection) {
         this.messageCollection = messageCollection;
     }
 
     /**
-     *
+     * Get message collection 1
      * @return Location Message Collection1
      */
     @XmlTransient
@@ -315,15 +316,15 @@ public class Location implements Serializable {
     }
 
     /**
-     *
-     * @param messageCollection1
+     * Set message collection 1
+     * @param messageCollection1 message collection 1
      */
     public void setMessageCollection1(Collection<Message> messageCollection1) {
         this.messageCollection1 = messageCollection1;
     }
     
     /**
-     *
+     * Get alternate name
      * @return Location Alternate Name
      */
     public String getAlternateName() {

@@ -24,6 +24,11 @@ import org.primefaces.context.RequestContext;
 
 public class Subscriber implements MessageListener, Serializable {
 
+    /*
+    ===============================
+    Instance Variables (Properties)
+    ===============================
+     */
     private TopicConnectionFactory connectionFactory;
     private TopicConnection connection;
     private TopicSession subscriberSession;
@@ -40,6 +45,9 @@ public class Subscriber implements MessageListener, Serializable {
     @EJB
     private LocationFacade locationFacade;
 
+    /*
+     Constructor
+    */
     public Subscriber() throws NamingException, JMSException {
         InitialContext ctx = new InitialContext();
         connectionFactory = (TopicConnectionFactory) ctx.lookup("jms/DisasterRecoveryConnectionFactory");
@@ -51,17 +59,21 @@ public class Subscriber implements MessageListener, Serializable {
         connection.start();
     }
 
+    /*
+     On message
+    */
     @Override
     public void onMessage(javax.jms.Message msg) {
-//        System.out.println("on message running!");
         String buttonID = messageManager.getLocationEngaged().getAlternateName() + messageManager.getLocationEngaged().getId();
         String jsToExecute = "document.getElementsByClassName(" + buttonID + ")[0].click()";
-//        System.out.println(jsToExecute);
         messageManager.messagesBetweenSelectedLocationAndUser();
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute(jsToExecute);
     }
 
+    /*
+     exit
+    */
     public void exit() {
         try {
             connection.close();

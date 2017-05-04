@@ -62,7 +62,7 @@ public class Need implements Serializable {
 
     /**
      * Need Constructor with ID
-     * @param id
+     * @param id id
      */
     public Need(Integer id) {
         this.id = id;
@@ -70,8 +70,8 @@ public class Need implements Serializable {
 
     /**
      * Overloaded Need Constructor
-     * @param id
-     * @param quantity
+     * @param id id
+     * @param quantity quantity
      */
     public Need(Integer id, int quantity) {
         this.id = id;
@@ -79,7 +79,7 @@ public class Need implements Serializable {
     }
 
     /**
-     * 
+     * Get id
      * @return Need ID
      */
     public Integer getId() {
@@ -87,7 +87,7 @@ public class Need implements Serializable {
     }
 
     /**
-     *
+     * Set id
      * @param id
      */
     public void setId(Integer id) {
@@ -95,7 +95,7 @@ public class Need implements Serializable {
     }
 
     /**
-     *
+     * Get quantity
      * @return Need Quantity
      */
     public int getQuantity() {
@@ -103,15 +103,15 @@ public class Need implements Serializable {
     }
 
     /**
-     *
+     * Set quantity
      * @param quantity
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    /**
-     *
+    /** 
+     * Get item id
      * @return Need Item ID
      */
     public Item getItemId() {
@@ -119,15 +119,15 @@ public class Need implements Serializable {
     }
     
     /**
-     *
-     * @param itemId
+     * Set item id
+     * @param itemId item id
      */
     public void setItemId(Item itemId) {
         this.itemId = itemId;
     }
 
     /**
-     *
+     * Get request id
      * @return Need Request ID
      */
     public Request getRequestId() {
@@ -135,8 +135,8 @@ public class Need implements Serializable {
     }
 
     /**
-     *
-     * @param requestId
+     * Set request id
+     * @param requestId request id
      */
     public void setRequestId(Request requestId) {
         this.requestId = requestId;

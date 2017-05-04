@@ -6,8 +6,6 @@ package com.mycompany.jms;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -19,10 +17,13 @@ import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-//@Named(value = "publisher")
-//@SessionScoped
 public class Publisher implements Serializable {
 
+    /*
+    ===============================
+    Instance Variables (Properties)
+    ===============================
+     */
     private TopicConnectionFactory connectionFactory;
     private TopicConnection topicConnection;
     private TopicSession topicSession;
@@ -30,6 +31,9 @@ public class Publisher implements Serializable {
     private Topic topic;
     private TopicPublisher topicPublisher;
 
+    /*
+     Constructor
+    */
     public Publisher() throws NamingException, JMSException {
         InitialContext ctx = new InitialContext();
         connectionFactory = (TopicConnectionFactory) ctx.lookup("jms/DisasterRecoveryConnectionFactory");
@@ -40,10 +44,16 @@ public class Publisher implements Serializable {
         topicConnection.start();
     }
 
+    /*
+     Close connection
+    */
     public void closeConnection() throws JMSException {
         topicConnection.stop();
     }
 
+    /*
+     Send message to topic
+    */
     public void sendMessageToTopic(String msgText, int msgId, int senderLocation, int recieverLocation, Date date) throws JMSException {
         Message msg = topicSession.createTextMessage(msgText);
         msg.setJMSMessageID(String.valueOf(msgId));

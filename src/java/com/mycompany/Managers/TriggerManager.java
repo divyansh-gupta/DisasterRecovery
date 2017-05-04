@@ -21,19 +21,37 @@ import com.mycompany.sessionbeans.LocationFacade;
 @SessionScoped
 public class TriggerManager implements Serializable {
     
+    /*
+    The instance variable 'locationFacade' is annotated with the @EJB annotation.
+    The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
+    of the LocationFacade object, after it is instantiated at runtime, into the instance variable 'locationFacade'.
+     */
     @EJB
     LocationFacade locationFacade;
     
     private String emergencyDescription;
 
+    /**
+     * Get emergency description
+     * @return emergency description
+     */
     public String getEmergencyDescription() {
         return emergencyDescription;
     }
 
+    /**
+     * Set emergency description
+     * @param emergencyDescription emergency description
+     */
     public void setEmergencyDescription(String emergencyDescription) {
         this.emergencyDescription = emergencyDescription;
     }
     
+    /**
+     * Trigger emergency at user location
+     * @param user responder
+     * @return map page
+     */
     public String triggerEmergency(Responder user) {
         Location userLocation = user.getLocationId();
         // TODO: Send Message to Nearby Responders
@@ -43,6 +61,11 @@ public class TriggerManager implements Serializable {
         return "/Map.xhtml?faces-redirect=true";
     }
     
+    /**
+     * Untrigger emergency at user location
+     * @param user responder
+     * @return map page
+     */
     public String unTriggerEmergency(Responder user) {
         Location userLocation = user.getLocationId();
         userLocation.setTriggered(Boolean.FALSE);
@@ -51,6 +74,11 @@ public class TriggerManager implements Serializable {
         return "/Map.xhtml?faces-redirect=true";
     }
     
+    /**
+     * Check status of location
+     * @param user responder
+     * @return return true if triggered, otherwise return false
+     */
     public boolean userLocationIsTriggered(Responder user) {
         if (user == null) {
             return false;

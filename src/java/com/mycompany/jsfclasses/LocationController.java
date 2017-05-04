@@ -19,42 +19,63 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ * Location controller
+ * @author cheng
+ */
 @Named("locationController")
 @SessionScoped
 public class LocationController implements Serializable {
 
+    /*
+    ===============================
+    Instance Variables (Properties)
+    ===============================
+     */
+    
     @EJB
     private com.mycompany.sessionbeans.LocationFacade ejbFacade;
     private List<Location> items = null;
     private Location selected;
 
+    /**
+     * Default constructor
+     */
     public LocationController() {
     }
 
+    /**
+     * Get selected
+     * @return selected location
+     */
     public Location getSelected() {
         return selected;
     }
 
+    /**
+     * Set selected location
+     * @param selected location
+     */
     public void setSelected(Location selected) {
         this.selected = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
     }
 
     private LocationFacade getFacade() {
         return ejbFacade;
     }
 
+    /**
+     * Prepare create
+     * @return
+     */
     public Location prepareCreate() {
         selected = new Location();
-        initializeEmbeddableKey();
         return selected;
     }
 
+    /**
+     * Create
+     */
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("LocationCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -62,10 +83,16 @@ public class LocationController implements Serializable {
         }
     }
 
+    /**
+     * Update
+     */
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("LocationUpdated"));
     }
 
+    /**
+     * Destroy
+     */
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("LocationDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -74,6 +101,10 @@ public class LocationController implements Serializable {
         }
     }
 
+    /**
+     * Get location
+     * @return list of location
+     */
     public List<Location> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -81,9 +112,11 @@ public class LocationController implements Serializable {
         return items;
     }
 
+    /*
+     * Persist
+     */
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getFacade().edit(selected);
@@ -109,21 +142,44 @@ public class LocationController implements Serializable {
         }
     }
 
+    /**
+     * Get location
+     * @param id id
+     * @return location
+     */
     public Location getLocation(java.lang.Integer id) {
         return getFacade().find(id);
     }
 
+    /**
+     * Get available location
+     * @return list of location
+     */
     public List<Location> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
+    /**
+     *Get available location
+     * @return list of location
+     */
     public List<Location> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
+    /**
+     * Converter
+     */ 
     @FacesConverter(forClass = Location.class)
     public static class LocationControllerConverter implements Converter {
 
+        /**
+         * Get as object
+         * @param facesContext
+         * @param component
+         * @param value
+         * @return
+         */
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -146,6 +202,13 @@ public class LocationController implements Serializable {
             return sb.toString();
         }
 
+        /** 
+         * Get as string
+         * @param facesContext
+         * @param component
+         * @param object
+         * @return
+         */
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {

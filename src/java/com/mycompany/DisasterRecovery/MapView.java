@@ -82,7 +82,7 @@ public class MapView implements Serializable {
     }
 
     /**
-     *
+     * Get map center coordinate
      * @return Map Center
      */
     public String getMapCenter() {
@@ -100,7 +100,7 @@ public class MapView implements Serializable {
     }
 
     /**
-     *
+     * Get advanced model for Google map
      * @return Advance Model
      */
     public MapModel getAdvancedModel() {
@@ -109,7 +109,7 @@ public class MapView implements Serializable {
 
     /**
      * Runs when a marker is selected
-     * @param event
+     * @param event marker selected event
      */
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
@@ -117,7 +117,7 @@ public class MapView implements Serializable {
     }
     
     /**
-     *
+     * Get selected Marker description
      * @return Emergency Description of selected location
      */
     public String getData() {
@@ -125,7 +125,7 @@ public class MapView implements Serializable {
     }
 
     /**
-     *
+     * Get marker
      * @return Selected marker
      */
     public Marker getMarker() {

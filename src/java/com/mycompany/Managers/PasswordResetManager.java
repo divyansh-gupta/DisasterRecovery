@@ -16,11 +16,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
+
 @Named(value = "passwordResetManager")
 @SessionScoped
+
 /**
- *
- * @author Balci
+ * Password reset manager
+ * @author cheng
  */
 public class PasswordResetManager implements Serializable {
 
@@ -47,38 +49,75 @@ public class PasswordResetManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
+
+    /**
+     * Get username
+     * @return username
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Set username
+     * @param username username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Get message
+     * @return message
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Set message
+     * @param message message
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Get answer
+     * @return answer
+     */
     public String getAnswer() {
         return answer;
     }
 
+    /**
+     * Set answer
+     * @param answer answer
+     */
     public void setAnswer(String answer) {
         this.answer = answer;
     }
 
+    /**
+     * Get password
+     * @return password
+     */ 
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Set password
+     * @param password password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Get responder facade
+     * @return responder facade
+     */
     public ResponderFacade getUserFacade() {
         return userFacade;
     }
@@ -88,6 +127,7 @@ public class PasswordResetManager implements Serializable {
     Instance Methods
     ================
      */
+    
     // Process the submitted username
     public String usernameSubmit() {
 
@@ -195,6 +235,10 @@ public class PasswordResetManager implements Serializable {
         }
     }
 
+    /**
+     * Reset password
+     * @return redirect page
+     */
     public String resetPassword() {
 
         if (message == null || message.isEmpty()) {
