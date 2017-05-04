@@ -11,6 +11,10 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ *
+ * @author Jinwoo Yom
+ */
 @FacesValidator("emailValidator")
 /**
  *
@@ -18,6 +22,13 @@ import javax.faces.validator.ValidatorException;
  */
 public class EmailValidator implements Validator {
 
+    /**
+     *
+     * @param context
+     * @param component
+     * @param value
+     * @throws ValidatorException
+     */
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         

@@ -15,6 +15,14 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
         <ui:define name="editableContent">
             <div align="center" style="width:70%; margin:0 auto;">
                 <h2>Trigger Emergency In Your Area</h2>
+                <!-- Error messages will be shown here if any -->
+                <div align="center">
+                    <p:messages showIcon="false"/>
+                    <h:outputLabel id="form-error-message" class="errorMessages" 
+                                   value="#{loginManager.errorMessage}"/>
+                    #{loginManager.setErrorMessage("")}
+                </div>
+                <br />
                 <!-- Create Emergency Form -->
                 <h:form>
                     <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">

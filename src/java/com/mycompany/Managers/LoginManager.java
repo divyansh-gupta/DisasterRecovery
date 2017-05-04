@@ -135,12 +135,11 @@ public class LoginManager implements Serializable {
     @return "" if an error occurs; otherwise, redirect to show the Profile page
      */
     public String loginUser(boolean triggered) {
-
         // Obtain the object reference of the User object from the entered username
         Responder user = getResponderFacade().findByUsername(getUsername());
 
         if (user == null) {
-            errorMessage = "Entered username " + getUsername() + " does not exist!";
+            errorMessage = "Invalid login credential!";
             return "";
         } else {
             String actualUsername = user.getUsername();
@@ -149,13 +148,8 @@ public class LoginManager implements Serializable {
             String actualPassword = user.getPassword();
             String enteredPassword = getPassword();
 
-            if (!actualUsername.equals(enteredUsername)) {
-                errorMessage = "Invalid Username!";
-                return "";
-            }
-
-            if (!actualPassword.equals(enteredPassword)) {
-                errorMessage = "Invalid Password!";
+            if (!actualUsername.equals(enteredUsername) || !actualPassword.equals(enteredPassword)) {
+                errorMessage = "Invalid login credential!";
                 return "";
             }
 
