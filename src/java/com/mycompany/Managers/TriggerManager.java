@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import com.mycompany.DisasterRecovery.Location;
 import com.mycompany.DisasterRecovery.Responder;
 import com.mycompany.sessionbeans.LocationFacade;
+import javax.inject.Inject;
 
 /*
  * Created by Divyansh Gupta on 2017.04.11  * 
@@ -24,6 +25,9 @@ public class TriggerManager implements Serializable {
     @EJB
     LocationFacade locationFacade;
     
+    @Inject
+    MessageManager messageManager;
+    
     private String emergencyDescription;
 
     public String getEmergencyDescription() {
@@ -36,10 +40,10 @@ public class TriggerManager implements Serializable {
     
     public String triggerEmergency(Responder user) {
         Location userLocation = user.getLocationId();
-        // TODO: Send Message to Nearby Responders
         userLocation.setTriggered(Boolean.TRUE);
         userLocation.setEmergencyDescription(emergencyDescription);
         locationFacade.edit(userLocation);
+        messageManager.sendTrigger(userLocation, emergencyDescription);
         return "/Map.xhtml?faces-redirect=true";
     }
     

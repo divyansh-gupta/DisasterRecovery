@@ -65,7 +65,8 @@ h1 {
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: #006400; /* Dark Green */
+    /*color: #006400;  Dark Green */
+    color: rgb(0, 200, 100);
 }
 
 /* Style the text used under the standard HTML tag "h2" for header 2 */
@@ -75,7 +76,7 @@ h2 {
     font-style: normal;
     font-weight:bolder;
     text-decoration: none;
-    color: rgb(0, 145, 74);
+    color: rgb(0, 200, 100);
 }
 
 /*
@@ -194,19 +195,24 @@ Vertical Navigation Menu
     padding: 0;
     width: 180px;
     background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgb(0, 145, 74);
+    border: 1px solid rgb(0, 200, 100);
+        color: rgb(0, 200, 100);
+
 }
 
 /* Style class for <li> */
 .verticalMenuItem {
     text-align: left;
-    border-bottom: 1px solid rgb(0, 145, 74);
+    border-bottom: 1px solid rgb(0, 200, 100);
+;
 }
 
 /* Style class for <li> and the <a> tag that defines a hyperlink */
 .verticalMenuItem a {
     display: block;
-    color: rgb(0, 145, 74);
+    /*color: rgb(0, 145, 74);*/
+        color: rgb(0, 200, 100);
+
     padding: 8px 16px;
     text-decoration: none;  /* Do not underline the hyperlink */
 }
@@ -242,7 +248,7 @@ Other Style Definitions
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
-    color: rgb(0, 145, 74);
+    color: rgb(0, 200, 100);
 }
 
 /* Used in EditAccount and UserFiles */
@@ -273,7 +279,7 @@ Other Style Definitions
     text-align: right;
     background-color: rgba(0, 0, 0, 0.8);
     white-space: nowrap;  /* Disallow line break */
-    color: rgb(0, 145, 74);
+    color: rgb(0, 200, 100);
 }
 
 /* Used in CreateAccount and EditAccount */
@@ -281,7 +287,7 @@ Other Style Definitions
     text-align: left;
     background-color: rgba(0, 0, 0, 0.8);
     white-space: nowrap;  /* Disallow line break */
-    color:rgb(0, 145, 74);
+    color:rgb(0, 200, 100);
 }
 
 /* Style error messages text */
@@ -299,7 +305,8 @@ Other Style Definitions
     font-size: 14pt;
     font-style: normal;
     font-weight: normal;
-    color: #006400;  /* Dark Green */
+    /*color: #006400;   Dark Green */
+    color: rgb(0, 200, 100);
 }
 
 /* Style form item text */
@@ -547,14 +554,14 @@ if content overflows an element's box.
 
 /* custom settings */
 .signinText {
-    color:rgb(0, 145, 74);
+    color:rgb(0, 200, 100);
 }
 
 .ui-panel, .ui-panel-content {
-    background-color: rgba(0, 145, 74, 0.5);
+    background-color: rgba(0, 200, 100, 0.5);
 }
 
 #talkingTo {
     font-weight:bolder;
-    color:rgb(0, 145, 74);
+    color:rgb(0, 200, 100);
 }

@@ -4,26 +4,16 @@
  */
 package com.mycompany.jms;
 
-import com.mycompany.Managers.MessageManager;
-import com.mycompany.sessionbeans.LocationFacade;
-import com.mycompany.sessionbeans.MessageFacade;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.ActivationConfigProperty;
-import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-import javax.naming.NamingException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -42,60 +32,42 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint("/actions")
 public class Subscriber implements MessageListener, Serializable {
 
-    @EJB
-    private LocationFacade locationFacade;
-
-    private Set<Session> allSessions = new HashSet();
-
-    public Subscriber() {
-
-    }
-
     @Override
     public void onMessage(javax.jms.Message msg) {
         try {
             String msgTxt = ((TextMessage) msg).getText();
             System.out.println("on message running!: " + msgTxt);
-            this.sendMessageToAll(msgTxt);
-        } catch (Exception e) {
+        } catch (JMSException e) {
             System.out.println(e);
         }
     }
 
     @OnOpen
     public void open(Session session) {
-        System.out.println("Helloo");
-        this.allSessions.add(session);
+        System.out.println("Hello!");
     }
 
     @OnClose
     public void close(Session session) {
-        this.allSessions.remove(session);
-        System.out.println("Helloo closed");
+        System.out.println("Bye bye!");
     }
 
     @OnError
     public void onError(Throwable error) {
-        System.out.println("Helloo error");
-    }
-
-    public void sendMessageToAll(String msgTxt) {
-        allSessions.forEach((sess) -> {
-            System.out.println(sess);
-            if (sess.isOpen()) {
-                try {
-                    sess.getBasicRemote().sendText("Nice to meet ya pal");
-                } catch (IOException ex) {
-                    Logger.getLogger(Subscriber.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                this.allSessions.remove(sess);
-            }
-        });
+        System.out.println("Websocket error!");
     }
 
     @OnMessage
     public void handleMessage(String message, Session session) {
-
+        session.getOpenSessions().forEach((sess) -> {
+            System.out.println(sess);
+            if (sess.isOpen()) {
+                try {
+                    sess.getBasicRemote().sendText("Got a new message for ya, pal!");
+                } catch (IOException ex) {
+                    Logger.getLogger(Subscriber.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 }

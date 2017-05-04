@@ -19,58 +19,34 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
 
         <ui:define name="editableContent">
             <script>
-
-//                var socket = null;
+                var sendToWebSocket;
+                $(function () {
                     var socket = new WebSocket("ws://" + location.host + "/DisasterRecovery/actions");
 
-                    function ClickButton() {
-                        $('.b#{messageManager.locationEngaged.alternateName}#{messageManager.locationEngaged.id}').each(
-                                function () {
-                                    var button = $(this);
-                                    console.log($(this) + " being clicked");
-                                    button.click();
-                                }
-                        );
-                    }
-
-                    function sendToWebSocket() {
+                    sendToWebSocket = function () {
                         socket.send("sendingmessage");
                     }
-
-                $(function () {
-                    socket.onopen = function () {
-                        socket.send("Sending message");
-                    };
                     socket.onmessage = function (e) {
-                        console.log(e.data);
+                        $('.therefreshbutton')[0].click();
                     };
                 });
             </script>
-            <!--<h:form id="talkingForm">-->
-            <p:outputLabel id="talkingTo"  value="#{messageManager.getLocationEngaged().locationName}"></p:outputLabel>
-            <!--</h:form>-->
+            <p:outputLabel id="talkingTo"  value="Talking to: #{messageManager.getLocationEngaged().locationName}"></p:outputLabel>
             <p:growl id="growl" life="5000" />
             <h:form>
-                <!--<p:layout style="min-width:400px;min-height:400px; overflow: hidden">-->
-                <!--<p:layoutUnit position="west" resizable="true" size="100" minSize="100" maxSize="200">-->
                 <div style="float: left; max-height: 250px; overflow-y: scroll; overflow-x: hidden">
-
                     <c:forEach items="#{messageManager.getMessageLocations()}" var="location">
                         <p:commandButton style="width: 100%;" class="b#{location.alternateName}#{location.id}" value="#{location.locationName}"
                                          update="MessageViewForm:datalistMessages talkingTo"
-
                                          actionListener="#{messageManager.setLocationEngaged(location)}" >
                         </p:commandButton>
                         <br/>
                     </c:forEach>
                 </div>
 
-                <!--</p:layoutUnit>-->
-                <!--<p:layoutUnit position="center" >-->
                 <div style="text-align: center">
                     <h:form id="MessageViewForm" >
-                        <!--<p:ajax event="change" update="datalistMessages" listener="#{messageManager.messagesBetweenSelectedLocationAndUser()}" />-->
-                        <div>
+                        <div style="margin-bottom: 10px">
                             <p:dataTable style="max-height: 250px; overflow-y: scroll;" class="datalistMessages" id="datalistMessages" value="#{messageManager.locationMessages}" var="message">
                                 <p:column>
                                     <div style="float: left"><h:outputText rendered="#{not messageManager.messageFromMe(message.id)}"   value="#{message.description}"/></div>
@@ -80,13 +56,20 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                                 </p:column>
                             </p:dataTable>
                         </div>
-                        <p:inputText value="#{messageManager.messageBeingTyped}"></p:inputText>
-                        <p:commandButton value="Send" action="#{messageManager.sendMessage()}" oncomplete="sendToWebSocket()" update="MessageViewForm:datalistMessages" />
-                        <p:commandButton style="visibility: hidden" id="messageRefreshButton" update="MessageViewForm:datalistMessages" />
+                        <div>
+
+                            <p:inputTextarea value="#{messageManager.messageBeingTyped}" rows="4" cols="50" counter="display" maxlength="250" counterTemplate="{0} characters remaining." autoResize="false" />
+                            <br/>
+
+                            <h:outputText style="color: white;" id="display" />
+                            <br/>
+                            <p:commandButton style="text-align: right;" value="Send" action="#{messageManager.sendMessage()}" oncomplete="sendToWebSocket()" update="MessageViewForm:datalistMessages" />
+                            <br/>
+                            <p:commandButton style="display: none" class="therefreshbutton" action="#{messageManager.clickButton()}" update="MessageViewForm:datalistMessages"/>
+                        </div>
+
                     </h:form>
                 </div>
-                <!--</p:layoutUnit>-->
-                <!--</p:layout>-->
             </h:form>
         </ui:define>
 

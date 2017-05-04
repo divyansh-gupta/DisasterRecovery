@@ -23,6 +23,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -40,11 +41,7 @@ public class MessageManager implements Serializable {
     @Inject
     private AccountManager accountManager;
 
-//    @Inject
     private Publisher publisher;
-
-//    @Inject
-//    private Subscriber subscriber;
 
     @EJB
     private MessageFacade messageFacade;
@@ -59,6 +56,13 @@ public class MessageManager implements Serializable {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void clickButton() {
+        String jsToRun = "document.getElementsByClassName('b"
+                + this.locationEngaged.getAlternateName() + this.locationEngaged.getId() + "')[0].click()";
+        System.out.println(jsToRun);
+        RequestContext.getCurrentInstance().execute(jsToRun);
     }
 
     public void sendMessage() {
@@ -80,6 +84,27 @@ public class MessageManager implements Serializable {
             System.out.println(e);
         }
         this.messageBeingTyped = "";
+    }
+
+    public void sendTrigger(Location sender, String description) {
+        Date date = new Date();
+        Random rand = new Random(date.getTime());
+        locationFacade.findAll().forEach(loc -> {
+            int randId = Math.abs(rand.nextInt());
+            Message msg = new Message();
+            msg.setDescription("Emergency triggered!: " + description);
+            msg.setId(randId);
+            msg.setSenderLocation(sender);
+            msg.setRecieverLocation(loc);
+            msg.setTimeStamp(date);
+            messageFacade.create(msg);
+            try {
+                publisher.sendMessageToTopic("Emergency triggered!: " + description, randId, sender.getId(), loc.getId(), date);
+                messagesBetweenSelectedLocationAndUser();
+            } catch (JMSException e) {
+                System.out.println(e);
+            }
+        });
     }
 
     public List<Message> messagesBetweenSelectedLocationAndUser() {

@@ -19,7 +19,6 @@ import javax.jms.TopicSession;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-//@Named(value = "publisher")
 @SessionScoped
 public class Publisher implements Serializable {
 

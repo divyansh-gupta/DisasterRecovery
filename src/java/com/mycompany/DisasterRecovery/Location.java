@@ -327,7 +327,7 @@ public class Location implements Serializable {
      * @return Location Alternate Name
      */
     public String getAlternateName() {
-        return this.locationName.split(",")[0];
+        return this.locationName.split(",")[0].replace("\\s+", "_");
     }
 
     // Override functions

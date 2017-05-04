@@ -12,10 +12,12 @@ public final class Constants {
 
     public static final String GMAPS_GEOCODE_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
     public static final String GMAPS_GEOCODE_API = "key=***REMOVED***";
-    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\Jinwoo Yom\\Documents\\NetBeansProjects\\cloudfinalproj\\DisasterRecovery\\DisasterRecoveryStorage";
-    public static final String PHOTOS_RELATIVE_PATH = "..\\";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage\\defaultResponderPhoto.png";
-    
+//    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\divya\\Documents\\NetBeansProjects\\DisasterRecovery";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/DisasterRecoveryStorage/";
+
+    public static final String PHOTOS_RELATIVE_PATH = "DisasterRecoveryStorage/";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage/defaultResponderPhoto.png";
+
     /* Temporary filename */
     public static final String TEMP_FILE = "tmp_file";
 
