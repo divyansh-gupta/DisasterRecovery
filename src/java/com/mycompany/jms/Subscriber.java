@@ -69,7 +69,6 @@ public class Subscriber implements MessageListener, Serializable {
         System.out.println("Websocket error!");
     }
 
-    @OnMessage
     public void sendMessageToAll() {
         connectedSessions.forEach((sess) -> {
             if (sess.isOpen()) {
