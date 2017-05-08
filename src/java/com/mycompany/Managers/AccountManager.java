@@ -573,7 +573,7 @@ public class AccountManager implements Serializable {
                 newResponder.setUsername(username);
 
                 newResponder.setImage(Constants.SET_DEFAULT_PHOTO_RELATIVE_PATH);
-
+                
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {
                 username = "";
@@ -599,9 +599,9 @@ public class AccountManager implements Serializable {
      * @throws Exception exception
      */
     public String updateAccount() throws Exception {
- 
+        System.out.println("I'm right HERE");
         if (statusMessage == null || statusMessage.isEmpty()) {
- 
+            System.out.println("I'm right HERE2");
             // Obtain the signed-in user's username
             String user_name = (String) FacesContext.getCurrentInstance().
                     getExternalContext().getSessionMap().get("username");

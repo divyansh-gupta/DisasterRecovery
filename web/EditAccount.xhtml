@@ -65,7 +65,7 @@ Copyright © 2017 Divyansh Gupta. All rights reserved.
                         <!-- EMAIL ADDRESS -->
                         <p:outputLabel value="#{bundle.EditResponderLabel_email}" for="email" />
                         <p:inputText id="email" value="#{accountManager.selected.email}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_email}" label="Email">
+                                     requiredMessage="#{bundle.EditResponderRequiredMessage_email}" label="Email">
                             <f:validateLength minimum="2" />
                             <f:validator validatorId="emailValidator" />  
                         </p:inputText>
