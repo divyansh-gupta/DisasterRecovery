@@ -566,7 +566,9 @@ public class AccountManager implements Serializable {
                  */
                 editResponder.setResponderName(this.selected.getResponderName());
                 editResponder.setEmail(this.selected.getEmail());
-                editResponder.setLocationName(this.selected.getLocationId().getLocationName());
+                Location newResponderLocation = this.getLatLongFromAddress(city, state, zipcode);
+                editResponder.setLocationId(newResponderLocation);
+//                editResponder.setLocationName(this.selected.getLocationId().getLocationName());
                 editResponder.setUsername(this.selected.getUsername());
 //                Location userLocation = getLatLongFromAddress(city, state, zipcode);
 //                editResponder.setLocationId(userLocation);

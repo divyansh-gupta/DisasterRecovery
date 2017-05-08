@@ -229,14 +229,8 @@ public class RequestController implements Serializable {
         cannedNeed.setItemId(fromLocationMap.get("CANNED_GOODS"));
         blanketNeed.setItemId(fromLocationMap.get("SHELTER"));
         shelterNeed.setItemId(fromLocationMap.get("BLANKETS"));
-        usdNeed.setItemId(fromLocationMap.get("EMERGENCY_KITS"));
-        emergencyNeed.setItemId(fromLocationMap.get("USD"));
-//                waterNeed.setQuantity(0);
-//        blanketNeed.setQuantity(0);
-//        shelterNeed.setQuantity(0);
-//        usdNeed.setQuantity(0);
-//        cannedNeed.setQuantity(0);
-//        emergencyNeed.setQuantity(0);
+        usdNeed.setItemId(fromLocationMap.get("USD"));
+        emergencyNeed.setItemId(fromLocationMap.get("EMERGENCY_KITS"));
 
         waterNeed.setRequestId(selected);
         cannedNeed.setRequestId(selected);
