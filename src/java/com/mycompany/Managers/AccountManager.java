@@ -57,8 +57,10 @@ as long as the user's established HTTP session is alive.
 @SessionScoped
 
 /**
+ * This class handles User Account actions. This includes logging in, logging
+ * out, editing user information.
  *
- * @author Balci
+ * @author divyansh
  */
 
 /*
@@ -90,13 +92,9 @@ public class AccountManager implements Serializable {
     private String state;
     private String zipcode;
 
-    private int securityQuestion;
-    private String securityAnswer;
-
     private String email;
 
     private final String[] listOfStates = Constants.STATES;
-    private Map<String, Object> security_questions;
     private String statusMessage;
 
     private Responder selected;
@@ -108,41 +106,35 @@ public class AccountManager implements Serializable {
      */
     @EJB
     private ResponderFacade responderFacade;
-    
+
     /*
      Location facade
-    */
+     */
     @EJB
     private LocationFacade locationFacade;
 
     /*
      Item facade
-    */
+     */
     @EJB
     private ItemFacade itemFacade;
 
     /**
-     * Get item facade 
-     * @return item facade 
+     * Get item facade
+     *
+     * @return item facade
      */
     public ItemFacade getItemFacade() {
         return itemFacade;
     }
 
     /**
-     * Set item facade 
-     * @param itemFacade item facade 
+     * Set item facade
+     *
+     * @param itemFacade item facade
      */
     public void setItemFacade(ItemFacade itemFacade) {
         this.itemFacade = itemFacade;
-    }
-
-    // Constructor method instantiating an instance of AccountManager
-
-    /**
-     * Empty constructor
-     */
-    public AccountManager() {
     }
 
     /*
@@ -150,18 +142,18 @@ public class AccountManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
-
     /**
-     * Get list of states
+     * Get list of states.
+     *
      * @return list of states
      */
-
     public String[] getListOfStates() {
         return listOfStates;
     }
 
     /**
      * Get password
+     *
      * @return
      */
     public String getPassword() {
@@ -170,6 +162,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set password
+     *
      * @param password password
      */
     public void setPassword(String password) {
@@ -178,6 +171,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get new password
+     *
      * @return new password
      */
     public String getNewPassword() {
@@ -186,6 +180,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set new password
+     *
      * @param newPassword new password
      */
     public void setNewPassword(String newPassword) {
@@ -194,6 +189,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get name
+     *
      * @return name
      */
     public String getName() {
@@ -202,6 +198,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set name
+     *
      * @param name name
      */
     public void setName(String name) {
@@ -210,6 +207,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get city
+     *
      * @return city
      */
     public String getCity() {
@@ -218,6 +216,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set city
+     *
      * @param city city
      */
     public void setCity(String city) {
@@ -226,6 +225,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get state
+     *
      * @return state
      */
     public String getState() {
@@ -234,6 +234,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set state
+     *
      * @param state state
      */
     public void setState(String state) {
@@ -242,6 +243,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get zip code
+     *
      * @return zip code
      */
     public String getZipcode() {
@@ -250,6 +252,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set zip code
+     *
      * @param zip_code zip code
      */
     public void setZipcode(String zip_code) {
@@ -257,39 +260,8 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Get security question
-     * @return security question
-     */
-    public int getSecurityQuestion() {
-        return securityQuestion;
-    }
-
-    /**
-     * Set security question
-     * @param securityQuestion security question
-     */
-    public void setSecurityQuestion(int securityQuestion) {
-        this.securityQuestion = securityQuestion;
-    }
-
-    /**
-     * Get security answer
-     * @return security answer
-     */
-    public String getSecurityAnswer() {
-        return securityAnswer;
-    }
-
-    /**
-     * Set security answer
-     * @param securityAnswer security answer
-     */
-    public void setSecurityAnswer(String securityAnswer) {
-        this.securityAnswer = securityAnswer;
-    }
-
-    /**
      * Get email
+     *
      * @return email
      */
     public String getEmail() {
@@ -298,6 +270,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set email
+     *
      * @param email email
      */
     public void setEmail(String email) {
@@ -306,6 +279,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get responder facade
+     *
      * @return responder facade
      */
     public ResponderFacade getResponderFacade() {
@@ -314,6 +288,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get location facade
+     *
      * @return location facade
      */
     public LocationFacade getLocationFacade() {
@@ -322,6 +297,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Get username
+     *
      * @return username
      */
     public String getUsername() {
@@ -330,50 +306,16 @@ public class AccountManager implements Serializable {
 
     /**
      * Set username
+     *
      * @param username username
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /*
-    private Map<String, Object> security_questions;
-        String      int
-        ---------   ---
-        question1,  0
-        question2,  1
-        question3,  2
-            :
-    When the user selects a security question, its number (int) is stored; not its String.
-    Later, given the number (int), the security question String is retrieved.
-     */
-
-    /**
-     * Get security question map
-     * @return security question map
-     */
-
-    public Map<String, Object> getSecurity_questions() {
-
-        if (security_questions == null) {
-            /*
-            Difference between HashMap and LinkedHashMap:
-            HashMap stores key-value pairings in no particular order. 
-                Values are retrieved based on their corresponding Keys.
-            LinkedHashMap stores and retrieves key-value pairings
-                in the order they were put into the map.
-             */
-            security_questions = new LinkedHashMap<>();
-
-            for (int i = 0; i < Constants.QUESTIONS.length; i++) {
-                security_questions.put(Constants.QUESTIONS[i], i);
-            }
-        }
-        return security_questions;
-    }
-
     /**
      * Get status message
+     *
      * @return status message
      */
     public String getStatusMessage() {
@@ -382,6 +324,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Set status message
+     *
      * @param statusMessage status message
      */
     public void setStatusMessage(String statusMessage) {
@@ -389,8 +332,10 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Get selected responder
-     * @return responder
+     * Get selected responder (the one who is logged in).
+     *
+     * @return responder who is logged in. If there is no responder logged in
+     * null is returned.
      */
     public Responder getSelected() {
 
@@ -412,7 +357,8 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Set selected responder 
+     * Set selected responder. Usually don't use this function.
+     *
      * @param selectedResponder responder
      */
     public void setSelected(Responder selectedResponder) {
@@ -425,19 +371,20 @@ public class AccountManager implements Serializable {
     ================
      */
     // Return True if a user is logged in; otherwise, return False
-
     /**
      * Check if user is logged in
+     *
      * @return boolean
      */
     public boolean isLoggedIn() {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username") != null;
     }
-    
+
     /**
-     *  This function utilizes the Google maps to get Latitude and Longitude values
-     *  based on a City, State and Zip code. These values are used to create a Location
-     *  Object which is stored in the database. 
+     * This function utilizes the Google maps to get Latitude and Longitude
+     * values based on a City, State and Zip code. These values are used to
+     * create a Location Object which is stored in the database.
+     *
      * @param city city
      * @param State state
      * @param zipcode zip code
@@ -478,11 +425,12 @@ public class AccountManager implements Serializable {
             return newEntry;
         }
     }
-    
+
     /**
-     * Creates and stores an initial item list for a location. 
-     * All items start out with a value with 0. A user will have to manually updated
-     * the values from another page.
+     * Creates and stores an initial item list for a location. All items start
+     * out with a value with 0. A user will have to manually updated the values
+     * from another page.
+     *
      * @param location location id
      * @return item collection
      */
@@ -537,11 +485,11 @@ public class AccountManager implements Serializable {
 
     /**
      * Create a new new responder account.
-     * @return "" if an error occurs; otherwise, upon successful account creation, 
-     * redirect to show the SignIn page.
+     *
+     * @return "" if an error occurs; otherwise, upon successful account
+     * creation, redirect to show the SignIn page.
      * @throws Exception exception
      */
-
     public String createAccount() throws Exception {
 
         // First, check if the entered username is already being used
@@ -573,7 +521,7 @@ public class AccountManager implements Serializable {
                 newResponder.setUsername(username);
 
                 newResponder.setImage(Constants.SET_DEFAULT_PHOTO_RELATIVE_PATH);
-                
+
                 getResponderFacade().create(newResponder);
             } catch (EJBException e) {
                 username = "";
@@ -593,8 +541,10 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * Update the signed-in user's account profile. Return "" if an error occurs;w
-     * otherwise, upon successful account update, redirect to show the Profile page.
+     * Update the signed-in user's account profile. Return "" if an error
+     * occurs;w otherwise, upon successful account update, redirect to show the
+     * Profile page.
+     *
      * @return ""
      * @throws Exception exception
      */
@@ -605,10 +555,10 @@ public class AccountManager implements Serializable {
             // Obtain the signed-in user's username
             String user_name = (String) FacesContext.getCurrentInstance().
                     getExternalContext().getSessionMap().get("username");
- 
+
             // Obtain the object reference of the signed-in user
             Responder editResponder = getResponderFacade().findByUsername(user_name);
- 
+
             try {
                 /*
                 Set the signed-in user's properties to the values entered by
@@ -620,10 +570,10 @@ public class AccountManager implements Serializable {
                 editResponder.setUsername(this.selected.getUsername());
 //                Location userLocation = getLatLongFromAddress(city, state, zipcode);
 //                editResponder.setLocationId(userLocation);
- 
+
                 // It is optional for the user to change his/her password
                 String new_Password = getNewPassword();
- 
+
                 if (new_Password == null || new_Password.isEmpty()) {
                     // Do nothing. The user does not want to change the password.
                 } else {
@@ -631,10 +581,10 @@ public class AccountManager implements Serializable {
                     // Password changed successfully!
                     // Password was first validated by invoking the validatePasswordChange method below.
                 }
- 
+
                 // Store the changes in the CloudDriveDB database
                 getResponderFacade().edit(editResponder);
- 
+
             } catch (EJBException e) {
                 username = "";
                 statusMessage = "Something went wrong while editing user's profile! See: " + e.getMessage();
@@ -647,8 +597,9 @@ public class AccountManager implements Serializable {
     }
 
     /**
-     * the signed-in user's account. Return "" if an error occurs; otherwise,
+     * Delete the signed-in user's account. Return "" if an error occurs; otherwise,
      * upon successful account deletion, redirect to show the index (home) page.
+     *
      * @return ""
      */
     public String deleteAccount() {
@@ -907,6 +858,7 @@ public class AccountManager implements Serializable {
 
     /**
      * Log out
+     *
      * @return redirect to sign in page
      */
     public String logout() {
@@ -918,8 +870,6 @@ public class AccountManager implements Serializable {
         username = password = "";
         name = "";
         city = state = zipcode = "";
-        securityQuestion = 0;
-        securityAnswer = "";
         email = statusMessage = "";
 
         // Invalidate the logged-in Responder's session
@@ -931,8 +881,9 @@ public class AccountManager implements Serializable {
 
     /**
      * Get responder photo path
+     *
      * @return responder photo path
-     */ 
+     */
     public String responderPhoto() {
 
         // Obtain the signed-in user's username

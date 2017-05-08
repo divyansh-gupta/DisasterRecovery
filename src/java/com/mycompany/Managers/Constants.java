@@ -5,7 +5,8 @@
 package com.mycompany.Managers;
 
 /**
- *
+ * Class contains constant values for the DisasterRecovery
+ * project (API Keys etc).
  * @author andre
  */
 public final class Constants {
@@ -32,7 +33,7 @@ public final class Constants {
         which we call the Thumbnail photo, and use it.
     
         We do not want to use the uploaded photo as is, which may be
-        very large in size degrading performance.
+        very large in size, degrading performance.
      */
 
     /**
@@ -52,21 +53,5 @@ public final class Constants {
         "MD", "ME", "MH", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM",
         "NV", "NY", "OH", "OK", "OR", "PA", "PR", "PW", "RI", "SC", "SD", "TN", "TX", "UT",
         "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
-
-    /* Security questions to reset password  */
-
-    /**
-     * Security questions
-     */
-
-    public static final String[] QUESTIONS = {
-        "In what city were you born?",
-        "What is your mother's maiden name?",
-        "What elementary school did you attend?",
-        "What was the make of your first car?",
-        "What is your father's middle name?",
-        "What is the name of your most favorite pet?",
-        "What street did you grow up on?"
-    };
 
 }

@@ -27,6 +27,7 @@ import org.primefaces.model.UploadedFile;
 
 /**
  * Responder photo manager
+ *
  * @author cheng
  */
 public class PhotoManager implements Serializable {
@@ -48,9 +49,9 @@ public class PhotoManager implements Serializable {
     Getter and Setter Methods
     =========================
      */
-
     /**
      * Get file
+     *
      * @return file
      */
     public UploadedFile getFile() {
@@ -59,7 +60,8 @@ public class PhotoManager implements Serializable {
 
     /**
      * Set file
-     * @param file file 
+     *
+     * @param file file
      */
     public void setFile(UploadedFile file) {
         this.file = file;
@@ -96,9 +98,9 @@ public class PhotoManager implements Serializable {
     Clear Error Messages
     ====================
      */
-
     /**
      * Clear error message
+     *
      * @return redirect to change photo page
      */
     public String clearErrorMessage() {
@@ -111,9 +113,9 @@ public class PhotoManager implements Serializable {
     Handle User Photo Upload
     ========================
      */
-
     /**
-     * upload
+     * Upload a new photo to the user profile.
+     *
      * @return redirect page
      */
     public String upload() {
@@ -182,14 +184,14 @@ public class PhotoManager implements Serializable {
     Cancel Photo File Upload
     ========================
      */
-
     /**
-     * Cancel uploading
+     * Cancel uploading and return to the user profile.
+     *
      * @return
      */
     public String cancel() {
         message = "";
-        return "Profile?faces-redirect=true";
+        return "/Profile?faces-redirect=true";
     }
 
     /*
@@ -232,28 +234,8 @@ public class PhotoManager implements Serializable {
             // If it is an image file, obtain its file extension; otherwise, set png as the file extension anyway.
             String fileExtension = mimeFileType.startsWith("image/") ? mimeFileType.subSequence(6, mimeFileType.length()).toString() : "png";
 
-//            /*
-//            Obtain the list of Photo objects that belong to the User whose
-//            database primary key is user.getId()
-//             */
-//            List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(user.getId());
-//
-//            if (!photoList.isEmpty()) {
-//                // Remove the photo from the database
-//                getUserPhotoFacade().remove(photoList.get(0));
-//            }
-
             responder.setImage(responder.getId() + "." + fileExtension);
             responderFacade.edit(responder);
-//            // Construct a new Photo object with file extension and user's object reference
-//            UserPhoto newPhoto = new UserPhoto(fileExtension, user);
-//
-//            // Create a record for the new Photo object in the database
-//            getUserPhotoFacade().create(newPhoto);
-//
-//            // Obtain the object reference of the first Photo object of the
-//            // user whose primary key is user.getId()
-//            UserPhoto photo = getUserPhotoFacade().findPhotosByUserID(user.getId()).get(0);
 
             // Reconvert the uploaded file into an input stream of bytes.
             inputStream = file.getInputstream();
@@ -288,7 +270,8 @@ public class PhotoManager implements Serializable {
     =====================================================
      */
     /**
-     * @param inputStream of bytes to be written into file with name targetFilename
+     * @param inputStream of bytes to be written into file with name
+     * targetFilename
      * @param targetFilename
      * @return the created file targetFile
      * @throws IOException
@@ -384,53 +367,4 @@ public class PhotoManager implements Serializable {
         }
     }
 
-    /*
-    =============================
-    Delete Signed-In User's Photo
-    =============================
-     */
-//    public void deletePhoto() {
-//
-//        // Obtain the signed-in user's username
-//        String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
-//                .getExternalContext().getSessionMap().get("username");
-//
-//        // Obtain the object reference of the signed-in user
-//        User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
-//
-//        // Obtain the id (primary key in the database) of the signedInUser object
-//        Integer userId = signedInUser.getId();
-//
-//        /*
-//        Obtain the list of Photo file objects that belong to the signed-in user whose
-//        database primary key is userId. The list will contain only one photo or nothing.
-//         */
-//        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
-//
-//        if (!photoList.isEmpty()) {
-//
-//            // Obtain the object reference of the first Photo object in the list
-//            UserPhoto photo = photoList.get(0);
-//
-//            try {
-//                // Delete the photo file from CloudStorage/PhotoStorage
-//                Files.deleteIfExists(Paths.get(photo.getPhotoFilePath()));
-//
-//                // Delete the thumbnail file from CloudStorage/PhotoStorage
-//                Files.deleteIfExists(Paths.get(photo.getThumbnailFilePath()));
-//
-//                // Delete the temporary file from CloudStorage/PhotoStorage
-//                Files.deleteIfExists(Paths.get(photo.getTemporaryFilePath()));
-//
-//                // Delete the photo file record from the CloudDriveDB database
-//                getUserPhotoFacade().remove(photo);
-//                // UserPhotoFacade inherits the remove() method from AbstractFacade
-//
-//            } catch (IOException e) {
-//                resultMsg = new FacesMessage("Something went wrong while deleting the photo file! See: " + e.getMessage());
-//                FacesContext.getCurrentInstance().addMessage(null, resultMsg);
-//            }
-//        }
-//
-//    }
 }

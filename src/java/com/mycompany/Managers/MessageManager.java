@@ -23,10 +23,12 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.jms.JMSException;
+import javax.naming.NamingException;
 import org.primefaces.context.RequestContext;
 
 /**
- * Message manager
+ * Message manager handles sending and recieving messages between
+ * locations through JMS.
  *
  * @author divyansh
  */
@@ -35,13 +37,11 @@ import org.primefaces.context.RequestContext;
 public class MessageManager implements Serializable {
 
     private List<Message> locationMessages;
-
     private Location locationEngaged;
+    private Publisher publisher;
 
     @Inject
     private AccountManager accountManager;
-
-    private Publisher publisher;
 
     @EJB
     private MessageFacade messageFacade;
@@ -50,13 +50,12 @@ public class MessageManager implements Serializable {
     private LocationFacade locationFacade;
 
     /**
-     * Constructor
+     * Constructor creates a new Publisher.
      */
     public MessageManager() {
         try {
             publisher = new Publisher();
-//            subscriber = new Subscriber();
-        } catch (Exception e) {
+        } catch (JMSException | NamingException e) {
             System.out.println(e);
         }
     }

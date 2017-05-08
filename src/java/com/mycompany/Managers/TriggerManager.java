@@ -15,13 +15,15 @@ import javax.inject.Inject;
  */
 
 /**
- *
+ * This class handles triggering and untriggering emergencies at
+ * user-defined locations.
+ * 
  * @author divyansh
  */
 @Named(value = "triggerManager")
 @SessionScoped
 public class TriggerManager implements Serializable {
-    
+
     /*
     The instance variable 'locationFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
@@ -29,14 +31,15 @@ public class TriggerManager implements Serializable {
      */
     @EJB
     LocationFacade locationFacade;
-    
+
     @Inject
     MessageManager messageManager;
-    
+
     private String emergencyDescription;
 
     /**
-     * Get emergency description
+     * Get emergency description text field input.
+     *
      * @return emergency description
      */
     public String getEmergencyDescription() {
@@ -44,16 +47,19 @@ public class TriggerManager implements Serializable {
     }
 
     /**
-     * Set emergency description
+     * Set emergency description for a location in which you are triggering an
+     * emergency.
+     *
      * @param emergencyDescription emergency description
      */
     public void setEmergencyDescription(String emergencyDescription) {
         this.emergencyDescription = emergencyDescription;
     }
-    
+
     /**
-     * Trigger emergency at user location
-     * @param user responder
+     * Trigger emergency at user location.
+     *
+     * @param user responder to trigger an emergency for.
      * @return map page
      */
     public String triggerEmergency(Responder user) {
@@ -64,9 +70,10 @@ public class TriggerManager implements Serializable {
         messageManager.sendTrigger(userLocation, emergencyDescription);
         return "/Map.xhtml?faces-redirect=true";
     }
-    
+
     /**
-     * Untrigger emergency at user location
+     * Untrigger emergency at user's location.
+     *
      * @param user responder
      * @return map page
      */
@@ -77,9 +84,10 @@ public class TriggerManager implements Serializable {
         locationFacade.edit(userLocation);
         return "/Map.xhtml?faces-redirect=true";
     }
-    
+
     /**
      * Check status of location
+     *
      * @param user responder
      * @return return true if triggered, otherwise return false
      */
