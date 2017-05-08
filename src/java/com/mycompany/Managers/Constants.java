@@ -19,9 +19,9 @@ public final class Constants {
      * Google map API key
      */
     public static final String GMAPS_GEOCODE_API = "key=***REMOVED***";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/DisasterRecoveryStorage/";
-    public static final String PHOTOS_RELATIVE_PATH = "DisasterRecoveryStorage/";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "DisasterRecoveryStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/FileSorageLocation-team5/";
+    public static final String PHOTOS_RELATIVE_PATH = "FileSorageLocation-team5/";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "FileSorageLocation-team5/";
     public static final String SET_DEFAULT_PHOTO_RELATIVE_PATH = "defaultResponderPhoto.png";
     
     /* Temporary filename */

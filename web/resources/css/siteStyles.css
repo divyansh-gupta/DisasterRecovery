@@ -16,8 +16,10 @@ html, body {
     /* background-color: #FFFFF0;   /* Ivory */
     /* background-color: #FAF0E6;   /* Linen */
     /* background-color: #FDF5E6;    OldLace */
-    background-image:-webkit-linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(http://www.desktopwallpaperhd.net/wallpapers/10/f/desktop-wallpapers-desktoplaptop-theme-black-stunning-disaster-109919.jpg);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(http://www.desktopwallpaperhd.net/wallpapers/10/f/desktop-wallpapers-desktoplaptop-theme-black-stunning-disaster-109919.jpg);
+    /*background-image:-webkit-linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(http://www.desktopwallpaperhd.net/wallpapers/10/f/desktop-wallpapers-desktoplaptop-theme-black-stunning-disaster-109919.jpg);*/
+    /*background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(http://www.desktopwallpaperhd.net/wallpapers/10/f/desktop-wallpapers-desktoplaptop-theme-black-stunning-disaster-109919.jpg);*/
+    background-image:-webkit-linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("#{resource['images/Background.jpg']}");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url("#{resource['images/Background.jpg']}");
     /* background-color: #FFEFD5;   /* PapayaWhip */
     /* background-color: #F5DEB3;   /* Wheat */
     /* background-color: #B0E0E6;   /* PowderBlue */
